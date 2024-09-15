@@ -41,13 +41,13 @@ layout = html.Div([
     dbc.Row([
         dbc.Col([
             dcc.Graph(id="grafico-autenticos-geral", figure=components.fig, style={"height": "30vh", "padding": "5px"})
-        ], sm = 5),
-        dbc.Col([
-            dcc.Graph(id="grafico-", figure=components.fig, style={"height": "30vh", "padding": "5px"})
-        ], sm = 3),        
+        ], sm = 6),
+        # dbc.Col([
+        #     dcc.Graph(id="grafico-", figure=components.fig, style={"height": "30vh", "padding": "5px"})
+        # ], sm = 3),        
         dbc.Col([
             dcc.Graph(id="grafico-mapa-geral", figure=components.fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"})
-        ], sm = 4),        
+        ], sm = 6),        
     ])
 ])
 

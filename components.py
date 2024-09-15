@@ -1,160 +1,47 @@
+# dash components
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 
+# graficos
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
+import dash_cytoscape as cyto
+cyto.load_extra_layouts()
 tema = "cyborg"
 load_figure_template(tema)
 
-card_post1 = dbc.Card(
-    [
-        dbc.CardImg(src="https://dash-bootstrap-components.opensource.faculty.ai/static/images/placeholder286x180.png", top=True),
-        dbc.CardBody(
-            [
-                html.H4(id = "plataforma-post1"),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-heart", style={"color": "#FF5555"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-comment", style={"color": "#66D9EF"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-comment-dots", style={"color": "#AAAAAA"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-thumbs-up", style={"color": "#E78C45"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-chart-line", style={"color": "#A6E22E"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-share", style={"color": "#AE81FF"}),
-                        html.Span(id="likes-post1")
-                    ]),
-                ], style={"padding": "10px"}),
-                
-                html.Div(
-                    [
-                    dbc.Button("Ir para Post", outline=True, color="primary", style={"margin-top": "10px"}),
-                    ], className="d-grid gap-2",
-                )
-            ]
-        ),
-    ],
-)
-
-card_post2 = dbc.Card(
-    [
-        dbc.CardImg(src="https://dash-bootstrap-components.opensource.faculty.ai/static/images/placeholder286x180.png", top=True),
-        dbc.CardBody(
-            [
-                html.H4(id = "plataforma-post2"),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-heart", style={"color": "#FF5555"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-comment", style={"color": "#66D9EF"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-comment-dots", style={"color": "#AAAAAA"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-thumbs-up", style={"color": "#E78C45"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-chart-line", style={"color": "#A6E22E"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-share", style={"color": "#AE81FF"}),
-                        html.Span(id="likes-post2")
-                    ]),
-                ], style={"padding": "10px"}),
-                
-                html.Div(
-                    [
-                    dbc.Button("Ir para Post", outline=True, color="primary", style={"margin-top": "10px"}),
-                    ], className="d-grid gap-2",
-                )
-            ]
-        ),
-    ],
-)
-
-card_post3 = dbc.Card(
-    [
-        dbc.CardImg(src="https://dash-bootstrap-components.opensource.faculty.ai/static/images/placeholder286x180.png", top=True),
-        dbc.CardBody(
-            [
-                html.H4(id = "plataforma-post3"),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-heart", style={"color": "#FF5555"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-comment", style={"color": "#66D9EF"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-comment-dots", style={"color": "#AAAAAA"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-thumbs-up", style={"color": "#E78C45"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                ], style={"padding": "10px"}),
-
-                dbc.Row([
-                    dbc.Col([
-                        html.I(className="fas fa-chart-line", style={"color": "#A6E22E"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                    dbc.Col([
-                        html.I(className="fas fa-share", style={"color": "#AE81FF"}),
-                        html.Span(id="likes-post3")
-                    ]),
-                ], style={"padding": "10px"}),
-                
-                html.Div(
-                    [
-                    dbc.Button("Ir para Post", outline=True, color="primary", style={"margin-top": "10px"}),
-                    ], className="d-grid gap-2",
-                )
-            ],
-        ),
-    ],
-)
 
 fig = go.Figure()
 fig.update_layout(template = tema)
+
+accordion = html.Div(
+    dbc.Accordion(
+        [
+            dbc.AccordionItem(title="Seguidores", children=
+                [
+                    html.P("Seguidores por faixa etária em cada uma das plataformas"),
+                    dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "40vh", "padding": "5px", "margin-top": "10px"}),
+                ] 
+            ),
+            dbc.AccordionItem(title="Genero", children=
+                [
+                    html.P("Seguidores por gênero em cada uma das plataformas"),
+                    dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "40vh", "padding": "5px", "margin-top": "10px"}),
+                ] 
+            ),
+            dbc.AccordionItem(id="con-acord", title="Conexões", children=
+                [
+                    dbc.Col([
+                        cyto.Cytoscape(
+                            id = "grafico-conexoes-individual",
+                            layout={'name': 'cola'},
+                            style = {"height": "60vh"}),
+                    ], sm=12, style={'align-items': 'center'})
+                ] 
+            ),
+        ],
+        flush=True,
+    ),
+)
+
+

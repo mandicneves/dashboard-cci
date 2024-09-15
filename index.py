@@ -14,6 +14,7 @@ import pandas as pd
 import json
 
 # Graficos
+from plotly import subplots
 import plotly.express as px
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
@@ -40,6 +41,10 @@ with open('dataset/conexoes.json', 'r') as file:
 
 cores = funcs.gerar_cores(len(sidebar.politicos))
 
+cores_personalizadas = {}
+for i in range(len(cores)):
+    cores_personalizadas[sidebar.politicos[i]["value"]] = cores[i]
+
 conexao_stylesheet = [{
     'selector': 'node',
     'style': {
@@ -55,7 +60,8 @@ conexao_stylesheet = [{
         'height': 'data(size)',
         'opacity': 0.90,
         'text-wrap': 'wrap',
-        'text-max-width': 80
+        'text-max-width': 80,
+        'font-weight': 'bold'
     }
 }, {
     'selector': 'edge',
@@ -194,7 +200,6 @@ def update_checklist(selected_values):
         Output("grafico-genero-geral", "figure"),
         Output("grafico-idade-geral", "figure"),
         Output("grafico-autenticos-geral", "figure"),
-        Output("grafico-", "figure"),
         Output("grafico-mapa-geral", "figure"),
     ],
     [
@@ -205,21 +210,13 @@ def update_checklist(selected_values):
 def update_graficos_geral(selected_values, operacao):
 
     px.set_mapbox_access_token(open("./keys/mapbox_token").read())
-    fig = go.Figure()    
-
-    cores_personalizadas = {}
-    for i in range(len(cores)):
-        cores_personalizadas[sidebar.politicos[i]["value"]] = cores[i]
         
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
     df_genero = genero[genero["NOME"].isin(list(selected_values))].groupby(["NOME", "GENERO"])
     df_mapa = local[local["NOME"].isin(list(selected_values))]
 
-
     if operacao == "percentual":
-
-
         
         totais = df_seguidores[df_seguidores["PLATAFORMA"] == "TOTAL"][["NOME", "SEGUIDORES"]].set_index("NOME")
         df_autenticos = df_seguidores.groupby("NOME")["SEGUIDORES AUTÊNTICOS"].unique().explode().reset_index()
@@ -250,7 +247,6 @@ def update_graficos_geral(selected_values, operacao):
         grafico_autenticos = px.bar(df_autenticos, y = "NOME", x = "SEGUIDORES AUTÊNTICOS", color="NOME", barmode="group", color_discrete_map=cores_personalizadas, orientation="h")
         mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "SEGUIDORES CIDADE", zoom = 10, opacity=0.6, 
                                 hover_data={'CIDADE': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
-        
 
     grafico_seguidores.update_layout(margin=go.layout.Margin(l=150, r=5, t=20, b=0), template = tema, showlegend = True, 
                                      yaxis=dict(side="right"), legend=dict(x=0, xanchor='right', y=1))
@@ -260,18 +256,34 @@ def update_graficos_geral(selected_values, operacao):
     mapa.update_layout(margin=go.layout.Margin(l=5, r=5, t=20, b=0), template = tema, showlegend = False,
                        mapbox = dict(center=go.layout.mapbox.Center(lat = lat_mean, lon = lon_mean)))    
 
-    return grafico_seguidores, grafico_genero, grafico_idade, grafico_autenticos, fig, mapa
+    return grafico_seguidores, grafico_genero, grafico_idade, grafico_autenticos, mapa
 
 @app.callback(
     [
-        Output("id", "value"),
+        Output("grafico-idade-individual", "figure"),
+        Output("grafico-genero-individual", "figure"),
     ],
-        Input("id", "value")
+        Input('dropdown-politico', 'value'),
 )
-def update_visaogeral():
+def update_graficos_visao_geral(selected_value):
 
+    df_idade = idade[idade["NOME"] == selected_value]
+    df_genero = genero[genero["NOME"] == selected_value]
 
-    return
+    plataformas = df_genero["PLATAFORMA"].unique().tolist()
+
+    cores = px.colors.sequential.Viridis
+    cores_personalizadas = {}
+    for i in range(len(plataformas)):
+        cores_personalizadas[plataformas[i]] = cores[i+1]
+
+    grafico_idade = px.bar(df_idade, x = "IDADE", y = "% SEGUIDORES IDADE", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_genero = px.bar(df_genero, x = "GENERO", y = "% SEGUIDORES GENERO", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
+
+    grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = True)
+    grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False)
+
+    return grafico_idade, grafico_genero
 
 @app.callback(
         [
@@ -299,4 +311,4 @@ def updtate_conexoes(selected_value):
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
