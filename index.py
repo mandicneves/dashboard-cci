@@ -11,6 +11,7 @@ import funcs
 
 # Tratamento dados
 import pandas as pd
+import json
 
 # Graficos
 import plotly.express as px
@@ -30,6 +31,8 @@ lon_mean = local.loc[local["CIDADE"] == "São Paulo", "LONGITUDE"].iloc[0]
 seguidores = pd.read_csv("./dataset/seguidores.csv")
 idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
+with open('dataset/conexoes.json', 'r') as file:
+    conexao = json.load(file)
 
 # =================================== #
 # LAYOUT
@@ -43,12 +46,16 @@ conexao_stylesheet = [{
         'label': 'data(label)',
         'text-valign': 'center',
         'text-halign': 'center',
+        'color': 'white',
         "background-color": 'data(color)',
+        'border-color': 'white',
         'border-width': 1.5,
         "border-opacity": 1,
         'width': 'data(size)',
         'height': 'data(size)',
-        'opacity': 0.90
+        'opacity': 0.90,
+        'text-wrap': 'wrap',
+        'text-max-width': 80
     }
 }, {
     'selector': 'edge',
@@ -265,6 +272,26 @@ def update_visaogeral():
 
 
     return
+
+@app.callback(
+        [
+            Output("grafico-conexoes-individual", "elements"),
+            Output("grafico-conexoes-individual", "stylesheet"),
+        ],
+        Input('dropdown-politico', 'value'),
+)
+def updtate_conexoes(selected_value):
+
+
+    elementos = conexao[selected_value]
+
+    return elementos, conexao_stylesheet
+
+
+
+
+
+
 
 
 # =================================== #

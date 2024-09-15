@@ -1,0 +1,1924 @@
+{
+    "Abilio Brunini": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Abilio Brunini",
+                "size": 120.4468,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 389.04,
+                "y": 360.75
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Jair Bolsonaro",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 672.77,
+                "y": 571.24
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Carla Zambeli",
+                "size": 214.64905000000002,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 320.94,
+                "y": 121.69
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Zucco",
+                "size": 177.7492,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 100.77,
+                "y": 483.19
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Júlia Zanatta",
+                "size": 99.44735,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 478.06,
+                "y": 534.56
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Marco Feliciano",
+                "size": 92.05595,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 347.46,
+                "y": 593.52
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Felipe Wellaton",
+                "size": 90.06840000000001,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 164.23,
+                "y": 308.06
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Bia Kicis",
+                "size": 82.5373,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 521.51,
+                "y": 378.59
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Eduardo Bolsonaro",
+                "size": 75.2348,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 256.49,
+                "y": 482.28
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Magno Malta",
+                "size": 74.58075000000001,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 499.06,
+                "y": 165.58
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Luiz Philippe",
+                "size": 71.5391,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 591.17,
+                "y": 270.38
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "André Fernandes": [
+        {
+            "data": {
+                "id": "0",
+                "label": "André Fernandes",
+                "size": 89.2683,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 196.66,
+                "y": 277.23
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Neymar Jr",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 446.38,
+                "y": 442.86
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Eduardo Bolsonaro",
+                "size": 127.5461,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 117.24,
+                "y": 72.309
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Bia Kicis",
+                "size": 80.8863,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 45.855,
+                "y": 377.67
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Jason Maia",
+                "size": 76.9493,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 248.16,
+                "y": 438.54
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Rodrigo Nogueira",
+                "size": 72.73925,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 143.4,
+                "y": 437.38
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Flavio Bolsonaro",
+                "size": 71.77405,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 41.135,
+                "y": 200.33
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Jair Bolsonaro",
+                "size": 66.9163,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 352.7,
+                "y": 265.18
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Carla Zambeli",
+                "size": 62.31636,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 101.95,
+                "y": 285.98
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Direita Da",
+                "size": 56.42356,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 231.68,
+                "y": 130.22
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Eduardo Pereira",
+                "size": 50.53584,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 309.1,
+                "y": 189.5
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Antonio Carlos Rodrigues": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Antonio Carlos",
+                "size": 55.67299,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 145.01,
+                "y": 195.66
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Douglas Viegas",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 379.12,
+                "y": 306.69
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Delegada Raquel",
+                "size": 78.02244999999999,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 152.64,
+                "y": 44.232
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Chuvisco",
+                "size": 64.66205,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 36.657,
+                "y": 271.02
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Soraia Leal",
+                "size": 42.758995,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 189.85,
+                "y": 300.79
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Luis Henrique",
+                "size": 28.99156,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 121.63,
+                "y": 290.8
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Tom Maior",
+                "size": 21.979255,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 52.902,
+                "y": 184.13
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Renata Abreu",
+                "size": 22.26183,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 235.89,
+                "y": 156.5
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Yuji Kuge",
+                "size": 25.568910000000002,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 87.397,
+                "y": 114.61
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Magnani",
+                "size": 25.568910000000002,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 204.97,
+                "y": 111.76
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        }
+    ],
+    "Bia Kicis": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Bia Kicis",
+                "size": 130.46710000000002,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 420.78,
+                "y": 355.28
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Carla Zambeli",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 696.57,
+                "y": 584.07
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Presidente do",
+                "size": 219.2655,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 341.88,
+                "y": 124.31
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Eduardo Bolsonaro",
+                "size": 189.4713,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 107.42,
+                "y": 499.62
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Patrícia Pinheiro",
+                "size": 107.98809999999999,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 493.83,
+                "y": 524.9
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Damares Alves",
+                "size": 106.11485,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 348.54,
+                "y": 605.92
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Jair Bolsonaro",
+                "size": 106.05135,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 159.26,
+                "y": 320.74
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Flávio Bolsonaro",
+                "size": 96.57714999999999,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 558.12,
+                "y": 379.94
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Nova Iguaçu",
+                "size": 91.77655,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 276.36,
+                "y": 474.74
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Mario Frias",
+                "size": 83.7692,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 527.73,
+                "y": 153.93
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Carlos Bolsonaro",
+                "size": 77.05725,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 627.64,
+                "y": 266.69
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Caroline De Toni": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Caroline De",
+                "size": 115.0747,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 377.21,
+                "y": 426.32
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Carla Zambeli",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 688.77,
+                "y": 603.19
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Eduardo Bolsonaro",
+                "size": 204.79385,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 275.64,
+                "y": 116.1
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Bia Kicis",
+                "size": 160.1089,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 90.769,
+                "y": 482.78
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Flavio Bolsonaro",
+                "size": 107.89920000000001,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 486.84,
+                "y": 634.92
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "EderSumher",
+                "size": 93.73235,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 342.28,
+                "y": 651.28
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Rafael Tavares",
+                "size": 81.12125,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 184.96,
+                "y": 336.64
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "República de",
+                "size": 78.3971,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 590.53,
+                "y": 411.99
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Jair Bolsonaro",
+                "size": 77.23505,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 233.52,
+                "y": 565.76
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Ana Campagnolo",
+                "size": 61.906785000000006,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 441.38,
+                "y": 234.91
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Direita Da",
+                "size": 58.945145000000004,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 537.24,
+                "y": 303.72
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Chris Tonietto": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Chris Tonietto",
+                "size": 91.90990000000001,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 221.98,
+                "y": 240.82
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Eduardo Bolsonaro",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 473.0,
+                "y": 408.83
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Carla Zambeli",
+                "size": 154.0764,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 168.5,
+                "y": 87.351
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Jair Bolsonaro",
+                "size": 100.37445,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 56.905,
+                "y": 356.16
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Nação Conservadora",
+                "size": 91.7321,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 280.2,
+                "y": 413.4
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Caroline de",
+                "size": 68.90384999999999,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 167.81,
+                "y": 395.79
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Direita Minas",
+                "size": 60.87491,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 50.707,
+                "y": 217.51
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Capitão Derrite",
+                "size": 56.94299,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 372.25,
+                "y": 237.88
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Cristina Mel",
+                "size": 56.123839999999994,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 125.97,
+                "y": 253.91
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Sâmia Bonfim",
+                "size": 53.842285000000004,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 295.27,
+                "y": 96.432
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Daniel Silveira",
+                "size": 49.665255,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 343.92,
+                "y": 168.57
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Eduardo Bolsonaro": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Eduardo Bolsonaro",
+                "size": 110.54714999999999,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 312.61,
+                "y": 338.22
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Jair Bolsonaro",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 597.93,
+                "y": 533.3
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Flavio Bolsonaro",
+                "size": 159.6009,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 217.24,
+                "y": 90.481
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Carla Zambeli",
+                "size": 109.40415,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 62.026,
+                "y": 395.89
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Presidente do",
+                "size": 104.90835,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 396.17,
+                "y": 477.19
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Mario Frias",
+                "size": 101.473,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 270.79,
+                "y": 577.63
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Capitão Bruno",
+                "size": 87.9983,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 97.583,
+                "y": 267.58
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Bia Kicis",
+                "size": 82.33409999999999,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 521.88,
+                "y": 341.53
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Direita da",
+                "size": 78.27645,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 180.11,
+                "y": 465.15
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Michelle Bolsonaro",
+                "size": 77.73035,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 370.65,
+                "y": 134.92
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Helô",
+                "size": 77.17790000000001,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 481.67,
+                "y": 216.85
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Gustavo Gayer": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Gustavo Gayer",
+                "size": 62.308105000000005,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 159.24,
+                "y": 207.4
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Carla Zambeli",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 355.93,
+                "y": 347.67
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Eduardo Bolsonaro",
+                "size": 91.95434999999999,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 103.89,
+                "y": 52.133
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Bia Kicis",
+                "size": 62.394465,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 35.373,
+                "y": 281.44
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Flavio Bolsonaro",
+                "size": 45.13453,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 182.5,
+                "y": 329.47
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Capitão Alberto",
+                "size": 40.17899,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 109.95,
+                "y": 318.39
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Ally",
+                "size": 38.574980000000004,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 46.201,
+                "y": 164.87
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Tiago Santineli",
+                "size": 37.27196,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 272.31,
+                "y": 187.75
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Vítor Hugo",
+                "size": 28.698825000000003,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 91.39,
+                "y": 217.96
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Vereadora Jessicão",
+                "size": 26.614755,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 183.94,
+                "y": 107.57
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Bruno Zambelli",
+                "size": 25.66924,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 227.66,
+                "y": 135.8
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Josimar de Maranhãozinho": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Josimar de",
+                "size": 124.1425,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 331.72,
+                "y": 390.72
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Detinha",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 629.54,
+                "y": 588.14
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Enquanto Isso",
+                "size": 175.76165,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 231.42,
+                "y": 99.643
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Belenzinha",
+                "size": 165.8874,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 94.047,
+                "y": 571.43
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Raí Saia",
+                "size": 113.29035,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 426.11,
+                "y": 564.08
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Matheus Mendes",
+                "size": 102.02545,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 269.88,
+                "y": 625.7
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Sergio Frota",
+                "size": 100.2538,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 119.81,
+                "y": 279.8
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Marcio Flavio",
+                "size": 94.3864,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 477.29,
+                "y": 391.76
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Romeu Silva",
+                "size": 90.3224,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 200.48,
+                "y": 406.49
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Aldir Júnior",
+                "size": 89.04605000000001,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 398.32,
+                "y": 231.55
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Filipe Arnon",
+                "size": 83.88985,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 528.31,
+                "y": 257.28
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ],
+    "Nikolas Ferreira": [
+        {
+            "data": {
+                "id": "0",
+                "label": "Nikolas Ferreira",
+                "size": 127.66040000000001,
+                "color": "rgb(10, 10, 10)"
+            },
+            "position": {
+                "x": 381.88,
+                "y": 453.29
+            }
+        },
+        {
+            "data": {
+                "id": "1",
+                "label": "Carla Zambelli",
+                "size": 226.5807,
+                "color": "#440154"
+            },
+            "position": {
+                "x": 708.94,
+                "y": 623.43
+            }
+        },
+        {
+            "data": {
+                "id": "2",
+                "label": "Eduardo Bolsonaro",
+                "size": 216.87154999999998,
+                "color": "#482878"
+            },
+            "position": {
+                "x": 260.85,
+                "y": 122.95
+            }
+        },
+        {
+            "data": {
+                "id": "3",
+                "label": "Barreto",
+                "size": 147.07235,
+                "color": "#3e4989"
+            },
+            "position": {
+                "x": 83.381,
+                "y": 467.36
+            }
+        },
+        {
+            "data": {
+                "id": "4",
+                "label": "Thiago Gagliasso",
+                "size": 126.39675,
+                "color": "#31688e"
+            },
+            "position": {
+                "x": 493.06,
+                "y": 690.17
+            }
+        },
+        {
+            "data": {
+                "id": "5",
+                "label": "Jair Bolsonaro",
+                "size": 126.04115,
+                "color": "#26828e"
+            },
+            "position": {
+                "x": 339.58,
+                "y": 720.78
+            }
+        },
+        {
+            "data": {
+                "id": "6",
+                "label": "Bruno Engler",
+                "size": 98.45675,
+                "color": "#1f9e89"
+            },
+            "position": {
+                "x": 184.97,
+                "y": 313.59
+            }
+        },
+        {
+            "data": {
+                "id": "7",
+                "label": "Israel Targino",
+                "size": 89.63025,
+                "color": "#35b779"
+            },
+            "position": {
+                "x": 604.89,
+                "y": 426.58
+            }
+        },
+        {
+            "data": {
+                "id": "8",
+                "label": "Gustavo Gayer",
+                "size": 84.89314999999999,
+                "color": "#6ece58"
+            },
+            "position": {
+                "x": 208.63,
+                "y": 607.61
+            }
+        },
+        {
+            "data": {
+                "id": "9",
+                "label": "Bia Kicis",
+                "size": 81.1657,
+                "color": "#b5de2b"
+            },
+            "position": {
+                "x": 441.92,
+                "y": 238.95
+            }
+        },
+        {
+            "data": {
+                "id": "10",
+                "label": "Flavio Bolsonaro",
+                "size": 79.4893,
+                "color": "#fde725"
+            },
+            "position": {
+                "x": 553.06,
+                "y": 312.89
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "1"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "2"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "3"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "4"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "5"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "6"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "7"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "8"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "9"
+            }
+        },
+        {
+            "data": {
+                "source": "0",
+                "target": "10"
+            }
+        }
+    ]
+}
