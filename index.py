@@ -1,6 +1,6 @@
 # Componentes web
 from dash import html, dcc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 
 # auxiliares
@@ -210,7 +210,8 @@ def update_checklist(selected_values):
     )
 def update_graficos_geral(selected_values, operacao):
 
-    px.set_mapbox_access_token(open("./keys/mapbox_token").read())
+    # px.set_mapbox_access_token(open("./keys/mapbox_token").read())
+    px.set_mapbox_access_token(open("/etc/secrets/mapbox_token").read())
         
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
@@ -324,13 +325,17 @@ def update_graficos_visao_geral(selected_value):
             Output("grafico-conexoes-individual", "elements"),
             Output("grafico-conexoes-individual", "stylesheet"),
         ],
-        Input('dropdown-politico', 'value'),
+        [
+            Input('dropdown-politico', 'value'),
+        ],
+            
 )
 def updtate_conexoes(selected_value):
 
     elementos = conexao[selected_value]
 
     return elementos, conexao_stylesheet
+    
 
 # =================================== #
 # RUN SERVER

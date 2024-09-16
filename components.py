@@ -29,7 +29,8 @@ accordion = html.Div(
                     dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "40vh", "padding": "5px", "margin-top": "10px"}),
                 ] 
             ),
-            dbc.AccordionItem(id="con-acord", title="Conexões", children=
+            dbc.AccordionItem(
+                item_id="conexao-accordion", title="Conexões", children=
                 [
                     dbc.Col([
                         cyto.Cytoscape(
@@ -41,6 +42,7 @@ accordion = html.Div(
             ),
         ],
         flush=True,
+        id = "accordion-individual"
     ),
 )
 
