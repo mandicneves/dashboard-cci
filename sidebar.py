@@ -45,14 +45,16 @@ layout = dbc.Card(
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=20, style={"filter": "invert(1)"}),
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=20, style={"filter": "invert(1)"},
+                                         id="img-percentual"),
                             ],
                         "value": "percentual",
                     },
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=20, style={"filter": "invert(1)"}),
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=20, style={"filter": "invert(1)"},
+                                         id="img-absoluto"),
                             ],
                         "value": "absoluto",
                     },
@@ -63,12 +65,14 @@ layout = dbc.Card(
                 inputStyle={"margin-right": "10px"},
                 id="radio-items-geral"
             ),
+            dbc.Tooltip("Valores em percentual", target="img-percentual"),
+            dbc.Tooltip("Valores em absoluto", target="img-absoluto"),
             html.Hr(),
             html.P("Perfis analisados", className="lead", 
                style = {'font-size': '1.25vw', "padding": "10px", "text-align": "left"}),
             dbc.Checklist(
                 options=opcoes,
-                value=['Caroline De Toni', 'Eduardo Bolsonaro', 'Nikolas Ferreira'],
+                value=['Caroline De Toni', 'Eduardo Bolsonaro', 'Nikolas Ferreira', 'André Fernandes'],
                 style = {"padding": "5px", 'font-size': '0.8vw'},
                 id = "checklist-politicos-geral",
                 className="custom-checklist"

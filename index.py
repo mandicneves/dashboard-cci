@@ -11,10 +11,10 @@ import funcs
 
 # Tratamento dados
 import pandas as pd
+import numpy as np
 import json
 
 # Graficos
-from plotly import subplots
 import plotly.express as px
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
@@ -32,6 +32,7 @@ lon_mean = local.loc[local["CIDADE"] == "São Paulo", "LONGITUDE"].iloc[0]
 seguidores = pd.read_csv("./dataset/seguidores.csv")
 idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
+posts = pd.read_csv("./dataset/posts.csv")
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
 
@@ -51,7 +52,7 @@ conexao_stylesheet = [{
         'label': 'data(label)',
         'text-valign': 'center',
         'text-halign': 'center',
-        'color': 'white',
+        'color': 'rgb(255, 255, 255)',
         "background-color": 'data(color)',
         'border-color': 'white',
         'border-width': 1.5,
@@ -61,7 +62,7 @@ conexao_stylesheet = [{
         'opacity': 0.90,
         'text-wrap': 'wrap',
         'text-max-width': 80,
-        'font-weight': 'bold'
+        'font-weight': 'bold',
     }
 }, {
     'selector': 'edge',
@@ -209,7 +210,7 @@ def update_checklist(selected_values):
     )
 def update_graficos_geral(selected_values, operacao):
 
-    px.set_mapbox_access_token(open("./keys/mapbox_token").read())
+    # px.set_mapbox_access_token(open("./keys/mapbox_token").read())
         
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
@@ -277,11 +278,44 @@ def update_graficos_visao_geral(selected_value):
     for i in range(len(plataformas)):
         cores_personalizadas[plataformas[i]] = cores[i+1]
 
+
+    grafico_genero = go.Figure()
+
+    intervalos = [
+        [0.05, 0.2],
+        [0.3, 0.45],
+        [0.55, 0.7],
+        [0.8, 0.95],
+    ]
+
+    for idx, plataforma in enumerate(plataformas):
+
+        labels = df_genero.loc[df_genero["PLATAFORMA"] == plataforma, "GENERO"]
+        values = df_genero.loc[df_genero["PLATAFORMA"] == plataforma, "SEGUIDORES GENERO"]
+        colors = [funcs.ajustar_intensidade(cores_personalizadas[plataforma], i) for i in [1.3, 0.7]]
+
+        grafico_genero.add_trace(go.Pie(
+            labels=labels,
+            values=values,
+            hole=0.5,
+            name=plataforma,
+            textinfo='percent',
+            domain=dict(x=intervalos[idx]),
+            marker=dict(colors=colors),
+            showlegend=False
+        ))
+
+    eixo_x = [
+        {'text': 'INSTAGRAM', 'x': 0.078, 'y': 0.05, 'font_size': 20, 'showarrow': False},
+        {'text': 'X', 'x': 0.375, 'y': 0.05, 'font_size': 20, 'showarrow': False},
+        {'text': 'TIKTOK', 'x': 0.62, 'y': 0.05, 'font_size': 20, 'showarrow': False},
+        {'text': 'YOUTUBE', 'x': 0.92, 'y': 0.05, 'font_size': 20, 'showarrow': False}
+        ]
+
     grafico_idade = px.bar(df_idade, x = "IDADE", y = "% SEGUIDORES IDADE", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
-    grafico_genero = px.bar(df_genero, x = "GENERO", y = "% SEGUIDORES GENERO", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
 
     grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = True)
-    grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False)
+    grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=5, b=0), template = tema, showlegend = False, annotations=eixo_x)
 
     return grafico_idade, grafico_genero
 
@@ -294,21 +328,13 @@ def update_graficos_visao_geral(selected_value):
 )
 def updtate_conexoes(selected_value):
 
-
     elementos = conexao[selected_value]
 
     return elementos, conexao_stylesheet
-
-
-
-
-
-
-
 
 # =================================== #
 # RUN SERVER
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
