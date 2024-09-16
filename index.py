@@ -212,7 +212,7 @@ def update_checklist(selected_values):
     )
 def update_graficos_geral(selected_values, operacao):
 
-    # px.set_mapbox_access_token(open("./keys/mapbox_token").read())
+    px.set_mapbox_access_token(open("./keys/mapbox_token").read())
         
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
@@ -349,8 +349,8 @@ def updtate_conexoes(selected_value, ativo):
     
     else:
         
-        return [""]
-    
+        return [""]    
+
 
 # =================================== #
 # RUN SERVER

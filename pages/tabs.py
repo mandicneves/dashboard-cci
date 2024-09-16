@@ -18,7 +18,7 @@ tabs = html.Div(
                 dbc.Tab(label="Performance de Conteúdo", tab_id="tab-conteudo"),
             ],
             id="tabs",
-            active_tab="tab-geral",
+            active_tab="tab-conteudo",
             style={"padding": "10px", "margin": "10px"}
         ),
         html.Div(id="content"),
@@ -28,19 +28,11 @@ tabs = html.Div(
 visao_geral = html.Div([
     dbc.Row([
         dbc.Col([
-            components.accordion
+            components.accordion_vs
         ],sm = 12)
     ]),
 ])
 
-conteudo = dbc.Row([
-    dbc.Row([dbc.Col([
-        dcc.Graph(id="grafico-total-posts", figure=components.fig, style={"height": "28vh", "padding": "10px"})
-    ])]),
-    dbc.Row([dbc.Col([
-        dcc.Graph(id="grafico-total-posts", figure=components.fig, style={"height": "28vh", "padding": "10px"})
-    ])]),
-    dbc.Row([dbc.Col([
-        dcc.Graph(id="grafico-total-posts", figure=components.fig, style={"height": "28vh", "padding": "10px"})
-    ])]),
+conteudo = html.Div([
+    components.accordion_pc
 ])
