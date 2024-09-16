@@ -18,8 +18,10 @@ import json
 import plotly.express as px
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
+import dash_cytoscape as cyto
 tema = "cyborg"
 load_figure_template(tema)
+cyto.load_extra_layouts()
 
 # =================================== #
 # DADOS
@@ -210,8 +212,7 @@ def update_checklist(selected_values):
     )
 def update_graficos_geral(selected_values, operacao):
 
-    px.set_mapbox_access_token(open("./keys/mapbox_token").read())
-    # px.set_mapbox_access_token(open("/etc/secrets/mapbox_token").read())
+    # px.set_mapbox_access_token(open("./keys/mapbox_token").read())
         
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
@@ -322,19 +323,33 @@ def update_graficos_visao_geral(selected_value):
 
 @app.callback(
         [
-            Output("grafico-conexoes-individual", "elements"),
-            Output("grafico-conexoes-individual", "stylesheet"),
+            Output("grafico-conexoes-individual", "children"),
         ],
         [
             Input('dropdown-politico', 'value'),
+            Input('accordion-individual', 'active_item'),
         ],
+        prevent_initial_call=True,
             
 )
-def updtate_conexoes(selected_value):
+def updtate_conexoes(selected_value, ativo):
 
     elementos = conexao[selected_value]
 
-    return elementos, conexao_stylesheet
+    componente = cyto.Cytoscape(
+        layout={"name": "cola"},
+        elements=elementos,
+        style={"height": "65vh"},
+        stylesheet=conexao_stylesheet
+    )
+
+    if ativo == "conexao-accordion":
+
+        return [componente]
+    
+    else:
+        
+        return [""]
     
 
 # =================================== #

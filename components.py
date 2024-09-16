@@ -10,7 +10,7 @@ cyto.load_extra_layouts()
 tema = "cyborg"
 load_figure_template(tema)
 
-
+# componentes
 fig = go.Figure()
 fig.update_layout(template = tema)
 
@@ -33,10 +33,7 @@ accordion = html.Div(
                 item_id="conexao-accordion", title="Conexões", children=
                 [
                     dbc.Col([
-                        cyto.Cytoscape(
-                            id = "grafico-conexoes-individual",
-                            layout={'name': 'cola'},
-                            style = {"height": "60vh"}),
+                        html.Div([], id="grafico-conexoes-individual")
                     ], sm=12, style={'align-items': 'center'})
                 ] 
             ),
@@ -45,5 +42,3 @@ accordion = html.Div(
         id = "accordion-individual"
     ),
 )
-
-
