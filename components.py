@@ -75,12 +75,12 @@ perfomance_conteudo = html.Div([
     ]),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
+            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
         ])
     ]),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
+            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
         ])
     ]),
 

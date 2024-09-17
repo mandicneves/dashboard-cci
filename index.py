@@ -124,18 +124,6 @@ def switch_tab_geral(at):
     else:
         return components.perfomance_conteudo
 
-
-
-
-
-
-
-
-
-
-
-
-
 @app.callback(
         Output("content", "children"), 
         [Input("tabs", "active_tab")]
@@ -145,14 +133,6 @@ def switch_tab_individual(at):
         return tabs.visao_geral
     else:
         return tabs.conteudo
-
-
-
-
-
-
-
-
 
 @app.callback(
         [
@@ -226,6 +206,7 @@ def update_checklist(selected_values):
             # Retorna apenas os valores selecionados
             return [selected_values]
 
+# PAGINA GERAL - ABA VISAO GERAL
 @app.callback(
     [
         Output("grafico-seguidores-geral", "figure"),
@@ -239,7 +220,7 @@ def update_checklist(selected_values):
         Input('radio-items-geral', 'value'),
     ]
     )
-def update_graficos_geral(selected_values, operacao):
+def update_graficos_geral_vs(selected_values, operacao):
 
     # chave api
     px.set_mapbox_access_token(open("./keys/mapbox_token").read())
@@ -298,6 +279,59 @@ def update_graficos_geral(selected_values, operacao):
 
     return grafico_seguidores, grafico_genero, grafico_idade, grafico_autenticos, mapa
 
+# PAGINA GERAL - ABA PERFORMANCE DE CONTEUDO
+@app.callback(
+        [
+            Output("grafico-geral-total-posts", "figure"),
+            Output("grafico-geral-total-engajamento", "figure"),
+            Output("grafico-geral-taxa-engajamento", "figure"),
+        ],
+        [
+            Input('checklist-politicos-geral', 'value'),
+            Input('radio-items-geral', 'value'),
+        ]
+)
+def update_graficos_geral_pc(selected_values, operacao):
+
+    # selected_values = sidebar.opcoes
+    # selected_values.remove("Todos")
+
+    df_posts = posts[(posts["Nome"].isin(selected_values)) & (posts["Plataforma"] == "Total")]
+
+    if operacao == "percentual":
+
+        df_posts = df_posts.pivot_table(index="Data", columns="Nome", values=["Total de Posts", "Engajamento Total", "Taxa de Engajamento"]).pct_change(fill_method=None)
+        df_posts.iloc[0, :] = 0
+        df_posts = df_posts.reset_index().melt(id_vars=['Data'], var_name=['Métrica', 'Nome'], value_name='Valor').pivot_table(columns="Métrica", values="Valor", index=["Nome", "Data"]).reset_index()
+
+        grafico_total_posts = px.line(df_posts, x = "Data", y="Total de Posts", color="Nome",color_discrete_map=cores_personalizadas)
+        grafico_total_engajamento = px.line(df_posts, x = "Data", y="Engajamento Total", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_taxa_engajamento = px.line(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
+
+        titulo_posts = "Variação percentual (%) do total de posts"
+        titulo_engajamento = "Variação percentual (%) do total de engajamento"
+        ttiulo_taxa = "Variação percentual (%) da taxa de engajamento"
+
+    else:
+
+        grafico_total_posts = px.line(df_posts, x = "Data", y="Total de Posts", color="Nome",color_discrete_map=cores_personalizadas)
+        grafico_total_engajamento = px.line(df_posts, x = "Data", y="Engajamento Total", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_taxa_engajamento = px.line(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
+
+        titulo_posts = "Variação do total de posts"
+        titulo_engajamento = "Variação do total de engajamento"
+        ttiulo_taxa = "Variação da taxa de engajamento"        
+
+    grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False,
+                                      title={"text": titulo_posts, 'y': 0.9})
+    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False,
+                                            title={"text": titulo_engajamento, 'y': 0.9})
+    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False,
+                                           title={"text": ttiulo_taxa, 'y': 0.9})
+
+    return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento
+
+# PAGINA INDIVIDUAL - ABA VISAO GERAL
 @app.callback(
     [
         Output("grafico-idade-individual", "figure"),
