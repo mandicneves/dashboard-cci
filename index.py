@@ -8,6 +8,7 @@ from app import *
 from pages import geral, individual, tabs
 import sidebar
 import funcs
+import components
 
 # Tratamento dados
 import pandas as pd
@@ -114,16 +115,44 @@ def render_page(pathname):
         return individual.layout, False, True, True, False
 
 @app.callback(
+        Output("geral-content", "children"), 
+        [Input("tabs-geral", "active_tab")]
+        )
+def switch_tab_geral(at):
+    if at == "tab-geral-visaogeral":
+        return components.seguidores_geral
+    else:
+        return components.perfomance_conteudo
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.callback(
         Output("content", "children"), 
         [Input("tabs", "active_tab")]
         )
-def switch_tab(at):
+def switch_tab_individual(at):
     if at == "tab-geral":
         return tabs.visao_geral
-    elif at == "tab-metricas":
-        return tabs.metricas_analise
     else:
         return tabs.conteudo
+
+
+
+
+
+
+
+
 
 @app.callback(
         [

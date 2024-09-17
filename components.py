@@ -14,6 +14,96 @@ load_figure_template(tema)
 fig = go.Figure()
 fig.update_layout(template = tema)
 
+
+# =================================== #
+# COMPONENTES PARA LAYOUT GERAL
+# =================================== #
+
+
+tabs_geral = html.Div(
+    [
+        dbc.Tabs(
+            [
+                dbc.Tab(label="Visão Geral", tab_id="tab-geral-visaogeral"),
+                dbc.Tab(label="Performance de Conteúdo", tab_id="tab-geral-conteudo")
+            ],
+            id="tabs-geral",
+            active_tab="tab-geral-visaogeral",
+            style={"padding": "10px", "margin": "10px"}
+        ),
+        html.Div(id="geral-content"),
+    ],
+)
+
+seguidores_geral = html.Div([
+    # primeira linha
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-seguidores-geral", figure=fig, style={"height": "28vh", "padding": "5px"})
+        ], sm=8),
+        dbc.Col([
+            dcc.Graph(id="grafico-genero-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"})
+        ], sm=4),
+    ], className="g-0"),
+
+
+    # segunda linha
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-idade-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"})
+        ], sm=12)
+    ]),
+
+
+
+    # terceira linha
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-autenticos-geral", figure=fig, style={"height": "30vh", "padding": "5px"})
+        ], sm = 6),       
+        dbc.Col([
+            dcc.Graph(id="grafico-mapa-geral", figure=fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"})
+        ], sm = 6),        
+    ], className="g-0")    
+])
+
+perfomance_conteudo = html.Div([
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
+        ])
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
+        ])
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
+        ])
+    ]),
+
+])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =================================== #
+# COMPONENTES PARA LAYOUT INDIVIDUAL
+# =================================== #
+
 accordion_vs = html.Div(
     dbc.Accordion(
         [
@@ -44,22 +134,6 @@ accordion_vs = html.Div(
         style={"margin-right": "5px"}
     ),
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def make_postcard(i):
 
@@ -110,23 +184,11 @@ def make_postcard(i):
 
     return post_card
 
-
-# perfil geral
-# titulo dos graficos com explicacao
-# incluir no geral performance de conteudo (total de posts, total de engajamento, taxa de engajamento)
-
-# individual
-# conexoes com mais detalhes
-# conteudo
-# total de posts (plataforma)
-
-
-
 accordion_pc = html.Div(
     dbc.Accordion(
         flush=True, id = "accordion-conteudo", children=
         [
-            dbc.AccordionItem(title="📅 Completo", item_id="post-completo", children=[
+            dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
@@ -164,11 +226,4 @@ accordion_pc = html.Div(
     ),
     
 )
-
-
-
-
-
-
-
 

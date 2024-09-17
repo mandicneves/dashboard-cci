@@ -10,7 +10,10 @@ cyto.load_extra_layouts()
 import components
 
 
-tabs = html.Div(
+
+
+
+tabs_individual = html.Div(
     [
         dbc.Tabs(
             [

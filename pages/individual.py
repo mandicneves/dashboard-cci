@@ -7,8 +7,6 @@ import plotly.graph_objects as go
 
 layout = html.Div([
     dbc.Row([
-        tabs.tabs
+        tabs.tabs_individual
     ])
 ])
-
-
