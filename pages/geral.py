@@ -11,6 +11,8 @@ layout = html.Div([
 
 
 
+
+    # primeira linha
     dbc.Row([
         dbc.Col([
             dcc.Graph(id="grafico-seguidores-geral", figure=components.fig, style={"height": "30vh", "padding": "5px", "margin-top": "20px"})
@@ -18,14 +20,10 @@ layout = html.Div([
         dbc.Col([
             dcc.Graph(id="grafico-genero-geral", figure=components.fig, style={"height": "30vh", "padding": "5px", "margin-top": "20px", "margin-right": "20px"})
         ], sm=4),
-    ]),
+    ], className="g-0"),
 
 
-
-
-
-
-
+    # segunda linha
     dbc.Row([
         dbc.Col([
             dcc.Graph(id="grafico-idade-geral", figure=components.fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"})
@@ -34,28 +32,13 @@ layout = html.Div([
 
 
 
-
-
-
-
+    # terceira linha
     dbc.Row([
         dbc.Col([
             dcc.Graph(id="grafico-autenticos-geral", figure=components.fig, style={"height": "30vh", "padding": "5px"})
-        ], sm = 6),
-        # dbc.Col([
-        #     dcc.Graph(id="grafico-", figure=components.fig, style={"height": "30vh", "padding": "5px"})
-        # ], sm = 3),        
+        ], sm = 6),       
         dbc.Col([
             dcc.Graph(id="grafico-mapa-geral", figure=components.fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"})
         ], sm = 6),        
-    ])
+    ], className="g-0")
 ])
-
-
-
-
-
-
-
-
-

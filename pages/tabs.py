@@ -18,7 +18,7 @@ tabs = html.Div(
                 dbc.Tab(label="Performance de Conteúdo", tab_id="tab-conteudo"),
             ],
             id="tabs",
-            active_tab="tab-conteudo",
+            active_tab="tab-geral",
             style={"padding": "10px", "margin": "10px"}
         ),
         html.Div(id="content"),

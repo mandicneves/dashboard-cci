@@ -45,7 +45,7 @@ layout = dbc.Card(
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=20, style={"filter": "invert(1)"},
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=15, style={"filter": "invert(1)"},
                                          id="img-percentual"),
                             ],
                         "value": "percentual",
@@ -53,7 +53,7 @@ layout = dbc.Card(
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=20, style={"filter": "invert(1)"},
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=15, style={"filter": "invert(1)"},
                                          id="img-absoluto"),
                             ],
                         "value": "absoluto",
@@ -65,14 +65,14 @@ layout = dbc.Card(
                 inputStyle={"margin-right": "10px"},
                 id="radio-items-geral"
             ),
-            dbc.Tooltip("Valores em percentual", target="img-percentual"),
-            dbc.Tooltip("Valores em absoluto", target="img-absoluto"),
+            dbc.Tooltip("Coloca os gráficos em valores porcentuais", target="img-percentual"),
+            dbc.Tooltip("Coloca os gráficos em valores absolutos", target="img-absoluto"),
             html.Hr(),
             html.P("Perfis analisados", className="lead", 
                style = {'font-size': '1.25vw', "padding": "10px", "text-align": "left"}),
             dbc.Checklist(
                 options=opcoes,
-                value=['Caroline De Toni', 'Eduardo Bolsonaro', 'Nikolas Ferreira', 'André Fernandes'],
+                value=dados["NOME"].unique(),
                 style = {"padding": "5px", 'font-size': '0.8vw'},
                 id = "checklist-politicos-geral",
                 className="custom-checklist"
@@ -85,11 +85,10 @@ layout = dbc.Card(
 
         # MENU DE SELECAO DO POLITICO (INDIVIDUAL)
         html.Div([
-            html.H4("Escolha um político", style={'font-size': '1.1vw', 'padding': '10px'}),
+            html.H4("Escolha um perfil", style={'font-size': '1.1vw', 'padding': '10px'}),
             dcc.Dropdown(
                 options=politicos,
                 value="Abilio Brunini",
-                placeholder="Escolha um político",
                 id="dropdown-politico"),
             html.Img(src = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29.jpg",
                      style={"width": "12vw", "display": "block", "padding-top": "10px", "margin": "0 auto", "margin-top": "10px"},

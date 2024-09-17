@@ -212,13 +212,16 @@ def update_checklist(selected_values):
     )
 def update_graficos_geral(selected_values, operacao):
 
+    # chave api
     px.set_mapbox_access_token(open("./keys/mapbox_token").read())
-        
+    
+    # filtrando datasets
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
     df_idade = idade[idade["NOME"].isin(list(selected_values))].groupby(["NOME", "IDADE"])
     df_genero = genero[genero["NOME"].isin(list(selected_values))].groupby(["NOME", "GENERO"])
     df_mapa = local[local["NOME"].isin(list(selected_values))]
 
+    # verificando qual a operacao se percentual ou absoluto
     if operacao == "percentual":
         
         totais = df_seguidores[df_seguidores["PLATAFORMA"] == "TOTAL"][["NOME", "SEGUIDORES"]].set_index("NOME")
@@ -228,6 +231,8 @@ def update_graficos_geral(selected_values, operacao):
         df_seguidores["PERCENTUAL"] = df_seguidores["SEGUIDORES"] / df_seguidores["SEGUIDORES_TOTAL"]
         df_idade = df_idade["% SEGUIDORES IDADE"].mean().reset_index()
         df_genero = df_genero["% SEGUIDORES GENERO"].mean().reset_index()
+        df_mapa = df_mapa.groupby(["NOME", "CIDADE"])["% SEGUIDORES CIDADE"].mean().reset_index()
+        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "CIDADE", "NOME"]], on=["CIDADE", "NOME"])
 
         
         grafico_seguidores = px.bar(df_seguidores, x = "PLATAFORMA", y = "PERCENTUAL", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
@@ -243,6 +248,8 @@ def update_graficos_geral(selected_values, operacao):
         df_autenticos["SEGUIDORES AUTÊNTICOS"] = df_autenticos["SEGUIDORES AUTÊNTICOS"] * df_autenticos["SEGUIDORES"]
         df_idade = df_idade["SEGUIDORES IDADE"].sum().reset_index()
         df_genero = df_genero["SEGUIDORES GENERO"].sum().reset_index()
+        df_mapa = df_mapa.groupby(["NOME", "CIDADE"])["SEGUIDORES CIDADE"].sum().reset_index()
+        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "CIDADE", "NOME"]], on=["CIDADE", "NOME"])
 
         grafico_seguidores = px.bar(df_seguidores, x = "PLATAFORMA", y = "SEGUIDORES", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_idade = px.bar(df_idade, x = "IDADE", y = "SEGUIDORES IDADE", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
@@ -251,6 +258,7 @@ def update_graficos_geral(selected_values, operacao):
         mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "SEGUIDORES CIDADE", zoom = 10, opacity=0.6, 
                                 hover_data={'CIDADE': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
 
+    # atualizando layout dos graficos
     grafico_seguidores.update_layout(margin=go.layout.Margin(l=150, r=5, t=20, b=0), template = tema, showlegend = True, 
                                      yaxis=dict(side="right"), legend=dict(x=0, xanchor='right', y=1))
     grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = False)
@@ -265,31 +273,39 @@ def update_graficos_geral(selected_values, operacao):
     [
         Output("grafico-idade-individual", "figure"),
         Output("grafico-genero-individual", "figure"),
+        Output("grafico-mapa-individual", "figure"),
     ],
         Input('dropdown-politico', 'value'),
 )
 def update_graficos_visao_geral(selected_value):
 
+    # datasets
     df_idade = idade[idade["NOME"] == selected_value]
     df_genero = genero[genero["NOME"] == selected_value]
+    df_mapa = local[local["NOME"] == selected_value]
 
+
+    # lista com plataformas para auxiliar na criacao das cores
     plataformas = df_genero["PLATAFORMA"].unique().tolist()
-
+    # criando cores personalizadas
     cores = px.colors.sequential.Viridis
     cores_personalizadas = {}
     for i in range(len(plataformas)):
         cores_personalizadas[plataformas[i]] = cores[i+1]
 
+    # grafico de idade
+    grafico_idade = px.bar(df_idade, x = "IDADE", y = "% SEGUIDORES IDADE", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
 
+    # grafico de genero
     grafico_genero = go.Figure()
-
+    # intervalos dos valores para plotagem no eixo x
     intervalos = [
         [0.05, 0.2],
         [0.3, 0.45],
         [0.55, 0.7],
         [0.8, 0.95],
     ]
-
+    # criando grafico de pizza para cada plataforma
     for idx, plataforma in enumerate(plataformas):
 
         labels = df_genero.loc[df_genero["PLATAFORMA"] == plataforma, "GENERO"]
@@ -306,20 +322,27 @@ def update_graficos_visao_geral(selected_value):
             marker=dict(colors=colors),
             showlegend=False
         ))
-
+    # setando nome no eixo x
     eixo_x = [
-        {'text': 'INSTAGRAM', 'x': 0.078, 'y': 0.05, 'font_size': 20, 'showarrow': False},
+        {'text': 'INSTAGRAM', 'x': 0.04, 'y': 0.05, 'font_size': 20, 'showarrow': False},
         {'text': 'X', 'x': 0.375, 'y': 0.05, 'font_size': 20, 'showarrow': False},
         {'text': 'TIKTOK', 'x': 0.62, 'y': 0.05, 'font_size': 20, 'showarrow': False},
-        {'text': 'YOUTUBE', 'x': 0.92, 'y': 0.05, 'font_size': 20, 'showarrow': False}
+        {'text': 'YOUTUBE', 'x': 0.94, 'y': 0.05, 'font_size': 20, 'showarrow': False}
         ]
 
-    grafico_idade = px.bar(df_idade, x = "IDADE", y = "% SEGUIDORES IDADE", color = "PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
+    # grafico de mapas
+    grafico_mapa = px.bar(df_mapa, x="% SEGUIDORES CIDADE", y="CIDADE", color="PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
+    
+    
+    # atualizando layout dos graficos
+    grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=5, b=0), template = tema, showlegend = True,
+                                title={"text": "Distribuição (%) dos seguidores<br>por idade e plataforma", 'y': 0.85, "x": 0.87})
+    grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=5, b=0), template = tema, showlegend = False,
+                                 annotations=eixo_x, title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.9})
+    grafico_mapa.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+                               title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.96})
 
-    grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=10, b=0), template = tema, showlegend = True)
-    grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=5, b=0), template = tema, showlegend = False, annotations=eixo_x)
-
-    return grafico_idade, grafico_genero
+    return grafico_idade, grafico_genero, grafico_mapa
 
 @app.callback(
         [

@@ -19,14 +19,15 @@ accordion_vs = html.Div(
         [
             dbc.AccordionItem(title="Seguidores", children=
                 [
-                    html.P("Seguidores por faixa etária em cada uma das plataformas"),
-                    dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "40vh", "padding": "5px", "margin-top": "10px"}),
-                ] 
-            ),
-            dbc.AccordionItem(title="Genero", children=
-                [
-                    html.P("Seguidores por gênero em cada uma das plataformas"),
-                    dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "40vh", "padding": "5px", "margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "30vh", "margin-top": "5px"}),], sm=12)
+                    ]),
+                    dbc.Row([
+                        dbc.Col([dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"}),],sm=7),
+                        dbc.Col([dcc.Graph(id="grafico-mapa-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"}),],sm=5),
+                    ]),
+                    
+                    
                 ] 
             ),
             dbc.AccordionItem(
@@ -39,9 +40,25 @@ accordion_vs = html.Div(
             ),
         ],
         flush=True,
-        id = "accordion-individual"
+        id = "accordion-individual",
+        style={"margin-right": "5px"}
     ),
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def make_postcard(i):
@@ -78,7 +95,7 @@ def make_postcard(i):
                     html.Div([
                         # Botão no final do card
                         dbc.Button(
-                            "Ação", color="primary", outline=True, id=f"link-post-{i}"
+                            "Post", color="primary", outline=True, id=f"link-post-{i}"
                         ),                    
                     ], className="d-grid gap-2", style={"margin-top": "20px"})
 
@@ -96,15 +113,10 @@ def make_postcard(i):
 
 # perfil geral
 # titulo dos graficos com explicacao
-# verificar mapa
 # incluir no geral performance de conteudo (total de posts, total de engajamento, taxa de engajamento)
 
-
-# juntar no mesmo accordion os generos e os seguidores e a distribuicao dos seguidores
-# conexoes com mais detalhes
-
-
 # individual
+# conexoes com mais detalhes
 # conteudo
 # total de posts (plataforma)
 
@@ -114,14 +126,14 @@ accordion_pc = html.Div(
     dbc.Accordion(
         flush=True, id = "accordion-conteudo", children=
         [
-            dbc.AccordionItem(title="📅 Completo", children=[
+            dbc.AccordionItem(title="📅 Completo", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
                     ], sm=12),
                 ])
             ]),
-            dbc.AccordionItem(title="📅 14-20 Março/2024", children=[
+            dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
@@ -140,27 +152,6 @@ accordion_pc = html.Div(
                     ], sm=6),
                 ])
             ]),
-            dbc.AccordionItem(title="📅 04-10 Setembro/2024", children=[
-                dbc.Row([
-                    dbc.Col([
-                        dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
-                    ], sm=6),
-                    dbc.Col([
-                        html.Div(
-                            [
-                                html.H5("Top 3 posts"),
-                                html.Hr(style={"margin-bottom": "20px"}),
-                                dbc.Row(
-                                    [dbc.Col(make_postcard(i), sm=4) for i in range(1,4)]
-                                )
-                            ],
-                            className="h-100 p-5 text-white bg-secondary rounded-3"
-                        )
-                    ], sm=6),
-                ])
-            ]),
-
-
 
 
 
@@ -173,9 +164,6 @@ accordion_pc = html.Div(
     ),
     
 )
-
-
-
 
 
 
