@@ -168,8 +168,11 @@ list_group = dbc.ListGroup(
 
 accordion_vs = html.Div(
     dbc.Accordion(
-        [
-            dbc.AccordionItem(title="Seguidores", children=
+        [   
+            # Accordion com infos dos seguidores
+            dbc.AccordionItem(
+                item_id="seguidores-accordion",
+                title="Seguidores", children=
                 [
                     dbc.Row([
                         dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "30vh", "margin-top": "5px"}),], sm=12)
@@ -182,15 +185,22 @@ accordion_vs = html.Div(
                     
                 ] 
             ),
+            # Accordion com info das conexoes
             dbc.AccordionItem(
-                item_id="conexao-accordion", title="Conexões", children=
+                item_id="conexao-accordion",
+                title="Conexões", children=
                 [
                     dbc.Col([
                         html.Div([
                             dbc.Row([
                                 dbc.Col([
-                                    html.Div(id="cytoscape"),
-                                ], id="grafico-conexoes-individual", sm=9),
+                                    # html.Div(id="cytoscape"),
+                                    cyto.Cytoscape(
+                                        id="grafico-conexoes-individual",
+                                        layout={"name": "cola"},
+                                        style={"height": "65vh"})
+                                ], sm=9),
+                                # ], id="grafico-conexoes-individual", sm=9),
                                 dbc.Col([
                                     dbc.Card([
                                         list_group
@@ -206,7 +216,6 @@ accordion_vs = html.Div(
         flush=True,
         id = "accordion-individual",
         style={"margin-right": "5px"},
-        active_item="conexao-accordion"
     ),
 )
 

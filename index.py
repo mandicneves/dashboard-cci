@@ -428,38 +428,27 @@ def update_grafico_posts_card(selected_value, ativo):
 
 @app.callback(
         [
-            Output("grafico-conexoes-individual", "children"),
+            Output("grafico-conexoes-individual", "elements"),
+            Output("grafico-conexoes-individual", "stylesheet"),
         ],
         [
             Input('dropdown-politico', 'value'),
             Input('accordion-individual', 'active_item'),
         ],
-            
+        prevent_initial_call=True
 )
 def updtate_conexoes(selected_value, ativo):
 
     elementos = conexao[selected_value]
 
-    componente = cyto.Cytoscape(
-        layout={"name": "cola"},
-        elements=elementos,
-        style={"height": "65vh"},
-        stylesheet=conexao_stylesheet,
-        id="cytoscape"
-    )
-
     if ativo == "conexao-accordion":
-
-        return [componente]
-    
+        return elementos, conexao_stylesheet
     else:
-        
-        return [""]    
-
+        return elementos, conexao_stylesheet 
 
 @app.callback(
     [
-        Output('cytoscape', 'stylesheet'),
+        Output('grafico-conexoes-individual', 'stylesheet', allow_duplicate=True),
         Output("conexao-selecionada", "children"),
         Output("engajamento-conexao-selecionada", "children"),
         Output("posts-conexao-selecionada", "children"),
@@ -467,10 +456,11 @@ def updtate_conexoes(selected_value, ativo):
         Output("link-conexao-selecionada", "color"),
     ],
     [
-        Input('cytoscape', 'tapNode'),
-        Input('cytoscape', 'selectedNodeData'),
+        Input('grafico-conexoes-individual', 'tapNode'),
+        Input('grafico-conexoes-individual', 'selectedNodeData'),
         Input("dropdown-politico", "value")
-    ]
+    ],
+    prevent_initial_call=True
 )
 def generate_stylesheet(node, data_list, selected_value):
 
@@ -525,6 +515,10 @@ def generate_stylesheet(node, data_list, selected_value):
         }]
 
         nome = node['data']['label_selected']
+
+        if nome == selected_value:
+            return conexao_stylesheet, "", "", "", "", ""
+
         engajamento = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Engajamento"].values[0]
         posts = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Total de Posts"].values[0]
         link = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Top Post"].values[0]
