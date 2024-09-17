@@ -104,6 +104,68 @@ perfomance_conteudo = html.Div([
 # COMPONENTES PARA LAYOUT INDIVIDUAL
 # =================================== #
 
+list_group = dbc.ListGroup(
+    [
+        dbc.ListGroupItem(
+            [
+                html.Div(
+                    [
+                        html.H5("Conexão selecionada", className="mb-1"),
+                    ],
+                    className="d-flex w-100 justify-content-between",
+                ),
+                html.P(id="conexao-selecionada", className="mb-1"),
+            ],
+            style={"margin-top": "30px"}
+        ),
+        dbc.ListGroupItem(
+            [
+                html.Div(
+                    [
+                        html.H5("Total de Engajamento", className="mb-1"),
+                    ],
+                    className="d-flex w-100 justify-content-between",
+                ),
+                html.P(id="engajamento-conexao-selecionada", className="mb-1"),
+            ]
+        ),
+        dbc.ListGroupItem(
+            [
+                html.Div(
+                    [
+                        html.H5("Total de Posts", className="mb-1"),
+                    ],
+                    className="d-flex w-100 justify-content-between",
+                ),
+                html.P(id="posts-conexao-selecionada", className="mb-1"),
+            ]
+        ),
+        dbc.ListGroupItem(
+            [
+                html.Div(
+                    [
+                        html.H5("Top Post", className="mb-1"),
+                    ],
+                    className="d-flex w-100 justify-content-between",
+                ),
+                html.Div([
+                    dbc.Button(children="Link", id="link-conexao-selecionada", outline=True, color="secondary")
+                    ], className="d-grid gap-2")
+                
+            ]
+        ),
+    ]
+)
+
+
+
+
+
+
+
+
+
+
 accordion_vs = html.Div(
     dbc.Accordion(
         [
@@ -124,14 +186,27 @@ accordion_vs = html.Div(
                 item_id="conexao-accordion", title="Conexões", children=
                 [
                     dbc.Col([
-                        html.Div([], id="grafico-conexoes-individual")
+                        html.Div([
+                            dbc.Row([
+                                dbc.Col([
+                                    html.Div(id="cytoscape"),
+                                ], id="grafico-conexoes-individual", sm=9),
+                                dbc.Col([
+                                    dbc.Card([
+                                        list_group
+                                    ],
+                                    style={"margin-top": "30px", "margin-right": "10px", "padding": "10px", "height": "60vh"})
+                                ], sm=3),
+                            ])
+                        ])
                     ], sm=12, style={'align-items': 'center'})
                 ] 
             ),
         ],
         flush=True,
         id = "accordion-individual",
-        style={"margin-right": "5px"}
+        style={"margin-right": "5px"},
+        active_item="conexao-accordion"
     ),
 )
 
@@ -191,14 +266,14 @@ accordion_pc = html.Div(
             dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
+                        dcc.Graph(id = "grafico-posts-final", figure=fig, style={"height": "50vh"})
                     ], sm=12),
                 ])
             ]),
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-posts-semana5", figure=fig, style={"height": "50vh"})
+                        dcc.Graph(id = "grafico-posts-semana1", figure=fig, style={"height": "50vh"})
                     ], sm=6),
                     dbc.Col([
                         html.Div(

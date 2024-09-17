@@ -36,6 +36,7 @@ seguidores = pd.read_csv("./dataset/seguidores.csv")
 idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
 posts = pd.read_csv("./dataset/posts.csv")
+df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
 
@@ -407,6 +408,24 @@ def update_graficos_visao_geral(selected_value):
 
     return grafico_idade, grafico_genero, grafico_mapa
 
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS CARDS
+@app.callback(
+            funcs.make_postcard_output(),
+        [
+            Input('dropdown-politico', 'value'),
+            Input('accordion-conteudo', 'active_item'),
+        ]
+)
+def update_grafico_posts_card(selected_value, ativo):
+
+    selected_value = "Abilio Brunini"
+
+    df_posts = posts[posts["Nome"] == selected_value]
+
+
+    return ["" for i in range(len(funcs.make_postcard_output()))]
+
+
 @app.callback(
         [
             Output("grafico-conexoes-individual", "children"),
@@ -415,7 +434,6 @@ def update_graficos_visao_geral(selected_value):
             Input('dropdown-politico', 'value'),
             Input('accordion-individual', 'active_item'),
         ],
-        prevent_initial_call=True,
             
 )
 def updtate_conexoes(selected_value, ativo):
@@ -426,7 +444,8 @@ def updtate_conexoes(selected_value, ativo):
         layout={"name": "cola"},
         elements=elementos,
         style={"height": "65vh"},
-        stylesheet=conexao_stylesheet
+        stylesheet=conexao_stylesheet,
+        id="cytoscape"
     )
 
     if ativo == "conexao-accordion":
@@ -436,6 +455,81 @@ def updtate_conexoes(selected_value, ativo):
     else:
         
         return [""]    
+
+
+@app.callback(
+    [
+        Output('cytoscape', 'stylesheet'),
+        Output("conexao-selecionada", "children"),
+        Output("engajamento-conexao-selecionada", "children"),
+        Output("posts-conexao-selecionada", "children"),
+        Output("link-conexao-selecionada", "href"),
+        Output("link-conexao-selecionada", "color"),
+    ],
+    [
+        Input('cytoscape', 'tapNode'),
+        Input('cytoscape', 'selectedNodeData'),
+        Input("dropdown-politico", "value")
+    ]
+)
+def generate_stylesheet(node, data_list, selected_value):
+
+    if not data_list:
+        return conexao_stylesheet, "", "", "", "", ""
+
+
+    elif node:
+        node_id = node['data']['id']
+    
+        stylesheet = [{
+            'selector': 'node',
+            'style': {
+                'label': 'data(label)',
+                'text-valign': 'center',
+                'text-halign': 'center',
+                'color': 'rgb(255, 255, 255)',
+                "background-color": 'data(color)',
+                'border-color': 'white',
+                'border-width': 1.5,
+                "border-opacity": 1,
+                'width': 'data(size)',
+                'height': 'data(size)',
+                'opacity': 0.3,
+                'text-wrap': 'wrap',
+                'text-max-width': 80,
+                'font-weight': 'bold',
+            }
+        }, {
+            'selector': 'edge',
+            'style': {
+                "line-fill": "linear-gradient",
+                'width': 2.5,
+                'curve-style': 'bezier',
+                'source-endpoint': 'outside-to-node',
+                'target-endpoint': 'outside-to-node'
+            }
+        },{
+            "selector": 'node[id = "{}"]'.format(node_id),
+            "style": {
+                'label': 'data(label)',
+                'background-color': 'data(color)',
+                'text-valign': 'center',
+                'text-halign': 'center',
+                'border-width': 1.5,
+                "border-opacity": 1,
+                'width': 'data(size)',
+                'height': 'data(size)',
+                'opacity': 0.98,
+                'z-index': 9999
+            }
+        }]
+
+        nome = node['data']['label_selected']
+        engajamento = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Engajamento"].values[0]
+        posts = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Total de Posts"].values[0]
+        link = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Top Post"].values[0]
+
+        return stylesheet, nome, f"{engajamento:,.0f}".replace(",", "."), posts, link, "primary"
 
 
 # =================================== #
