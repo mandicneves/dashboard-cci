@@ -4,12 +4,19 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 from app import *
+import funcs
 
 dados = pd.read_csv("./dataset/infos.csv")
 
 politicos = [{"label": row["NICK"], "value": row["NOME"]} for i, row in dados.iterrows()]
 opcoes = dados["NOME"].unique().tolist()
 opcoes.insert(0, "Todos")
+
+
+cores = funcs.gerar_cores(len(politicos))
+cores_personalizadas = {}
+for i in range(len(cores)):
+    cores_personalizadas[politicos[i]["value"]] = cores[i]
 
 style_sidebar = style={"box-shadow": "2px 2px 10px 0px rgba(10, 9, 7, 0.10)",
                     "margin": "10px",
@@ -71,7 +78,7 @@ layout = dbc.Card(
             html.P("Perfis analisados", className="lead", 
                style = {'font-size': '1.25vw', "padding": "10px", "text-align": "left"}),
             dbc.Checklist(
-                options=opcoes,
+                options=funcs.criar_opcoes(dados, cores_personalizadas),
                 value=dados["NOME"].unique(),
                 style = {"padding": "5px", 'font-size': '0.8vw'},
                 id = "checklist-politicos-geral",

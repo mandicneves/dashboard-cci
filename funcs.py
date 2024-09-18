@@ -1,5 +1,6 @@
 import plotly.express as px
 from dash.dependencies import Output
+from dash import html
 
 def gerar_cores(n):
     # Paleta de cores categóricas disponíveis no Plotly
@@ -9,6 +10,29 @@ def gerar_cores(n):
     cores = (cores_disponiveis * ((n // len(cores_disponiveis)) + 1))[:n]
     
     return cores
+
+# Função para criar a lista de opções com os círculos coloridos
+def criar_opcoes(dados, cores_personalizadas):
+    opcoes = [{"label": "Todos", "value": "Todos"}]
+    for nome in dados["NOME"].unique():
+        cor = cores_personalizadas.get(nome, 'rgb(0, 0, 0)')  # Cor preta como fallback
+        opcoes.append({
+            'label': html.Span([
+                nome,  # Nome do político
+                html.Span(  # Círculo colorido
+                    style={
+                        'display': 'inline-block',
+                        'width': '12px',
+                        'height': '12px',
+                        'border-radius': '50%',
+                        'background-color': cor,
+                        'margin-left': '10px'
+                    }
+                )
+            ], style={'display': 'flex', 'justify-content': 'space-between', 'width': '100%'}),
+            'value': nome
+        })
+    return opcoes
 
 def ajustar_intensidade(cor, fator):
     """Retorna a cor ajustada, clareando ou escurecendo de acordo com o fator"""

@@ -30,8 +30,8 @@ cyto.load_extra_layouts()
 
 infos = pd.read_csv("./dataset/infos.csv")
 local = pd.read_csv("./dataset/local.csv").dropna()
-lat_mean = local.loc[local["CIDADE"] == "São Paulo", "LATITUDE"].iloc[0]
-lon_mean = local.loc[local["CIDADE"] == "São Paulo", "LONGITUDE"].iloc[0]
+lat_mean = local.loc[local["ESTADO"] == "São Paulo", "LATITUDE"].iloc[0]
+lon_mean = local.loc[local["ESTADO"] == "São Paulo", "LONGITUDE"].iloc[0]
 seguidores = pd.read_csv("./dataset/seguidores.csv")
 idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
@@ -45,10 +45,7 @@ with open('dataset/conexoes.json', 'r') as file:
 # =================================== #
 
 cores = funcs.gerar_cores(len(sidebar.politicos))
-
-cores_personalizadas = {}
-for i in range(len(cores)):
-    cores_personalizadas[sidebar.politicos[i]["value"]] = cores[i]
+cores_personalizadas = sidebar.cores_personalizadas
 
 conexao_stylesheet = [{
     'selector': 'node',
@@ -242,32 +239,32 @@ def update_graficos_geral_vs(selected_values, operacao):
         df_seguidores["PERCENTUAL"] = df_seguidores["SEGUIDORES"] / df_seguidores["SEGUIDORES_TOTAL"]
         df_idade = df_idade["% SEGUIDORES IDADE"].mean().reset_index()
         df_genero = df_genero["% SEGUIDORES GENERO"].mean().reset_index()
-        df_mapa = df_mapa.groupby(["NOME", "CIDADE"])["% SEGUIDORES CIDADE"].mean().reset_index()
-        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "CIDADE", "NOME"]], on=["CIDADE", "NOME"])
+        df_mapa = df_mapa.groupby(["NOME", "ESTADO"])["% SEGUIDORES ESTADO"].mean().reset_index()
+        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "ESTADO", "NOME"]], on=["ESTADO", "NOME"])
 
         
         grafico_seguidores = px.bar(df_seguidores, x = "PLATAFORMA", y = "PERCENTUAL", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_idade = px.bar(df_idade, x = "IDADE", y = "% SEGUIDORES IDADE", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_genero = px.bar(df_genero, x = "GENERO", y = "% SEGUIDORES GENERO", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_autenticos = px.bar(df_autenticos, y = "NOME", x = "SEGUIDORES AUTÊNTICOS", color="NOME", barmode="group", color_discrete_map=cores_personalizadas, orientation="h")
-        mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "% SEGUIDORES CIDADE", zoom = 10, opacity=0.6, 
-                                hover_data={'CIDADE': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
+        mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "% SEGUIDORES ESTADO", zoom = 10, opacity=0.6, 
+                                hover_data={'ESTADO': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
             
     else:
 
-        df_autenticos = df_seguidores[df_seguidores["PLATAFORMA"] == "TOTAL"]
+        df_autenticos = df_seguidores.loc[df_seguidores["PLATAFORMA"] == "TOTAL", :]
         df_autenticos["SEGUIDORES AUTÊNTICOS"] = df_autenticos["SEGUIDORES AUTÊNTICOS"] * df_autenticos["SEGUIDORES"]
         df_idade = df_idade["SEGUIDORES IDADE"].sum().reset_index()
         df_genero = df_genero["SEGUIDORES GENERO"].sum().reset_index()
-        df_mapa = df_mapa.groupby(["NOME", "CIDADE"])["SEGUIDORES CIDADE"].sum().reset_index()
-        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "CIDADE", "NOME"]], on=["CIDADE", "NOME"])
+        df_mapa = df_mapa.groupby(["NOME", "ESTADO"])["SEGUIDORES ESTADO"].sum().reset_index()
+        df_mapa = df_mapa.merge(local[["LATITUDE", "LONGITUDE", "ESTADO", "NOME"]], on=["ESTADO", "NOME"])
 
         grafico_seguidores = px.bar(df_seguidores, x = "PLATAFORMA", y = "SEGUIDORES", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_idade = px.bar(df_idade, x = "IDADE", y = "SEGUIDORES IDADE", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_genero = px.bar(df_genero, x = "GENERO", y = "SEGUIDORES GENERO", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_autenticos = px.bar(df_autenticos, y = "NOME", x = "SEGUIDORES AUTÊNTICOS", color="NOME", barmode="group", color_discrete_map=cores_personalizadas, orientation="h")
-        mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "SEGUIDORES CIDADE", zoom = 10, opacity=0.6, 
-                                hover_data={'CIDADE': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
+        mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "SEGUIDORES ESTADO", zoom = 10, opacity=0.6, 
+                                hover_data={'ESTADO': True, "LATITUDE": False, "LONGITUDE": False}, color_discrete_map=cores_personalizadas)
 
     # atualizando layout dos graficos
     grafico_seguidores.update_layout(margin=go.layout.Margin(l=150, r=5, t=20, b=0), template = tema, showlegend = True, 
@@ -315,9 +312,9 @@ def update_graficos_geral_pc(selected_values, operacao):
 
     else:
 
-        grafico_total_posts = px.line(df_posts, x = "Data", y="Total de Posts", color="Nome",color_discrete_map=cores_personalizadas)
-        grafico_total_engajamento = px.line(df_posts, x = "Data", y="Engajamento Total", color="Nome", color_discrete_map=cores_personalizadas)
-        grafico_taxa_engajamento = px.line(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_total_posts = px.area(df_posts, x = "Data", y="Total de Posts", color="Nome",color_discrete_map=cores_personalizadas)
+        grafico_total_engajamento = px.area(df_posts, x = "Data", y="Engajamento Total", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_taxa_engajamento = px.area(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
 
         titulo_posts = "Variação do total de posts"
         titulo_engajamento = "Variação do total de engajamento"
@@ -395,7 +392,7 @@ def update_graficos_visao_geral(selected_value):
         ]
 
     # grafico de mapas
-    grafico_mapa = px.bar(df_mapa, x="% SEGUIDORES CIDADE", y="CIDADE", color="PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_mapa = px.bar(df_mapa, x="% SEGUIDORES ESTADO", y="ESTADO", color="PLATAFORMA", barmode="group", color_discrete_map=cores_personalizadas)
     
     
     # atualizando layout dos graficos
@@ -425,7 +422,7 @@ def update_grafico_posts_card(selected_value, ativo):
 
     return ["" for i in range(len(funcs.make_postcard_output()))]
 
-
+# CONEXOES
 @app.callback(
         [
             Output("grafico-conexoes-individual", "elements"),
