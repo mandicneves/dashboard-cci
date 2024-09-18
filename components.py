@@ -70,20 +70,20 @@ seguidores_geral = html.Div([
 perfomance_conteudo = html.Div([
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
-        ])
-    ]),
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"})
+        ], sm=6),
+        dbc.Col([
+            dcc.Graph(id="grafico-geral-vmg", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
+        ], sm=6)
+    ], className="g-0"),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
-        ])
-    ]),
-    dbc.Row([
+            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"})
+        ], sm=6),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "15px"})
-        ])
-    ]),
-
+            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
+        ], sm=6)        
+    ], className="g-0"),
 ])
 
 
@@ -157,15 +157,6 @@ list_group = dbc.ListGroup(
     ]
 )
 
-
-
-
-
-
-
-
-
-
 accordion_vs = html.Div(
     dbc.Accordion(
         [   
@@ -175,12 +166,13 @@ accordion_vs = html.Div(
                 title="Seguidores", children=
                 [
                     dbc.Row([
-                        dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "30vh", "margin-top": "5px"}),], sm=12)
-                    ]),
+                        dbc.Col([dcc.Graph(id="grafico-seguidores-individual", figure=fig, style={"height": "32vh", "margin-top": "5px", "margin-right": "10px"}),], sm=4),
+                        dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "32vh", "margin-top": "5px"}),], sm=8),
+                    ], className="g-0"),
                     dbc.Row([
-                        dbc.Col([dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"}),],sm=7),
+                        dbc.Col([dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "35vh", "margin-top": "15px", "margin-right": "10px"}),],sm=7),
                         dbc.Col([dcc.Graph(id="grafico-mapa-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"}),],sm=5),
-                    ]),
+                    ], className="g-0"),
                     
                     
                 ] 
