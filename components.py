@@ -267,26 +267,44 @@ accordion_pc = html.Div(
             dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-posts-final", figure=fig, style={"height": "50vh"})
-                    ], sm=12),
-                ])
+                        dcc.Graph(id = "grafico-total-posts-final", figure=fig, style={"height": "30vh", "margin-right": "10px"}),
+                    ], sm=6),
+                    dbc.Col([
+                        dcc.Graph(id = "grafico-engajamento-total-final", figure=fig, style={"height": "30vh"}),
+                    ], sm=6),
+                ], className="g-0"),
+                dbc.Row([
+                    dbc.Col([
+                        dcc.Graph(id = "grafico-engajamento-taxa-final", figure=fig, style={"height": "30vh", "margin-right": "10px", "margin-top": "10px"}),
+                    ], sm=6),
+                    dbc.Col([
+                        dcc.Graph(id = "grafico-vmg-final", figure=fig, style={"height": "30vh", "margin-top": "10px"}),
+                    ], sm=6),
+                ], className="g-0"),
             ]),
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-posts-semana1", figure=fig, style={"height": "50vh"})
                     ], sm=6),
+                    # dbc.Col([
+                    #     html.Div(
+                    #         [
+                    #             html.H5("Top 3 posts"),
+                    #             html.Hr(style={"margin-bottom": "20px"}),
+                    #             dbc.Row(
+                    #                 [dbc.Col(make_postcard(i), sm=4) for i in range(1,4)]
+                    #             )
+                    #         ],
+                    #         className="h-100 p-5 text-white bg-secondary rounded-3"
+                    #     )
+                    # ], sm=6),
+                ])
+            ]),
+            dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
+                dbc.Row([
                     dbc.Col([
-                        html.Div(
-                            [
-                                html.H5("Top 3 posts"),
-                                html.Hr(style={"margin-bottom": "20px"}),
-                                dbc.Row(
-                                    [dbc.Col(make_postcard(i), sm=4) for i in range(1,4)]
-                                )
-                            ],
-                            className="h-100 p-5 text-white bg-secondary rounded-3"
-                        )
+                        dcc.Graph(id = "grafico-posts-semana2", figure=fig, style={"height": "50vh"})
                     ], sm=6),
                 ])
             ]),

@@ -36,9 +36,12 @@ seguidores = pd.read_csv("./dataset/seguidores.csv")
 idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
 posts = pd.read_csv("./dataset/posts.csv")
+conteudo = pd.read_csv("./dataset/conteudo.csv")
+top_posts = pd.read_csv("./dataset/top_posts.csv")
 df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
+
 
 # =================================== #
 # LAYOUT
@@ -470,6 +473,52 @@ def update_graficos_visao_geral(selected_value):
                                title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.96})
 
     return grafico_seguidores, grafico_idade, grafico_genero, grafico_mapa
+
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - GRAFICOS
+@app.callback(
+        [
+            Output("grafico-total-posts-final", "figure"),
+            Output("grafico-engajamento-total-final", "figure"),
+            Output("grafico-engajamento-taxa-final", "figure"),
+            Output("grafico-vmg-final", "figure"),
+        ],
+        [
+            Input('dropdown-politico', 'value'),
+            # Input('accordion-conteudo', 'active_item'),
+        ]
+)
+def update_graficos_conteudo_final(selected_value):
+
+    df_conteudo = conteudo[conteudo["Nome"] == selected_value]
+    df_total_posts = df_conteudo.groupby(["Nome", "Semana", "Plataforma"]).size().reset_index(name="Total de Posts")
+    df_engajamento_total = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["Engajamento"]].sum().reset_index()
+    df_engajamento_taxa = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["Taxa de Engajamento"]].mean().reset_index()
+    df_vmg = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["VMG"]].sum().reset_index()
+
+    # lista com plataformas para auxiliar na criacao das cores
+    plataformas = df_conteudo["Plataforma"].unique().tolist()
+    # criando cores personalizadas
+    cores = px.colors.sequential.Viridis
+    cores_personalizadas = {}
+    for i in range(len(plataformas)):
+        cores_personalizadas[plataformas[i]] = cores[i+1]
+
+    grafico_total_posts = px.bar(df_total_posts, x = "Semana", y = "Total de Posts", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_total_engajamento = px.bar(df_engajamento_total, x = "Semana", y = "Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_taxa_engajamento = px.bar(df_engajamento_taxa, x = "Semana", y = "Taxa de Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)    
+
+    grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+                                title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025})
+    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+                                title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025})
+    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+                                title={"text": "Taxa de engajamento média por plataforma", 'y': 0.95, "x": 0.025})
+    grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+                                title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025})
+    
+
+    return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS CARDS
 @app.callback(
