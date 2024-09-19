@@ -4,6 +4,14 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Output
 from dash import html, dcc
 
+
+def formatar_numero(numero):
+    if abs(numero) >= 1_000_000:
+        return f"{numero / 1_000_000:.2f}M"
+    elif abs(numero) >= 1_000:
+        return f"{numero / 1_000:.2f}K"
+    return str(numero)
+
 def gerar_cores(n):
     # Paleta de cores categóricas disponíveis no Plotly
     cores_disponiveis = px.colors.qualitative.Antique # Você pode escolher outras paletas como 'D3', 'G10', 'Bold', etc.
@@ -13,7 +21,6 @@ def gerar_cores(n):
     
     return cores
 
-# Função para criar a lista de opções com os círculos coloridos
 def criar_opcoes(dados, cores_personalizadas):
     opcoes = [{"label": "Todos", "value": "Todos"}]
     for nome in dados["NOME"].unique():
@@ -98,6 +105,103 @@ def layout_graficos_semanal(fig1, fig2, fig3, fig4):
         ], sm=6),
     ], className="g-0"),
     ])
+
+    return elemento
+
+def criar_post_cards(df):
+
+    posts_cards = []
+
+    for idx, linha in df.iterrows():
+
+        legenda = linha["Legenda"]
+        likes = int(linha["Likes"])
+        comentarios = int(linha["Comentarios"])
+        impressoes = int(linha["Impressoes"])
+        views = formatar_numero(int(linha["Visualizacoes"]))
+        engajamento = int(linha["Engajamento"])
+        compartilhamentos = int(linha["Compartilhamentos"])
+        link = linha["Link"] 
+
+        card = html.Div(
+            dbc.Container(
+                [
+                    html.H1(f"Post-0{idx+1}", className="display-6"),
+                    html.P(legenda, className="lead", 
+                           style={"font-size": "1vw", 
+                                  "width": "200px", 
+                                  "height": "80px", 
+                                  "overflow": "hidden"}),
+                    html.Hr(className="my-2"),
+                    dbc.Row([
+                        dbc.Col(f"❤️ {likes}", id=f"likes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"💬 {comentarios}", id=f"comentarios-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"💭 {impressoes}", id=f"impressoes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"📈 {views}", id=f"views-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"🔄 {compartilhamentos}", id=f"compartilhamentos-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px", "margin-bottom": "10px"}),
+                    html.Hr(className="my-2"),
+                    html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
+                ],
+                fluid=True,
+                className="py-3", style={"height": "45vh"}
+            ),
+            className="p-3 bg-body-secondary rounded-3",
+        )    
+
+        posts_cards.append(card)
+
+
+    return posts_cards
+
+def criar_tooltips(df):
+
+    tooltips = []
+
+    for i in range(len(df)):
+
+        likes = dbc.Tooltip("Likes", target=f"likes-{i+1}", placement="top")
+        comentarios = dbc.Tooltip("Comentarios", target=f"comentarios-{i+1}", placement="top")
+        impressoes = dbc.Tooltip("Impressões", target=f"impressoes-{i+1}", placement="top")
+        visualizacoes = dbc.Tooltip("Visualizações", target=f"views-{i+1}", placement="top")
+        engajamento = dbc.Tooltip("Engajamento", target=f"engajamento-{i+1}", placement="top")
+        compartilhamentos = dbc.Tooltip("Compartilhamentos", target=f"compartilhamentos-{i+1}", placement="top")
+        
+        tooltips.append(likes)
+        tooltips.append(comentarios)
+        tooltips.append(impressoes)
+        tooltips.append(visualizacoes)
+        tooltips.append(engajamento)
+        tooltips.append(compartilhamentos)
+
+    return tooltips
+
+def layout_cards_semanais(df):
+
+    try:
+        card1, card2, card3 = criar_post_cards(df)
+        elemento = html.Div([
+            dbc.Row([
+                dbc.Col([card1], sm=3, width={"offset": 1}),
+                dbc.Col([card2], sm=3, style={"margin-left": "20px", "margin-right": "20px"}),
+                dbc.Col([card3], sm=3),
+            ]),
+            html.Div(criar_tooltips(df))
+        ])
+    except:
+        card1, card2 = criar_post_cards(df)
+        elemento = html.Div([
+            dbc.Row([
+                dbc.Col([card1], sm=3, width={"offset": 2}),
+                dbc.Col([card2], sm=3, style={"margin-left": "20px", "margin-right": "20px"}),
+            ]),
+            html.Div(criar_tooltips())
+        ])
 
     return elemento
 

@@ -571,6 +571,32 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
         return ["", ""]
 
+@app.callback(
+        [
+            Output("top-posts-semana1", "children"),
+        ],
+        [
+            Input("dropdown-politico", "value"),
+            Input("accordion-conteudo", "active_item")
+        ]
+)
+def update_posts_cards(selected_value, item_ativo):
+
+    # selected_value = "Abilio Brunini"
+
+    df_top_posts = top_posts[(top_posts["Nome"] == selected_value)] 
+
+    if item_ativo == "post-semana1":
+
+        df_top_posts = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts)
+
+        return [elemento]
+    
+    else:
+        return [""]
+
+
 # CRIA O GRAFICO DE CONEXOES
 @app.callback(
         [
