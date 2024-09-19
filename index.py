@@ -37,6 +37,7 @@ idade = pd.read_csv("./dataset/idade.csv")
 genero = pd.read_csv("./dataset/genero.csv")
 posts = pd.read_csv("./dataset/posts.csv")
 conteudo = pd.read_csv("./dataset/conteudo.csv")
+conteudo["Data"] = pd.to_datetime(conteudo["Data"], dayfirst=True)
 top_posts = pd.read_csv("./dataset/top_posts.csv")
 df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
 with open('dataset/conexoes.json', 'r') as file:
@@ -99,6 +100,7 @@ app.layout = html.Div([
 # CALLBACKS
 # =================================== #
 
+# CARREGAR PAGINAS
 @app.callback(
     [
         Output("page-content", "children"),
@@ -115,6 +117,7 @@ def render_page(pathname):
     else:
         return individual.layout, False, True, True, False
 
+# ALTERAR ENTRE TABS DO GERAL
 @app.callback(
         Output("geral-content", "children"), 
         [Input("tabs-geral", "active_tab")]
@@ -125,6 +128,7 @@ def switch_tab_geral(at):
     else:
         return components.perfomance_conteudo
 
+# ALTERAR ENTRE TABS DO INDIVIDUAL
 @app.callback(
         Output("content", "children"), 
         [Input("tabs", "active_tab")]
@@ -135,6 +139,7 @@ def switch_tab_individual(at):
     else:
         return tabs.conteudo
 
+# PAGINAL INDIVIDUAL CARREGANDO INFORMACOES PESSOAIS DOS POLITICOS
 @app.callback(
         [
             Output("nome-politico", "children"),
@@ -168,6 +173,7 @@ def update_info_politico(selected):
 
     return nome, idade, cidade, cargo, nome, imagem
 
+# PAGINAL INDIVIDUAL TRATAMENTO DO CHECKLIST DE POLITICOS
 @app.callback(
         [
             Output('checklist-politicos-geral', 'value'),
@@ -474,7 +480,7 @@ def update_graficos_visao_geral(selected_value):
 
     return grafico_seguidores, grafico_idade, grafico_genero, grafico_mapa
 
-# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - GRAFICOS
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - GRAFICOS COMPLETO
 @app.callback(
         [
             Output("grafico-total-posts-final", "figure"),
@@ -506,6 +512,7 @@ def update_graficos_conteudo_final(selected_value):
     grafico_total_posts = px.bar(df_total_posts, x = "Semana", y = "Total de Posts", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
     grafico_total_engajamento = px.bar(df_engajamento_total, x = "Semana", y = "Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
     grafico_taxa_engajamento = px.bar(df_engajamento_taxa, x = "Semana", y = "Taxa de Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_taxa_engajamento.update_yaxes(tickformat=".1%")
     grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)    
 
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
@@ -513,31 +520,58 @@ def update_graficos_conteudo_final(selected_value):
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
                                 title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025})
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Taxa de engajamento média por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025})
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
                                 title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025})
     
 
     return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
 
-# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS CARDS
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - GRAFICOS SEMANAIS
 @app.callback(
-            funcs.make_postcard_output(),
         [
-            Input('dropdown-politico', 'value'),
-            Input('accordion-conteudo', 'active_item'),
-        ]
+            Output("graficos-semana1", "children"),
+            Output("graficos-semana2", "children"),
+        ],
+        [
+            Input("dropdown-politico", "value"),
+            Input("accordion-conteudo", "active_item"),
+        ],
 )
-def update_grafico_posts_card(selected_value, ativo):
+def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
-    selected_value = "Abilio Brunini"
+    # selected_value = "Abilio Brunini"
 
-    df_posts = posts[posts["Nome"] == selected_value]
+    plataformas = posts["Plataforma"].unique().tolist()
+    # criando cores personalizadas
+    cores = px.colors.sequential.Viridis
+    cores_personalizadas = {}
+    for i in range(len(plataformas)):
+        cores_personalizadas[plataformas[i]] = cores[i+1]    
 
+    df_posts = conteudo[conteudo["Nome"] == selected_value]
 
-    return ["" for i in range(len(funcs.make_postcard_output()))]
+    if item_ativo == "post-semana1":
 
-# CONEXOES
+        df_posts = df_posts[df_posts["Semana"] == "14-20 MAR/24"]
+        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
+
+        return [elemento, ""]
+    
+    elif item_ativo == "post-semana2":
+        
+        df_posts = df_posts[df_posts["Semana"] == "4-10 SET/24"]
+        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
+
+        return ["", elemento]
+    
+    else:
+
+        return ["", ""]
+
+# CRIA O GRAFICO DE CONEXOES
 @app.callback(
         [
             Output("grafico-conexoes-individual", "elements"),
@@ -558,6 +592,7 @@ def updtate_conexoes(selected_value, ativo):
     else:
         return elementos, conexao_stylesheet 
 
+# ADICIONA INTERATIVIDADE AS CONEXOES
 @app.callback(
     [
         Output('grafico-conexoes-individual', 'stylesheet', allow_duplicate=True),

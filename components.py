@@ -263,7 +263,8 @@ def make_postcard(i):
 accordion_pc = html.Div(
     dbc.Accordion(
         flush=True, id = "accordion-conteudo", children=
-        [
+        [   
+            # PERIODO COMPLETO
             dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
@@ -282,40 +283,14 @@ accordion_pc = html.Div(
                     ], sm=6),
                 ], className="g-0"),
             ]),
+            # SEMANA 1
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
-                dbc.Row([
-                    dbc.Col([
-                        dcc.Graph(id = "grafico-posts-semana1", figure=fig, style={"height": "50vh"})
-                    ], sm=6),
-                    # dbc.Col([
-                    #     html.Div(
-                    #         [
-                    #             html.H5("Top 3 posts"),
-                    #             html.Hr(style={"margin-bottom": "20px"}),
-                    #             dbc.Row(
-                    #                 [dbc.Col(make_postcard(i), sm=4) for i in range(1,4)]
-                    #             )
-                    #         ],
-                    #         className="h-100 p-5 text-white bg-secondary rounded-3"
-                    #     )
-                    # ], sm=6),
-                ])
+                html.Div([], id="graficos-semana1"),
             ]),
+            # SEMANA 2
             dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
-                dbc.Row([
-                    dbc.Col([
-                        dcc.Graph(id = "grafico-posts-semana2", figure=fig, style={"height": "50vh"})
-                    ], sm=6),
-                ])
+                html.Div([], id="graficos-semana2"),
             ]),
-
-
-
-
-
-
-
-
         ]
     ),
     
