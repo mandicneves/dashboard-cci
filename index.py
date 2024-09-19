@@ -39,6 +39,7 @@ posts = pd.read_csv("./dataset/posts.csv")
 conteudo = pd.read_csv("./dataset/conteudo.csv")
 conteudo["Data"] = pd.to_datetime(conteudo["Data"], dayfirst=True)
 top_posts = pd.read_csv("./dataset/top_posts.csv")
+top_posts["Legenda"] = top_posts["Legenda"].str.strip()
 df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
@@ -571,9 +572,11 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
         return ["", ""]
 
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS
 @app.callback(
         [
             Output("top-posts-semana1", "children"),
+            Output("top-posts-semana2", "children"),
         ],
         [
             Input("dropdown-politico", "value"),
@@ -588,14 +591,64 @@ def update_posts_cards(selected_value, item_ativo):
 
     if item_ativo == "post-semana1":
 
-        df_top_posts = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
-        elemento = funcs.layout_cards_semanais(df_top_posts)
+        df_top_posts1 = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts1)
 
-        return [elemento]
+        return [elemento, ""]
+
+    elif item_ativo == "post-semana2":
+
+        df_top_posts2 = df_top_posts[df_top_posts["Semana"] == "4-10 SET/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts2)
+
+        return ["", elemento]
     
     else:
-        return [""]
 
+        return ["", ""]
+
+# PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS
+@app.callback(
+        [
+            Output("div-mostrar-posts", "hidden"),
+            Output("top-posts-semana1", "hidden", allow_duplicate=True),
+            Output("graficos-semana1", "hidden"),
+            Output("top-posts-semana2", "hidden", allow_duplicate=True),
+            Output("graficos-semana2", "hidden"),
+        ],
+        [
+            Input("accordion-conteudo", "active_item"),
+            Input("mostrar-posts", "value"),
+        ],
+        prevent_initial_call=True,
+)
+def mostrar_posts(item_ativo, valor):
+
+
+    if item_ativo == "post-semana1":
+
+        if valor == "Gráficos":
+
+            return [False, True, False, True, True]
+        
+        else:
+            
+            return [False, False, True, True, True]
+
+
+    if item_ativo == "post-semana2":
+
+        if valor == "Gráficos":
+
+            return [False, True, True, True, False]
+        
+        else:
+            
+            return [False, True, True, False, True]
+        
+    else:
+            
+        return [True, True, True, True, True]
 
 # CRIA O GRAFICO DE CONEXOES
 @app.callback(

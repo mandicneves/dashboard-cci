@@ -254,7 +254,7 @@ def make_postcard(i):
 
 accordion_pc = html.Div(
     dbc.Accordion(
-        flush=True, id = "accordion-conteudo", active_item="post-semana1",children=
+        flush=True, id = "accordion-conteudo", active_item="post-completo",children=
         [   
             # PERIODO COMPLETO
             dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
@@ -277,12 +277,13 @@ accordion_pc = html.Div(
             ]),
             # SEMANA 1
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
-                html.Div([], id="top-posts-semana1"),
-                html.Div([], id="graficos-semana1", hidden=True),
+                html.Div([], id="top-posts-semana1", hidden=True),
+                html.Div([], id="graficos-semana1", hidden=False),
             ]),
             # SEMANA 2
             dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
-                html.Div([], id="graficos-semana2"),
+                html.Div([], id="top-posts-semana2", hidden=True),
+                html.Div([], id="graficos-semana2", hidden=False),
             ]),
         ]
     ),

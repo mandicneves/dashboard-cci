@@ -107,7 +107,11 @@ layout = dbc.Card(
                 dbc.ListGroupItem(id="cargo-politico", className="list-group-item-custom"),
                 ], style={"padding": "0.5px", 'font-size': '1vw', 'margin-top': '15px'},
             )
-        ], id="escolha-politico-div", hidden=True),                
+        ], id="escolha-politico-div", hidden=True),
+        html.Div([
+            dcc.RadioItems(id="mostrar-posts", options=["Gráficos", "Posts"], value="Gráficos", 
+                           inline=True, labelStyle={"padding": "5px", 'font-size': '1vw'}, inputStyle={"margin-right": "5px"})
+        ], hidden=True, id="div-mostrar-posts", style={"margin-top": "20px", "display": "flex", "justify-content": "center"}),             
     ], style=style_sidebar
 )
 

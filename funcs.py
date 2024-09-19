@@ -115,12 +115,12 @@ def criar_post_cards(df):
     for idx, linha in df.iterrows():
 
         legenda = linha["Legenda"]
-        likes = int(linha["Likes"])
-        comentarios = int(linha["Comentarios"])
-        impressoes = int(linha["Impressoes"])
+        likes = formatar_numero(int(linha["Likes"]))
+        comentarios = formatar_numero(int(linha["Comentarios"]))
+        impressoes = formatar_numero(int(linha["Impressoes"]))
         views = formatar_numero(int(linha["Visualizacoes"]))
-        engajamento = int(linha["Engajamento"])
-        compartilhamentos = int(linha["Compartilhamentos"])
+        engajamento = formatar_numero(int(linha["Engajamento"]))
+        compartilhamentos = formatar_numero(int(linha["Compartilhamentos"]))
         link = linha["Link"] 
 
         card = html.Div(
@@ -194,6 +194,7 @@ def layout_cards_semanais(df):
             html.Div(criar_tooltips(df))
         ])
     except:
+        # elemento = ""
         card1, card2 = criar_post_cards(df)
         elemento = html.Div([
             dbc.Row([
@@ -204,78 +205,3 @@ def layout_cards_semanais(df):
         ])
 
     return elemento
-
-def make_postcard_output():
-
-    outs = []
-
-    for i in range(1, 4):
-
-        aux = []
-
-        likes = Output(f"likes-{i}", "value")
-        comentarios = Output(f"comentarios-{i}", "value")
-        impressoes = Output(f"impressoes-{i}", "value")
-        liftconteudo = Output(f"lift-conteudo-{i}", "value")
-        taxaengajamento = Output(f"taxa-engajamento-{i}", "value")
-        compartilhamentos = Output(f"compartilhamentos-{i}", "value")
-
-        aux.append(likes)
-        aux.append(comentarios)
-        aux.append(impressoes)
-        aux.append(liftconteudo)
-        aux.append(taxaengajamento)
-        aux.append(compartilhamentos)
-
-        outs.extend(aux)
-    
-    return outs
-
-def make_postcard(i, likes, comentarios, impressoes, views, engajamento, compartilhamento, link):
-
-    post_card = dbc.Card(
-        [
-            # dbc.CardImg(src="", top=True, style={"height": "40%"}),  # Substitua pelo caminho da sua imagem
-            dbc.CardBody(
-                [
-                    # Primeira linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div(f"❤️ {likes}"), width=6),  # Emoji de coração
-                            dbc.Col(html.Div(f"💬 {comentarios}"), width=6),  # Emoji de comentário
-                        ],
-                        # className="mb-2",
-                    ),
-                    # Segunda linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div(f"💭 {impressoes}"), width=6),  # Emoji de balão de pensamento
-                            dbc.Col(html.Div(f"📈 {views}"), width=6),  # Emoji de gráfico de linha ascendente
-                        ],
-                        # className="mb-2",
-                    ),
-                    # Terceira linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div(f"👍 {engajamento}"), width=6),  # Emoji de dedo polegar
-                            dbc.Col(html.Div(f"🔄 {compartilhamento}"), width=6),  # Emoji de seta de compartilhamento
-                        ],
-                        # className="mb-2"
-                    ),
-                    html.Div([
-                        # Botão no final do card
-                        dbc.Button(
-                            "Post", color="primary", outline=True, href=link
-                        ),                    
-                    ], className="d-grid gap-2", style={"margin-top": "20px"})
-
-                ]
-            ),
-        ],
-        style={
-            "height": "20vh",  # Ajuste a altura do card
-        },
-    )
-
-
-    return post_card
