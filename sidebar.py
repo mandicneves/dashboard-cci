@@ -15,6 +15,20 @@ opcoes.insert(0, "Todos")
 
 
 cores = funcs.gerar_cores(len(politicos))
+
+cores = [
+    "#006400",  # Dark Green
+    "#00008B",  # Dark Blue
+    "#8B0000",  # Dark Red
+    "#556B2F",  # Dark Olive Green
+    "#1E90FF",  # Dodger Blue
+    "#DD4124",  # Orange Red
+    "#F5F5F5",   # White Smoke
+    "#9ACD32",  # Yellow Green
+    "#8B4513",  # Saddle Brown
+    "#F4A460",  # Sandy Brown
+]
+
 cores_personalizadas = {}
 for i in range(len(cores)):
     cores_personalizadas[politicos[i]["value"]] = cores[i]

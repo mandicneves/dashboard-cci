@@ -414,7 +414,6 @@ def update_graficos_geral_pc(selected_values, operacao):
 
     return grafico_total_posts, grafico_vmg, grafico_total_engajamento, grafico_taxa_engajamento
 
-
 # PAGINA INDIVIDUAL - ABA VISAO GERAL
 @app.callback(
     [
