@@ -27,15 +27,20 @@ def criar_opcoes(dados, cores_personalizadas):
     opcoes = [{"label": "Todos", "value": "Todos"}]
     for nome in dados["NOME"].unique():
         cor = cores_personalizadas.get(nome, 'rgb(0, 0, 0)')  # Cor preta como fallback
+        if nome == 'Antonio Carlos Rodrigues':
+            label = ["Antonio Carlos"]
+        else:
+            label = nome[:17] if len(nome) <= 17 else nome.split()[0],
+
         opcoes.append({
             'label': html.Span([
-                nome,  # Nome do político
+                label[0],  # Nome do político
                 html.Span(  # Círculo colorido
                     style={
                         'display': 'inline-block',
-                        'width': '12px',
-                        'height': '12px',
-                        'border-radius': '50%',
+                        'width': '20px',
+                        'height': '15px',
+                        'border-radius': '10%',
                         'background-color': cor,
                         'margin-left': '10px'
                     }
