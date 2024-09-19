@@ -5,6 +5,7 @@ import pandas as pd
 
 from app import *
 import funcs
+import components
 
 dados = pd.read_csv("./dataset/infos.csv")
 
@@ -105,13 +106,14 @@ layout = dbc.Card(
                 dbc.ListGroupItem(id="idade-politico", className="list-group-item-custom"),
                 dbc.ListGroupItem(id="cidade-politico", className="list-group-item-custom"),
                 dbc.ListGroupItem(id="cargo-politico", className="list-group-item-custom"),
-                ], style={"padding": "0.5px", 'font-size': '1vw', 'margin-top': '15px'},
+                html.Div([components.button_group1, components.button_group2], className="d-grid gap-2"), 
+                ], style={"padding": "0.5px", 'font-size': '0.9vw', 'margin-top': '15px'},
             )
         ], id="escolha-politico-div", hidden=True),
         html.Div([
             dcc.RadioItems(id="mostrar-posts", options=["Gráficos", "Posts"], value="Gráficos", 
-                           inline=True, labelStyle={"padding": "5px", 'font-size': '1vw'}, inputStyle={"margin-right": "5px"})
-        ], hidden=True, id="div-mostrar-posts", style={"margin-top": "20px", "display": "flex", "justify-content": "center"}),             
+                           inline=True, labelStyle={"padding": "5px", 'font-size': '0.9vw'}, inputStyle={"margin-right": "5px"})
+        ], hidden=True, id="div-mostrar-posts", style={"margin-top": "10px", "display": "flex", "justify-content": "center"}),             
     ], style=style_sidebar
 )
 

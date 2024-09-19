@@ -14,11 +14,9 @@ load_figure_template(tema)
 fig = go.Figure()
 fig.update_layout(template = tema)
 
-
 # =================================== #
 # COMPONENTES PARA LAYOUT GERAL
 # =================================== #
-
 
 tabs_geral = html.Div(
     [
@@ -28,7 +26,7 @@ tabs_geral = html.Div(
                 dbc.Tab(label="Performance de Conteúdo", tab_id="tab-geral-conteudo")
             ],
             id="tabs-geral",
-            active_tab="tab-geral-visaogeral",
+            active_tab="tab-geral-conteudo",
             style={"padding": "10px", "margin": "10px"}
         ),
         html.Div(id="geral-content"),
@@ -70,19 +68,45 @@ seguidores_geral = html.Div([
 perfomance_conteudo = html.Div([
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"})
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"}),
         ], sm=6),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-vmg", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
-        ], sm=6)
+            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"}),            
+        ], sm=6),
     ], className="g-0"),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"})
+            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"})
         ], sm=6),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
-        ], sm=6)        
+            dcc.Graph(id="grafico-geral-vmg", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
+        ], sm=6),
+        html.Div([
+            dbc.Popover(
+                [
+                    dbc.PopoverHeader("Total de Posts", style={"background-color": "#45A1FF"}),
+                    dbc.PopoverBody("Soma das postagens realizadas no período."),
+                ],
+                target="grafico-geral-total-posts", trigger="click", id="dica-total-posts"),
+            dbc.Popover(
+                [
+                    dbc.PopoverHeader("Total de Engajamento", style={"background-color": "#45A1FF"}),
+                    dbc.PopoverBody("Engajamento é o número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
+                ],
+                target="grafico-geral-total-engajamento", trigger="click", id="dica-total-engajamento"),
+            dbc.Popover(
+                [
+                    dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#45A1FF"}),
+                    dbc.PopoverBody("Taxa de engajamento é o percentual do público que engajou com a publicação curtindo, comentando ou compartilhando."),
+                ],
+                target="grafico-geral-taxa-engajamento", trigger="click", id="dica-taxa-engajamento"),
+            dbc.Popover(
+                [
+                    dbc.PopoverHeader("Total de VMG", style={"background-color": "#45A1FF"}),
+                    dbc.PopoverBody("VMG (Valor de Mídia Ganho) é um valor monetário estimado da publicação com base no tamanho do público alcançado."),
+                ],
+                target="grafico-geral-vmg", trigger="click", id="dica-vmg"),
+                ])               
     ], className="g-0"),
 ])
 
@@ -95,6 +119,17 @@ perfomance_conteudo = html.Div([
 # =================================== #
 # COMPONENTES PARA LAYOUT INDIVIDUAL
 # =================================== #
+
+
+button_group1 = dbc.ButtonGroup(
+    [dbc.Button("Insta", id="insta-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm"), 
+     dbc.Button("Twitter", id="twitter-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm")],
+     style={"margin-top": "10px"}
+)
+button_group2 = dbc.ButtonGroup(
+    [dbc.Button("TikTok", id="tiktok-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm"), 
+     dbc.Button("YouTube", id="youtube-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm")]
+)
 
 list_group = dbc.ListGroup(
     [
@@ -202,55 +237,6 @@ accordion_vs = html.Div(
         style={"margin-right": "5px"},
     ),
 )
-
-def make_postcard(i):
-
-    post_card = dbc.Card(
-        [
-            dbc.CardImg(src="", top=True, style={"height": "40%"}),  # Substitua pelo caminho da sua imagem
-            dbc.CardBody(
-                [
-                    # Primeira linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div("❤️", id=f"likes-{i}"), width=6),  # Emoji de coração
-                            dbc.Col(html.Div("💬", id=f"comentarios-{i}"), width=6),  # Emoji de comentário
-                        ],
-                        className="mb-2",
-                    ),
-                    # Segunda linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div("💭", id=f"impressoes-{i}"), width=6),  # Emoji de balão de pensamento
-                            dbc.Col(html.Div("📈", id=f"lift-conteudo-{i}"), width=6),  # Emoji de gráfico de linha ascendente
-                        ],
-                        className="mb-2",
-                    ),
-                    # Terceira linha
-                    dbc.Row(
-                        [
-                            dbc.Col(html.Div("👍", id=f"taxa-engajamento-{i}"), width=6),  # Emoji de dedo polegar
-                            dbc.Col(html.Div("🔄", id=f"compartilhamentos-{i}"), width=6),  # Emoji de seta de compartilhamento
-                        ],
-                        className="mb-2"
-                    ),
-                    html.Div([
-                        # Botão no final do card
-                        dbc.Button(
-                            "Post", color="primary", outline=True, id=f"link-post-{i}"
-                        ),                    
-                    ], className="d-grid gap-2", style={"margin-top": "20px"})
-
-                ]
-            ),
-        ],
-        style={
-            "height": "30vh",  # Ajuste a altura do card
-        },
-    )
-
-
-    return post_card
 
 accordion_pc = html.Div(
     dbc.Accordion(

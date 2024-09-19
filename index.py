@@ -9,6 +9,7 @@ from pages import geral, individual, tabs
 import sidebar
 import funcs
 import components
+import time
 
 # Tratamento dados
 import pandas as pd
@@ -109,14 +110,16 @@ app.layout = html.Div([
         Output("button-individual", "active"),
         Output("quadro-informacoes-div", "hidden"),
         Output("escolha-politico-div", "hidden"),
+        Output("div-mostrar-posts", "hidden", allow_duplicate=True),
     ],
-    Input("base-url", "pathname")
+    [Input("base-url", "pathname")],
+    prevent_initial_call=True
     )
 def render_page(pathname):
     if pathname == "/":
-        return geral.layout, True, False, False, True
+        return geral.layout, True, False, False, True, True
     else:
-        return individual.layout, False, True, True, False
+        return individual.layout, False, True, True, False, True
 
 # ALTERAR ENTRE TABS DO GERAL
 @app.callback(
@@ -131,14 +134,18 @@ def switch_tab_geral(at):
 
 # ALTERAR ENTRE TABS DO INDIVIDUAL
 @app.callback(
-        Output("content", "children"), 
-        [Input("tabs", "active_tab")]
+        [
+            Output("content", "children"),
+        ], 
+        [
+            Input("tabs", "active_tab")
+        ],
         )
 def switch_tab_individual(at):
     if at == "tab-geral":
-        return tabs.visao_geral
+        return [tabs.visao_geral]
     else:
-        return tabs.conteudo
+        return [tabs.conteudo]
 
 # PAGINAL INDIVIDUAL CARREGANDO INFORMACOES PESSOAIS DOS POLITICOS
 @app.callback(
@@ -149,10 +156,16 @@ def switch_tab_individual(at):
             Output("cargo-politico", "children"),
             Output("dropdown-politico", "value"),
             Output("imagem-politico", "src"),
+            Output("insta-politico", "href"),
+            Output("twitter-politico", "href"),
+            Output("tiktok-politico", "href"),
+            Output("youtube-politico", "href"),
         ],
     Input('dropdown-politico', 'value'),
     )
 def update_info_politico(selected):
+
+    # selected = "Abilio Brunini"
 
     if selected is None:
 
@@ -161,8 +174,12 @@ def update_info_politico(selected):
         cidade = infos.loc[0, "CIDADE"]
         cargo = infos.loc[0, "CARGO + PARTIDO"]
         selected = infos.loc[0, "NOME"]
+        insta = infos.loc[0, "INSTA"]
+        x = infos.loc[0, "X"]
+        tiktok = infos.loc[0, "TIKTOK"]
+        youtube = infos.loc[0, "YOUTUBE"]
 
-        return nome, idade, cidade, cargo, selected, "assets/images/@abiliobrunini.jpeg"
+        return nome, idade, cidade, cargo, selected, "assets/images/@abiliobrunini.jpeg", insta, x, tiktok, youtube
     
     dff = infos[infos["NOME"] == selected]
     nome= dff["NOME"].values[0]
@@ -171,8 +188,12 @@ def update_info_politico(selected):
     cargo = dff["CARGO + PARTIDO"].values[0]
     nick = dff["NICK"].values[0]
     imagem = f"assets/images/{nick}.jpeg"
+    insta = dff["INSTA"].values[0]
+    x = dff["X"].values[0]
+    tiktok = dff["TIKTOK"].values[0]
+    youtube = dff["YOUTUBE"].values[0]
 
-    return nome, idade, cidade, cargo, nome, imagem
+    return nome, idade, cidade, cargo, nome, imagem, insta, x, tiktok, youtube
 
 # PAGINAL INDIVIDUAL TRATAMENTO DO CHECKLIST DE POLITICOS
 @app.callback(
@@ -260,7 +281,7 @@ def update_graficos_geral_vs(selected_values, operacao):
         grafico_idade.update_yaxes(tickformat=".1%")
         grafico_genero = px.bar(df_genero, x = "GENERO", y = "% SEGUIDORES GENERO", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_genero.update_yaxes(tickformat=".1%")
-        grafico_autenticos = px.bar(df_autenticos, x = "NOME", y = "SEGUIDORES AUTÊNTICOS", color="NOME", color_discrete_map=cores_personalizadas, labels={"NOME": ""})
+        grafico_autenticos = px.bar(df_autenticos, x = "NOME", y = "SEGUIDORES AUTÊNTICOS", color="NOME", color_discrete_map=cores_personalizadas)
         grafico_autenticos.update_xaxes(showticklabels=False)
         grafico_autenticos.update_yaxes(tickformat=".1%")
         mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "% SEGUIDORES ESTADO", zoom = 10, opacity=0.6, 
@@ -290,7 +311,7 @@ def update_graficos_geral_vs(selected_values, operacao):
         grafico_idade.update_yaxes(tickformat=",.2s")
         grafico_genero = px.bar(df_genero, x = "GENERO", y = "SEGUIDORES GENERO", color="NOME", barmode="group", color_discrete_map=cores_personalizadas)
         grafico_genero.update_yaxes(tickformat=",.2s")
-        grafico_autenticos = px.bar(df_autenticos, x = "NOME", y = "SEGUIDORES AUTÊNTICOS", color="NOME", color_discrete_map=cores_personalizadas, labels={"NOME": ""})
+        grafico_autenticos = px.bar(df_autenticos, x = "NOME", y = "SEGUIDORES AUTÊNTICOS", color="NOME", color_discrete_map=cores_personalizadas)
         grafico_autenticos.update_xaxes(showticklabels=False)
         grafico_autenticos.update_yaxes(tickformat=",.2s")
         mapa = px.scatter_mapbox(df_mapa, lat = "LATITUDE", lon = "LONGITUDE", color = "NOME", size = "SEGUIDORES ESTADO", zoom = 10, opacity=0.6, 
@@ -308,13 +329,13 @@ def update_graficos_geral_vs(selected_values, operacao):
 
     # atualizando layout dos graficos
     grafico_seguidores.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                     title={"text": titulo_seguidores, 'y': 0.96, "x": 0.5}), 
+                                     title={"text": titulo_seguidores, 'y': 0.96, "x": 0.5}, xaxis_title="", yaxis_title=""), 
     grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                title={"text": titulo_idade, 'y': 0.96, "x": 0.2})
+                                title={"text": titulo_idade, 'y': 0.96, "x": 0.2}, xaxis_title="", yaxis_title="")
     grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                 title={"text": titulo_genero, 'y': 0.96, "x": 0.1, "font": {"size": 15}})
+                                 title={"text": titulo_genero, 'y': 0.96, "x": 0.1, "font": {"size": 15}}, xaxis_title="", yaxis_title="")
     grafico_autenticos.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=10), template = tema, showlegend = False,
-                                     title={"text": titulo_autenticos, 'y': 0.97, "x": 0.8})
+                                     title={"text": titulo_autenticos, 'y': 0.97, "x": 0.8}, xaxis_title="", yaxis_title="")
     mapa.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
                        mapbox = dict(center=go.layout.mapbox.Center(lat = lat_mean, lon = lon_mean)),
                        title={"text": titulo_mapa, 'y': 0.97, "x": 0.5})    
@@ -338,8 +359,6 @@ def update_graficos_geral_vs(selected_values, operacao):
 )
 def update_graficos_geral_pc(selected_values, operacao):
 
-    # selected_values = sidebar.opcoes
-    # selected_values.remove("Todos")
 
     df_posts = posts[(posts["Nome"].isin(selected_values)) & (posts["Plataforma"] == "Total")]
     data_inicial = df_posts["Data"].unique()[0]
@@ -369,29 +388,32 @@ def update_graficos_geral_pc(selected_values, operacao):
 
         grafico_total_posts = px.area(df_posts, x = "Data", y="Total de Posts", color="Nome",color_discrete_map=cores_personalizadas)
         grafico_vmg = px.area(df_posts, x = "Data", y="VMG", color="Nome",color_discrete_map=cores_personalizadas)
+        grafico_vmg.update_yaxes(tickformat=",.2s")
         grafico_total_engajamento = px.area(df_posts, x = "Data", y="Engajamento Total", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_total_engajamento.update_yaxes(tickformat=",.2s")
         grafico_taxa_engajamento = px.area(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
         grafico_taxa_engajamento.update_yaxes(tickformat=",.1%")
 
         titulo_posts = f"Variação do total de posts entre {data_inicial} e {data_final}"
-        titulo_vmg = f"Variação do total de posts entre {data_inicial} e {data_final}"
+        titulo_vmg = f"Variação do total de VMG {data_inicial} e {data_final}"
         titulo_engajamento = f"Variação do total de engajamento entre {data_inicial} e {data_final}"
         ttiulo_taxa = f"Variação da taxa de engajamento entre {data_inicial} e {data_final}"        
 
     grafico_total_posts.update_traces(mode="markers+lines", hovertemplate=None)
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                      title={"text": titulo_posts, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x")
+                                      title={"text": titulo_posts, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
     grafico_vmg.update_traces(mode="markers+lines", hovertemplate=None)
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                      title={"text": titulo_vmg, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x")
+                                      title={"text": titulo_vmg, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
     grafico_total_engajamento.update_traces(mode="markers+lines", hovertemplate=None)
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                            title={"text": titulo_engajamento, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x")
+                                            title={"text": titulo_engajamento, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_traces(mode="markers+lines", hovertemplate=None)
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
-                                           title={"text": ttiulo_taxa, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x")
+                                           title={"text": ttiulo_taxa, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
 
     return grafico_total_posts, grafico_vmg, grafico_total_engajamento, grafico_taxa_engajamento
+
 
 # PAGINA INDIVIDUAL - ABA VISAO GERAL
 @app.callback(
@@ -452,7 +474,7 @@ def update_graficos_visao_geral(selected_value):
             hole=0.5,
             name=plataforma,
             textinfo='percent',
-            domain=dict(x=intervalos[idx]),
+            domain=dict(x=intervalos[idx], y=[0, 1]),
             marker=dict(colors=colors),
             showlegend=False
         ))
@@ -470,14 +492,14 @@ def update_graficos_visao_geral(selected_value):
     
     
     # atualizando layout dos graficos
-    grafico_seguidores.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de seguidores por plataforma", 'y': 0.95, "x": 0.025})
+    grafico_seguidores.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
+                                title={"text": "Quantidade total de seguidores por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_idade.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Distribuição (%) dos seguidores por idade e plataforma", 'y': 0.95, "x": 0.5})
+                                title={"text": "Distribuição (%) dos seguidores por idade e plataforma", 'y': 0.95, "x": 0.5}, xaxis_title="", yaxis_title="")
     grafico_genero.update_layout(margin=go.layout.Margin(l=5, r=5, t=5, b=0), template = tema, showlegend = False,
-                                 annotations=eixo_x, title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.9})
+                                 title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.9})
     grafico_mapa.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                               title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.96})
+                               title={"text": "Distribuição (%) dos seguidores por gênero e plataforma", 'y': 0.96}, xaxis_title="", yaxis_title="")
 
     return grafico_seguidores, grafico_idade, grafico_genero, grafico_mapa
 
@@ -517,13 +539,13 @@ def update_graficos_conteudo_final(selected_value):
     grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)    
 
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     
 
     return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
@@ -650,6 +672,25 @@ def mostrar_posts(item_ativo, valor):
             
         return [True, True, True, True, True]
 
+# ESCONDER RADIO POST GRAFICO NO PERFIL INDIVIDUAL GERAL
+@app.callback(
+        [
+            Output("div-mostrar-posts", "hidden", allow_duplicate=True),
+        ], 
+        [
+            Input("tabs", "active_tab")
+        ],
+        prevent_initial_call=True
+        )
+def esconder_radio_posts_graficos(at):
+
+    if at == "tab-geral":
+
+        return [True]
+    else:
+
+        return [False]
+
 # CRIA O GRAFICO DE CONEXOES
 @app.callback(
         [
@@ -758,3 +799,32 @@ def generate_stylesheet(node, data_list, selected_value):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

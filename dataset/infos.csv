@@ -1,11 +1,11 @@
-NOME,IDADE,CIDADE,CARGO + PARTIDO,NICK
-Abilio Brunini,40 anos,Mato Grosso,Deputado Fereral - PL,@abiliobrunini
-André Fernandes,26 anos,Ceará,Deputado Fereral - PL,@andrefernandes
-Antonio Carlos Rodrigues,74 anos,São Paulo,Deputado Fereral - PL,@antoniocarlosrodrigues.sp
-Bia Kicis,62 anos,Distrito Federal,Deputada Fereral - PL,@biakicis
-Caroline De Toni,38 anos,Santa Catarina,Deputada Fereral - PL,@carolinedetoni
-Chris Tonietto,33 anos,Rio de Janeiro,Deputada Fereral - PL,@christonietto
-Eduardo Bolsonaro,40 anos,São Paulo,Deputado Fereral - PL,@bolsonarosp
-Gustavo Gayer,43 anos,Goiânia,Deputado Fereral - PL,@gusgayer
-Josimar de Maranhãozinho,47 anos,Maranhão,Deputado Fereral - PL,@josimarmaranhaozinho
-Nikolas Ferreira,28 anos,Minas Gerais,Deputado Fereral - PL,@nikolasferreiradm
+,NOME,IDADE,CIDADE,CARGO + PARTIDO,NICK,INSTA,TIKTOK,X,YOUTUBE
+0,Abilio Brunini,40 anos,Mato Grosso,Deputado Fereral - PL,@abiliobrunini,https://www.instagram.com/abiliobrunini,https://www.tiktok.com/@abiliobrunini,https://x.com/abiliobrunini,http://www.youtube.com/@AbilioBrunini
+1,André Fernandes,26 anos,Ceará,Deputado Fereral - PL,@andrefernandes,https://www.instagram.com/andrefernandes,https://www.tiktok.com/@andrefernandes_br,https://x.com/andrefernm,http://youtube.com/@andrefernandesoficial
+2,Antonio Carlos Rodrigues,74 anos,São Paulo,Deputado Fereral - PL,@antoniocarlosrodrigues.sp,https://www.instagram.com/antoniocarlosrodrigues.sp,,https://x.com/acrodriguessp,http://youtube.com/@AntonioCRodriguesTV
+3,Bia Kicis,62 anos,Distrito Federal,Deputada Fereral - PL,@biakicis,https://www.instagram.com/biakicis,https://www.tiktok.com/@biakicisoficial,https://x.com/Biakicis,http://youtube.com/@Biakicis
+4,Caroline De Toni,38 anos,Santa Catarina,Deputada Fereral - PL,@carolinedetoni,https://www.instagram.com/carolinedetoni,https://www.tiktok.com/@carol_detoni,https://x.com/CarolDeToni,http://youtube.com/@CarolineDeToni1
+5,Chris Tonietto,33 anos,Rio de Janeiro,Deputada Fereral - PL,@christonietto,https://www.instagram.com/christonietto,,https://x.com/ToniettoChris,http://youtube.com/@ChrisToniettoOficial
+6,Eduardo Bolsonaro,40 anos,São Paulo,Deputado Fereral - PL,@bolsonarosp,https://www.instagram.com/bolsonarosp,https://www.tiktok.com/@depeduardobolsonaro,https://x.com/BolsonaroSP,http://youtube.com/@EDUARDOBOLSONAROSP
+7,Gustavo Gayer,43 anos,Goiânia,Deputado Fereral - PL,@gusgayer,https://www.instagram.com/gusgayer,https://www.tiktok.com/@gusgayer,https://x.com/GayerGus,http://www.youtube.com/@GustavoGayer
+8,Josimar de Maranhãozinho,47 anos,Maranhão,Deputado Fereral - PL,@josimarmaranhaozinho,https://www.instagram.com/josimarmaranhaozinho,https://www.tiktok.com/@josimardemaranhaozinho,https://x.com/josimarPL22,http://youtube.com/c/JOSIMARMARANH%C3%83OZINHO
+9,Nikolas Ferreira,28 anos,Minas Gerais,Deputado Fereral - PL,@nikolasferreiradm,https://www.instagram.com/nikolasferreiradm,https://www.tiktok.com/@nikolasferreiradm,https://x.com/nikolas_dm,http://youtube.com/@NikolasFerreiraO

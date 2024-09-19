@@ -10,6 +10,8 @@ def formatar_numero(numero):
         return f"{numero / 1_000_000:.2f}M"
     elif abs(numero) >= 1_000:
         return f"{numero / 1_000:.2f}K"
+    elif abs(numero) == 0:
+        return ""
     return str(numero)
 
 def gerar_cores(n):
@@ -75,13 +77,13 @@ def criar_graficos_semanal(df_posts):
 
 
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
-                                title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025})
+                                title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
 
     return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
 
@@ -149,7 +151,7 @@ def criar_post_cards(df):
                     html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
                 ],
                 fluid=True,
-                className="py-3", style={"height": "45vh"}
+                className="py-3", style={"height": "55vh"}
             ),
             className="p-3 bg-body-secondary rounded-3",
         )    
@@ -201,7 +203,7 @@ def layout_cards_semanais(df):
                 dbc.Col([card1], sm=3, width={"offset": 2}),
                 dbc.Col([card2], sm=3, style={"margin-left": "20px", "margin-right": "20px"}),
             ]),
-            html.Div(criar_tooltips())
+            html.Div(criar_tooltips(df))
         ])
 
     return elemento
