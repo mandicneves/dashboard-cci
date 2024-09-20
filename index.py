@@ -791,6 +791,30 @@ def generate_stylesheet(node, data_list, selected_value):
 
         return stylesheet, nome, f"{engajamento:,.0f}".replace(",", "."), posts, link, "primary"
 
+# TOAST INFORMACOES CONEXOES
+@app.callback(
+    Output("conexoes-toast", "is_open"),
+    [
+        Input("conexoes-button-toast", "n_clicks"),
+        Input("conexoes-toast", "is_open"),
+    ],
+)
+def open_toast(n, aberto):
+    if aberto:
+
+        if n:
+            return False
+        else:
+            return True
+    else:
+
+        if n:
+            return True
+        else:
+            return False
+
+
+
 
 # =================================== #
 # RUN SERVER

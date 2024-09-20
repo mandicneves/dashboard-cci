@@ -141,13 +141,10 @@ legenda = html.Div(
         'flexDirection': 'column',
         'justifyContent': 'center',  # Centraliza verticalmente
         'alignItems': 'center',       # Centraliza horizontalmente os itens internos
-        'margin-top': '60px',
+        'margin-top': '20px',
         'textAlign': 'center'
     }   
 )
-
-
-
 
 
 button_group1 = dbc.ButtonGroup(
@@ -166,7 +163,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Conexão selecionada", className="mb-1"),
+                        html.H5("Conexão selecionada", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -178,7 +175,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Total de Engajamento", className="mb-1"),
+                        html.H5("Total de Engajamento", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -189,7 +186,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Total de Posts", className="mb-1"),
+                        html.H5("Total de Posts", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -200,9 +197,9 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Top Post", className="mb-1"),
+                        html.H5("Top Post", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
                     ],
-                    className="d-flex w-100 justify-content-between",
+                    className="d-flex w-100 justify-content-between", style={"margin-bottom": "10px"},
                 ),
                 html.Div([
                     dbc.Button(children="Link", id="link-conexao-selecionada", outline=True, color="secondary")
@@ -213,6 +210,40 @@ list_group = dbc.ListGroup(
     ]
 )
 
+
+toast = html.Div(
+    [
+        dbc.Button(
+            "Infos",
+            id="conexoes-button-toast",
+            color="primary",
+            n_clicks=0,
+            outline=True
+        ),
+        dbc.Toast(
+            html.Div([
+                html.Small([
+                    "Tamanho: Engajamento/total de menções",
+                    html.Hr(),
+                    "Cor: Engajamento total",
+                    html.Hr(),
+                    "Linha: % do total de menções",
+                ])
+            ]),
+            id="conexoes-toast",
+            header=html.Span([
+                "Informações",
+                html.Span(" ℹ️", style={"margin-left": "10px"})  # Símbolo de informação ao lado
+            ]),
+            is_open=False,
+            dismissable=False,
+            style={"position": "fixed", "top": 10, "right": 35, "width": "18vw"},
+        ),
+    ]
+)
+
+
+# ACCODRION
 accordion_vs = html.Div(
     dbc.Accordion(
         [   
@@ -242,7 +273,10 @@ accordion_vs = html.Div(
                         html.Div([
                             dbc.Row([
                                 dbc.Col(
-                                    [legenda]
+                                    [
+                                        toast,
+                                        legenda
+                                    ]
                                     , sm=1),
                                 dbc.Col([
                                     cyto.Cytoscape(
@@ -250,10 +284,9 @@ accordion_vs = html.Div(
                                         layout={"name": "cola"},
                                         style={"height": "65vh"})
                                 ], sm=8),
-                                # ], id="grafico-conexoes-individual", sm=9),
                                 dbc.Col([
                                     dbc.Card([
-                                        list_group
+                                        list_group,
                                     ],
                                     style={"margin-top": "30px", "margin-right": "10px", "padding": "10px", "height": "60vh"})
                                 ], sm=3),
@@ -266,6 +299,7 @@ accordion_vs = html.Div(
         flush=True,
         id = "accordion-individual",
         style={"margin-right": "5px"},
+        # active_item="conexao-accordion"
     ),
 )
 
