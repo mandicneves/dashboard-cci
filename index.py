@@ -75,10 +75,10 @@ conexao_stylesheet = [{
     'selector': 'edge',
     'style': {
         "line-fill": "linear-gradient",
-        'width': 2.5,
-        'curve-style': 'bezier',
+        'width': 0.5,
+        'curve-style': 'straight',
         'source-endpoint': 'outside-to-node',
-        'target-endpoint': 'outside-to-node'
+        'target-endpoint': 'outside-to-node',
     }
 }]
 
@@ -759,10 +759,11 @@ def generate_stylesheet(node, data_list, selected_value):
             'selector': 'edge',
             'style': {
                 "line-fill": "linear-gradient",
-                'width': 2.5,
+                'width': 0.5,
                 'curve-style': 'bezier',
                 'source-endpoint': 'outside-to-node',
-                'target-endpoint': 'outside-to-node'
+                'target-endpoint': 'outside-to-node',
+                'control-point-step-size': 3
             }
         },{
             "selector": 'node[id = "{}"]'.format(node_id),
@@ -779,7 +780,6 @@ def generate_stylesheet(node, data_list, selected_value):
                 'z-index': 9999
             }
         }]
-
         nome = node['data']['label_selected']
 
         if nome == selected_value:

@@ -120,6 +120,35 @@ perfomance_conteudo = html.Div([
 # COMPONENTES PARA LAYOUT INDIVIDUAL
 # =================================== #
 
+# Lista de cores, do valor mais alto (escuro) ao valor mais baixo (claro)
+cores = ['#2f003a', '#58016d', '#8802a8', '#aa02d2', '#321c54', 
+         '#5d349c', '#9050f0', '#b464ff', '#2b335f', '#505eb2']
+
+# Texto representando os valores relativos (do maior ao menor)
+valores = [f'' for i in range(len(cores))]
+valores = ["Máx", "", "", "", "", "", "", "", "", "Mín"]
+
+# Criar uma div para cada cor e valor, organizando-os em uma legenda
+legenda = html.Div(
+    children=[
+        html.Div(
+            style={'backgroundColor': cor, 'height': '4vh', 'width': '7vw', 'margin': '0px', 'display': 'inline-block'},
+            children=html.Span(texto, style={'color': '#bfbfbf', 'paddingLeft': '5px'})
+        ) for cor, texto in zip(cores, valores)],
+    
+    style={
+        'display': 'flex',
+        'flexDirection': 'column',
+        'justifyContent': 'center',  # Centraliza verticalmente
+        'alignItems': 'center',       # Centraliza horizontalmente os itens internos
+        'margin-top': '60px',
+        'textAlign': 'center'
+    }   
+)
+
+
+
+
 
 button_group1 = dbc.ButtonGroup(
     [dbc.Button("Insta", id="insta-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm"), 
@@ -212,13 +241,15 @@ accordion_vs = html.Div(
                     dbc.Col([
                         html.Div([
                             dbc.Row([
+                                dbc.Col(
+                                    [legenda]
+                                    , sm=1),
                                 dbc.Col([
-                                    # html.Div(id="cytoscape"),
                                     cyto.Cytoscape(
                                         id="grafico-conexoes-individual",
                                         layout={"name": "cola"},
                                         style={"height": "65vh"})
-                                ], sm=9),
+                                ], sm=8),
                                 # ], id="grafico-conexoes-individual", sm=9),
                                 dbc.Col([
                                     dbc.Card([
