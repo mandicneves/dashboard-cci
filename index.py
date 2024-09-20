@@ -42,6 +42,8 @@ conteudo["Data"] = pd.to_datetime(conteudo["Data"], dayfirst=True)
 top_posts = pd.read_csv("./dataset/top_posts.csv")
 top_posts["Legenda"] = top_posts["Legenda"].str.strip()
 df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
+df_conexao["Metrica"] = (df_conexao["Engajamento"] / df_conexao["Total de Posts"]).astype(int)
+
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
 
@@ -55,6 +57,7 @@ cores_personalizadas = sidebar.cores_personalizadas
 
 conexao_stylesheet = [{
     'selector': 'node',
+    # ESTILO DAS BOLAS
     'style': {
         'label': 'data(label)',
         'text-valign': 'center',
@@ -66,17 +69,18 @@ conexao_stylesheet = [{
         "border-opacity": 1,
         'width': 'data(size)',
         'height': 'data(size)',
-        'opacity': 0.90,
+        'opacity': 0.95,
         'text-wrap': 'wrap',
         'text-max-width': 80,
         'font-weight': 'bold',
     }
 }, {
     'selector': 'edge',
+    # ESTILO DAS LINHAS
     'style': {
-        "line-fill": "linear-gradient",
-        'width': 0.5,
-        'curve-style': 'straight',
+        'opacity': 0.2,
+        'width': 5,
+        'curve-style': 'haystack',
         'source-endpoint': 'outside-to-node',
         'target-endpoint': 'outside-to-node',
     }
@@ -716,6 +720,7 @@ def updtate_conexoes(selected_value, ativo):
     [
         Output('grafico-conexoes-individual', 'stylesheet', allow_duplicate=True),
         Output("conexao-selecionada", "children"),
+        Output("metrica-conexao-selecionada", "children"),
         Output("engajamento-conexao-selecionada", "children"),
         Output("posts-conexao-selecionada", "children"),
         Output("link-conexao-selecionada", "href"),
@@ -731,7 +736,7 @@ def updtate_conexoes(selected_value, ativo):
 def generate_stylesheet(node, data_list, selected_value):
 
     if not data_list:
-        return conexao_stylesheet, "", "", "", "", ""
+        return conexao_stylesheet, "", "", "", "", "", ""
 
 
     elif node:
@@ -759,11 +764,12 @@ def generate_stylesheet(node, data_list, selected_value):
             'selector': 'edge',
             'style': {
                 "line-fill": "linear-gradient",
-                'width': 0.5,
-                'curve-style': 'bezier',
+                'width': 0.1,
+                'curve-style': 'haystack',
                 'source-endpoint': 'outside-to-node',
                 'target-endpoint': 'outside-to-node',
-                'control-point-step-size': 3
+                'opacity': 0.1,
+                # 'control-point-step-size': 3
             }
         },{
             "selector": 'node[id = "{}"]'.format(node_id),
@@ -777,19 +783,62 @@ def generate_stylesheet(node, data_list, selected_value):
                 'width': 'data(size)',
                 'height': 'data(size)',
                 'opacity': 0.98,
-                'z-index': 9999
+                'z-index': 9999,
             }
-        }]
+        },{
+            "selector": 'node[id = "0"]',
+            "style": {
+                'label': 'data(label)',
+                'background-color': 'data(color)',
+                'text-valign': 'center',
+                'text-halign': 'center',
+                'border-width': 1.5,
+                "border-opacity": 1,
+                'width': 'data(size)',
+                'height': 'data(size)',
+                'opacity': 0.8,
+                'z-index': 9999,
+            }
+        }
+        ]
+
+        for edge in node["edgesData"]:
+            
+            if edge["target"] == node_id:
+
+                stylesheet.append(
+                    {
+                        "selector": 'edge[id= "{}"]'.format(edge['id']),
+                        "style": {
+                            'width': 1,
+                            'curve-style': 'bezier',
+                            'source-endpoint': 'outside-to-node',
+                            'target-endpoint': 'outside-to-node',
+                            'control-point-step-size': 5,
+                            'opacity': 0.9,
+                            'z-index': 5000,
+                            'label': 'data(pct)',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'color': 'rgb(255, 255, 255)',                                           
+                        }                        
+                    }                   
+                )        
+        
+        
+        
+        
         nome = node['data']['label_selected']
 
         if nome == selected_value:
-            return conexao_stylesheet, "", "", "", "", ""
+            return conexao_stylesheet, "", "", "", "", "", ""
 
+        metrica = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Metrica"].values[0]
         engajamento = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Engajamento"].values[0]
         posts = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Total de Posts"].values[0]
         link = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Top Post"].values[0]
 
-        return stylesheet, nome, f"{engajamento:,.0f}".replace(",", "."), posts, link, "primary"
+        return stylesheet, nome, f"{metrica:,.0f}".replace(",", "."), f"{engajamento:,.0f}".replace(",", "."), posts, link, "primary"
 
 # TOAST INFORMACOES CONEXOES
 @app.callback(
@@ -800,8 +849,10 @@ def generate_stylesheet(node, data_list, selected_value):
     ],
 )
 def open_toast(n, aberto):
-    if aberto:
 
+    if aberto:
+        inicio = time.time()    
+        tempo_decorrido = time.time() - inicio
         if n:
             return False
         else:

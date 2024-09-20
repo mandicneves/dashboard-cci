@@ -175,6 +175,17 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
+                        html.H5("Engajamento / Total de Menções", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                    ],
+                    className="d-flex w-100 justify-content-between",
+                ),
+                html.P(id="metrica-conexao-selecionada", className="mb-1"),
+            ]
+        ),
+        dbc.ListGroupItem(
+            [
+                html.Div(
+                    [
                         html.H5("Total de Engajamento", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
                     ],
                     className="d-flex w-100 justify-content-between",
