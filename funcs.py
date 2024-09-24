@@ -115,12 +115,13 @@ def layout_graficos_semanal(fig1, fig2, fig3, fig4):
 
     return elemento
 
-def criar_post_cards(df):
+def criar_post_cards(df, semana):
 
     posts_cards = []
 
     for idx, linha in df.iterrows():
 
+        nome = linha["Nome"]
         legenda = linha["Legenda"]
         likes = formatar_numero(int(linha["Likes"]))
         comentarios = formatar_numero(int(linha["Comentarios"]))
@@ -128,7 +129,9 @@ def criar_post_cards(df):
         views = formatar_numero(int(linha["Visualizacoes"]))
         engajamento = formatar_numero(int(linha["Engajamento"]))
         compartilhamentos = formatar_numero(int(linha["Compartilhamentos"]))
-        link = linha["Link"] 
+        link = linha["Link"]
+
+        plataforma = linha["Plataforma"]
 
         card = html.Div(
             dbc.Container(
@@ -161,8 +164,178 @@ def criar_post_cards(df):
             className="p-3 bg-body-secondary rounded-3",
         )    
 
-        posts_cards.append(card)
+        card_x = html.Div(
+            dbc.Container(
+                [
+                    html.Div([
+                        html.P(legenda, className="lead", 
+                            style={
+                                "font-size": "0.9vw",  # Tamanho fixo da fonte do P
+                                "width": "200px",  # Largura fixa
+                                "height": "80px",  # Altura fixa
+                                # "overflow": "hidden",  # Evita que o texto saia dos limites
+                                "z-index": "1",  # Texto abaixo da imagem
+                                "position": "relative",  # Permite sobreposição
+                                "color": "#A8A800",
+                                "padding": "5px",
+                                "text-shadow": "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000"
+                            }),
+                        html.Img(src=f"assets/posts/{nome}-tp{idx+1}-semana{semana}.png",
+                                style={
+                                    "position": "absolute",  # Sobreposição
+                                    "top": "0",  # Posiciona no topo do contêiner pai
+                                    "left": "0",  # Alinha à esquerda
+                                    "width": "100%",  # Largura total do contêiner
+                                    "height": "100%",  # Altura total do contêiner
+                                    "opacity": "0.5",  # Definição da opacidade da imagem
+                                    "z-index": "0"  # Imagem atrás do texto
+                                })
+                    ], style={
+                        "position": "relative",  # Define o contêiner como relativo para a sobreposição funcionar
+                        "height": "250px",  # Altura total do bloco de conteúdo
+                        "width": "100%",  # Largura total do bloco de conteúdo
+                        "overflow": "hidden",  # Garante que os elementos fiquem dentro do contêiner
+                        "display": "flex",  # Define layout flexível
+                        "flex-direction": "column",  # Alinha itens na vertical
+                        "justify-content": "flex-end"  # Alinha o conteúdo ao final
+                    }),
+                    html.Hr(className="my-2"),
+                    dbc.Row([
+                        dbc.Col(f"❤️ {likes}", id=f"likes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"💭 {impressoes}", id=f"impressoes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"🔄 {compartilhamentos}", id=f"compartilhamentos-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px", "margin-bottom": "10px"}),
+                    html.Hr(className="my-2"),
+                    html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
+                ],
+                fluid=True, 
+                style={"height": "55vh"}
+            ),
+            className="p-2 bg-body-primary rounded-3",
+            style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+        )
 
+        card_insta = html.Div(
+            dbc.Container(
+                [
+                    html.Div([
+                        html.P(legenda, className="lead", 
+                            style={
+                                "font-size": "0.9vw",  # Tamanho fixo da fonte do P
+                                "width": "200px",  # Largura fixa
+                                "height": "80px",  # Altura fixa
+                                # "overflow": "hidden",  # Evita que o texto saia dos limites
+                                "z-index": "1",  # Texto abaixo da imagem
+                                "position": "relative",  # Permite sobreposição
+                                "color": "#A8A800",
+                                "padding": "5px",
+                                "text-shadow": "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000"
+                            }),
+                        html.Img(src=f"assets/posts/{nome}-tp{idx+1}-semana{semana}.png",
+                                style={
+                                    "position": "absolute",  # Sobreposição
+                                    "top": "0",  # Posiciona no topo do contêiner pai
+                                    "left": "0",  # Alinha à esquerda
+                                    "width": "100%",  # Largura total do contêiner
+                                    "height": "100%",  # Altura total do contêiner
+                                    "opacity": "0.5",  # Definição da opacidade da imagem
+                                    "z-index": "0"  # Imagem atrás do texto
+                                })
+                    ], style={
+                        "position": "relative",  # Define o contêiner como relativo para a sobreposição funcionar
+                        "height": "250px",  # Altura total do bloco de conteúdo
+                        "width": "100%",  # Largura total do bloco de conteúdo
+                        "overflow": "hidden",  # Garante que os elementos fiquem dentro do contêiner
+                        "display": "flex",  # Define layout flexível
+                        "flex-direction": "column",  # Alinha itens na vertical
+                        "justify-content": "flex-end"  # Alinha o conteúdo ao final
+                    }),
+                    html.Hr(className="my-2"),
+                    dbc.Row([
+                        dbc.Col(f"❤️ {likes}", id=f"likes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"💬 {comentarios}", id=f"comentarios-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"💭 {impressoes}", id=f"impressoes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    html.Hr(className="my-2"),
+                    html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
+                ],
+                fluid=True, 
+                style={"height": "55vh"}
+            ),
+            className="p-2 bg-body-primary rounded-3",
+            style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+        )
+
+        card_tiktok = html.Div(
+            dbc.Container(
+                [
+                    html.Div([
+                        html.P(legenda, className="lead", 
+                            style={
+                                "font-size": "0.9vw",  # Tamanho fixo da fonte do P
+                                "width": "200px",  # Largura fixa
+                                "height": "80px",  # Altura fixa
+                                # "overflow": "hidden",  # Evita que o texto saia dos limites
+                                "z-index": "1",  # Texto abaixo da imagem
+                                "position": "relative",  # Permite sobreposição
+                                "color": "#A8A800",
+                                "padding": "5px",
+                                "text-shadow": "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000"
+                            }),
+                        html.Img(src=f"assets/posts/{nome}-tp{idx+1}-semana{semana}.png",
+                                style={
+                                    "position": "absolute",  # Sobreposição
+                                    "top": "0",  # Posiciona no topo do contêiner pai
+                                    "left": "0",  # Alinha à esquerda
+                                    "width": "100%",  # Largura total do contêiner
+                                    "height": "100%",  # Altura total do contêiner
+                                    "opacity": "0.5",  # Definição da opacidade da imagem
+                                    "z-index": "0"  # Imagem atrás do texto
+                                })
+                    ], style={
+                        "position": "relative",  # Define o contêiner como relativo para a sobreposição funcionar
+                        "height": "250px",  # Altura total do bloco de conteúdo
+                        "width": "100%",  # Largura total do bloco de conteúdo
+                        "overflow": "hidden",  # Garante que os elementos fiquem dentro do contêiner
+                        "display": "flex",  # Define layout flexível
+                        "flex-direction": "column",  # Alinha itens na vertical
+                        "justify-content": "flex-end"  # Alinha o conteúdo ao final
+                    }),
+                    html.Hr(className="my-2"),
+                    dbc.Row([
+                        dbc.Col(f"❤️ {likes}", id=f"likes-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"💬 {comentarios}", id=f"comentarios-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                        dbc.Col(f"🔄 {compartilhamentos}", id=f"compartilhamentos-{idx+1}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px"}),
+                    dbc.Row([
+                        dbc.Col(f"📈 {views}", id=f"views-{idx+1}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                    ], style={"margin-top": "10px", "margin-bottom": "10px"}),
+                    html.Hr(className="my-2"),
+                    html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
+                ],
+                fluid=True, style={"height": "55vh"}
+            ),
+            className="p-2 bg-body-primary rounded-3",
+            style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+        )
+
+        if plataforma == "Instagram":
+            posts_cards.append(card_insta)
+
+        elif plataforma == "TikTok":
+            posts_cards.append(card_tiktok)
+        
+        else:
+            posts_cards.append(card_x)
 
     return posts_cards
 
@@ -178,6 +351,7 @@ def criar_tooltips(df):
         visualizacoes = dbc.Tooltip("Visualizações", target=f"views-{i+1}", placement="top")
         engajamento = dbc.Tooltip("Engajamento", target=f"engajamento-{i+1}", placement="top")
         compartilhamentos = dbc.Tooltip("Compartilhamentos", target=f"compartilhamentos-{i+1}", placement="top")
+        df.loc[i, "Plataforma"]
         
         tooltips.append(likes)
         tooltips.append(comentarios)
@@ -188,10 +362,10 @@ def criar_tooltips(df):
 
     return tooltips
 
-def layout_cards_semanais(df):
+def layout_cards_semanais(df, semana):
 
     try:
-        card1, card2, card3 = criar_post_cards(df)
+        card1, card2, card3 = criar_post_cards(df, semana)
         elemento = html.Div([
             dbc.Row([
                 dbc.Col([card1], sm=3, width={"offset": 1}),
@@ -202,7 +376,7 @@ def layout_cards_semanais(df):
         ])
     except:
         # elemento = ""
-        card1, card2 = criar_post_cards(df)
+        card1, card2 = criar_post_cards(df, semana)
         elemento = html.Div([
             dbc.Row([
                 dbc.Col([card1], sm=3, width={"offset": 2}),
@@ -212,3 +386,5 @@ def layout_cards_semanais(df):
         ])
 
     return elemento
+
+

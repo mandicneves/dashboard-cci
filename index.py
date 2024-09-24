@@ -625,14 +625,14 @@ def update_posts_cards(selected_value, item_ativo):
     if item_ativo == "post-semana1":
 
         df_top_posts1 = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
-        elemento = funcs.layout_cards_semanais(df_top_posts1)
+        elemento = funcs.layout_cards_semanais(df_top_posts1, 1)
 
         return [elemento, ""]
 
     elif item_ativo == "post-semana2":
 
         df_top_posts2 = df_top_posts[df_top_posts["Semana"] == "4-10 SET/24"].reset_index(drop=True)
-        elemento = funcs.layout_cards_semanais(df_top_posts2)
+        elemento = funcs.layout_cards_semanais(df_top_posts2, 2)
 
         return ["", elemento]
     

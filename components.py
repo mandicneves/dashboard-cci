@@ -285,7 +285,12 @@ accordion_vs = html.Div(
                             dbc.Row([
                                 dbc.Col(
                                     [
-                                        toast,
+                                        html.Div([toast],
+                                                 style={
+                                                    'display': 'flex',
+                                                    'justify-content': 'center',
+                                                    'align-items': 'center'
+                                                }),
                                         legenda
                                     ]
                                     , sm=1),
@@ -347,7 +352,7 @@ accordion_pc = html.Div(
                 html.Div([], id="top-posts-semana2", hidden=True),
                 html.Div([], id="graficos-semana2", hidden=False),
             ]),
-        ]
+        ],
     ),
     
 )
