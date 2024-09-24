@@ -31,13 +31,19 @@ cyto.load_extra_layouts()
 
 infos = pd.read_csv("./dataset/infos.csv")
 local = pd.read_csv("./dataset/local.csv").dropna()
+local["PLATAFORMA"] = local["PLATAFORMA"].str.replace("X", "TWITTER")
 lat_mean = local.loc[local["ESTADO"] == "São Paulo", "LATITUDE"].iloc[0]
 lon_mean = local.loc[local["ESTADO"] == "São Paulo", "LONGITUDE"].iloc[0]
 seguidores = pd.read_csv("./dataset/seguidores.csv")
+seguidores["PLATAFORMA"] = seguidores["PLATAFORMA"].str.replace("X", "TWITTER")
 idade = pd.read_csv("./dataset/idade.csv")
+idade["PLATAFORMA"] = idade["PLATAFORMA"].str.replace("X", "TWITTER")
 genero = pd.read_csv("./dataset/genero.csv")
+genero["PLATAFORMA"] = genero["PLATAFORMA"].str.replace("X", "TWITTER")
 posts = pd.read_csv("./dataset/posts.csv")
+posts["Nome"] = posts["Nome"].str.replace("Josimar Maranhãozinho", "Josimar de Maranhãozinho")
 conteudo = pd.read_csv("./dataset/conteudo.csv")
+conteudo[conteudo["Nome"].str.contains("Josimar")]
 conteudo["Data"] = pd.to_datetime(conteudo["Data"], dayfirst=True)
 top_posts = pd.read_csv("./dataset/top_posts.csv")
 top_posts["Legenda"] = top_posts["Legenda"].str.strip()
@@ -367,6 +373,8 @@ def update_graficos_geral_pc(selected_values, operacao):
     df_posts = posts[(posts["Nome"].isin(selected_values)) & (posts["Plataforma"] == "Total")]
     data_inicial = df_posts["Data"].unique()[0]
     data_final = df_posts["Data"].unique()[-1]
+
+    posts["Nome"].unique()
 
     if operacao == "percentual":
 
@@ -872,7 +880,7 @@ def open_toast(n, aberto):
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 
 

@@ -949,7 +949,8 @@
         {
             "data": {
                 "source": "0",
-                "target": "1"
+                "target": "1",
+                "pct": "1.0%"
             }
         },
         {
