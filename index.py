@@ -519,7 +519,9 @@ def update_graficos_visao_geral(selected_value):
 @app.callback(
         [
             Output("grafico-total-posts-final", "figure"),
+            Output("caixas-total-posts-final", "children"),
             Output("grafico-engajamento-total-final", "figure"),
+            Output("grafico-engajamento-medio-final", "figure"),
             Output("grafico-engajamento-taxa-final", "figure"),
             Output("grafico-vmg-final", "figure"),
         ],
@@ -533,6 +535,8 @@ def update_graficos_conteudo_final(selected_value):
     df_conteudo = conteudo[conteudo["Nome"] == selected_value]
     df_total_posts = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True).size().reset_index(name="Total de Posts")
     df_engajamento_total = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Engajamento"]].sum().reset_index()
+    df_engajamento_medio = df_total_posts.merge(df_engajamento_total, on=["Nome", "Semana", "Plataforma"])
+    df_engajamento_medio["Engajamento Médio"] = (df_engajamento_medio["Engajamento"] / df_engajamento_medio["Total de Posts"]).astype(int)
     df_engajamento_taxa = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Taxa de Engajamento"]].mean().reset_index()
     df_vmg = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["VMG"]].sum().reset_index()
 
@@ -546,21 +550,127 @@ def update_graficos_conteudo_final(selected_value):
 
     grafico_total_posts = px.bar(df_total_posts, x = "Semana", y = "Total de Posts", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
     grafico_total_engajamento = px.bar(df_engajamento_total, x = "Semana", y = "Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_total_engajamento.update_yaxes(tickformat=",.2s")
+    grafico_engajamento_medio = px.bar(df_engajamento_medio, x = "Semana", y = "Engajamento Médio", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_engajamento_medio.update_yaxes(tickformat=",.2s")
     grafico_taxa_engajamento = px.bar(df_engajamento_taxa, x = "Semana", y = "Taxa de Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
     grafico_taxa_engajamento.update_yaxes(tickformat=".1%")
-    grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)    
+    grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
+    grafico_vmg.update_yaxes(tickformat=",.2s")
 
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
+    grafico_engajamento_medio.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
+                                title={"text": "Engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    
 
-    return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
+
+
+    try:
+        posts_insta = df_total_posts.loc[df_total_posts["Plataforma"] == "Instagram", "Total de Posts"].sum()
+    except:
+        posts_insta = 0
+    try:
+        posts_tiktok = df_total_posts.loc[df_total_posts["Plataforma"] == "TikTok", "Total de Posts"].sum()
+    except:
+        posts_tiktok = 0
+    try:
+        posts_x = df_total_posts.loc[df_total_posts["Plataforma"] == "Twitter", "Total de Posts"].sum()
+    except:
+        posts_x = 0
+    try:
+        posts_youtube = df_total_posts.loc[df_total_posts["Plataforma"] == "YouTube", "Total de Posts"].sum()
+    except:
+        posts_youtube = 0
+
+
+    caixas = dbc.Container(
+        dbc.Row(
+            [
+                html.H6("Contagem de Posts", style={"margin-bottom": "5px"}),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-instagram", style={"font-size": "12px", "color": "#E1306C"}),  # Ícone do Instagram
+                                    html.P("Instagram", className="mb-0"),
+                                    html.H6(f"{posts_insta}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-twitter", style={"font-size": "12px", "color": "#1DA1F2"}),  # Ícone do Twitter
+                                    html.P("Twitter", className="mb-0"),
+                                    html.H6(f"{posts_x}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-youtube", style={"font-size": "12px", "color": "#FF0000"}),  # Ícone do YouTube
+                                    html.P("YouTube", className="mb-0"),
+                                    html.H6(f"{posts_youtube}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-tiktok", style={"font-size": "12px", "color": "#000000"}),  # Ícone do TikTok
+                                    html.P("TikTok", className="mb-0"),
+                                    html.H6(f"{posts_tiktok}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+            ],
+            className="g-2",  # Gap entre as colunas
+            style={"justify-content": "center", "margin-bottom": "10px", "margin-right": "8px"}  # Centralizar os elementos
+        ),
+        fluid=True
+    ) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return grafico_total_posts, caixas, grafico_total_engajamento, grafico_engajamento_medio, grafico_taxa_engajamento, grafico_vmg
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - GRAFICOS SEMANAIS
 @app.callback(

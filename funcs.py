@@ -1,9 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
-from dash.dependencies import Output
 from dash import html, dcc
-import components
 
 
 
@@ -238,8 +236,17 @@ def criar_post_cards(df, semana):
 
             card_insta = html.Div(
                 dbc.Container(
-                    [
+                    [                        
                         html.Div([
+                            html.I(className="bi bi-instagram", 
+                                    style={
+                                        "font-size": "50px", 
+                                        "color": "#000000",
+                                        "position": "absolute",  # Posicionamento absoluto
+                                        "top": "10px",  # Alinha no topo com um pequeno espaçamento
+                                        "right": "10px",  # Alinha à direita com um pequeno espaçamento
+                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                    }), 
                             html.P(legenda, className="lead", 
                                 style={
                                     "font-size": "0.9vw",  # Tamanho fixo da fonte do P
@@ -277,7 +284,7 @@ def criar_post_cards(df, semana):
                             dbc.Col(f"💬 {comentarios}", id=f"comentarios-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px"}),
                         dbc.Row([
-                            dbc.Col(f"💭 {impressoes}", id=f"impressoes-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"📈 {impressoes}", id=f"impressoes-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
                             dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px"}),
                         html.Hr(className="my-2"),
@@ -298,6 +305,15 @@ def criar_post_cards(df, semana):
                 dbc.Container(
                     [
                         html.Div([
+                            html.I(className="bi bi-tiktok", 
+                                    style={
+                                        "font-size": "50px", 
+                                        "color": "#000000",
+                                        "position": "absolute",  # Posicionamento absoluto
+                                        "top": "10px",  # Alinha no topo com um pequeno espaçamento
+                                        "right": "10px",  # Alinha à direita com um pequeno espaçamento
+                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                    }),                            
                             html.P(legenda, className="lead", 
                                 style={
                                     "font-size": "0.9vw",  # Tamanho fixo da fonte do P
@@ -336,10 +352,10 @@ def criar_post_cards(df, semana):
                         ], style={"margin-top": "10px"}),
                         dbc.Row([
                             dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
-                            dbc.Col(f"🔄 {compartilhamentos}", id=f"compartilhamentos-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"🔀 {compartilhamentos}", id=f"compartilhamentos-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px"}),
                         dbc.Row([
-                            dbc.Col(f"📈 {views}", id=f"views-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"👁️ {views}", id=f"views-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px", "margin-bottom": "10px"}),
                         html.Hr(className="my-2"),
                         html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
@@ -358,6 +374,15 @@ def criar_post_cards(df, semana):
                 dbc.Container(
                     [
                         html.Div([
+                            html.I(className="bi bi-twitter", 
+                                    style={
+                                        "font-size": "50px", 
+                                        "color": "#000000",
+                                        "position": "absolute",  # Posicionamento absoluto
+                                        "top": "10px",  # Alinha no topo com um pequeno espaçamento
+                                        "right": "10px",  # Alinha à direita com um pequeno espaçamento
+                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                    }), #                             
                             html.P(legenda, className="lead", 
                                 style={
                                     "font-size": "0.9vw",  # Tamanho fixo da fonte do P
@@ -395,8 +420,8 @@ def criar_post_cards(df, semana):
                             dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px"}),
                         dbc.Row([
-                            dbc.Col(f"💭 {impressoes}", id=f"impressoes-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
-                            dbc.Col(f"🔄 {compartilhamentos}", id=f"compartilhamentos-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"📈 {impressoes}", id=f"impressoes-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"🔀 {compartilhamentos}", id=f"compartilhamentos-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px", "margin-bottom": "10px"}),
                         html.Hr(className="my-2"),
                         html.P(dbc.Button("Link", color="primary", outline=True, href=link, style={"margin-top": "15px"}), className="d-grid gap-2"),
@@ -416,6 +441,15 @@ def criar_post_cards(df, semana):
                 dbc.Container(
                     [
                         html.Div([
+                            html.I(className="bi bi-youtube", 
+                                    style={
+                                        "font-size": "50px", 
+                                        "color": "#000000",
+                                        "position": "absolute",  # Posicionamento absoluto
+                                        "top": "10px",  # Alinha no topo com um pequeno espaçamento
+                                        "right": "10px",  # Alinha à direita com um pequeno espaçamento
+                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                    }),
                             html.P(legenda, className="lead", 
                                 style={
                                     "font-size": "0.9vw",  # Tamanho fixo da fonte do P
@@ -453,7 +487,7 @@ def criar_post_cards(df, semana):
                             dbc.Col(f"💬 {comentarios}", id=f"comentarios-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px"}),
                         dbc.Row([
-                            dbc.Col(f"📈 {views}", id=f"views-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
+                            dbc.Col(f"👁️ {views}", id=f"views-{idx+1}-semana{semana}", style={"margin-left": "15px", "font-size": "1.1vw"}),
                             dbc.Col(f"👍 {engajamento}", id=f"engajamento-{idx+1}-semana{semana}", style={"margin-right": "15px", "font-size": "1.1vw"}),
                         ], style={"margin-top": "10px", "margin-bottom": "10px"}),
                         html.Hr(className="my-2"),
