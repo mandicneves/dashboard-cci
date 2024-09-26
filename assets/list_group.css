@@ -2,3 +2,14 @@
 .list-group-item-custom {
     border: 1px solid #e9e9e9a0; /* Borda branca */
 }
+
+
+
+
+
+
+/* Mudar a cor ao passar o mouse sobre os nav-link */
+.nav-link:hover {
+    background-color: #78c2ad; 
+    color: white;
+}

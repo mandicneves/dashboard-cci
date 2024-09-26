@@ -5,16 +5,6 @@ from dash import html, dcc
 
 
 
-
-
-
-
-
-
-
-
-
-
 def formatar_numero(numero):
     if abs(numero) >= 1_000_000:
         return f"{numero / 1_000_000:.2f}M"
@@ -96,7 +86,7 @@ def criar_graficos_semanal(df_posts):
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
-                                title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
+                                title={"text": "Taxa média de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     
@@ -123,6 +113,7 @@ def criar_graficos_semanal(df_posts):
         dbc.Row(
             [
                 html.H6("Contagem de Posts", style={"margin-bottom": "5px"}),
+                # INSTAGRAM
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
@@ -137,6 +128,7 @@ def criar_graficos_semanal(df_posts):
                         style={"width": "100%", "text-align": "center"}
                     ),
                 ),
+                # TWITTER
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
@@ -151,6 +143,7 @@ def criar_graficos_semanal(df_posts):
                         style={"width": "100%", "text-align": "center"}
                     ),
                 ),
+                # YOUTUBE
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
@@ -165,6 +158,7 @@ def criar_graficos_semanal(df_posts):
                         style={"width": "100%", "text-align": "center"}
                     ),
                 ),
+                # TIKTOK
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
@@ -188,24 +182,56 @@ def criar_graficos_semanal(df_posts):
 
     return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg, caixas
 
-def layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas):
+def criar_popover_grafico_semanal(semana):
+    
+    elemento = html.Div([        
+        dbc.Popover(
+            [
+                dbc.PopoverHeader("Total de Posts", style={"background-color": "#45A1FF"}),
+                dbc.PopoverBody("Soma das postagens realizadas no período."),
+            ],
+            target=f"grafico-total-posts-semana{semana}", trigger="click", id=f"dica-total-posts-semana{semana}"),
+        dbc.Popover(
+            [
+                dbc.PopoverHeader("Total de Engajamento", style={"background-color": "#45A1FF"}),
+                dbc.PopoverBody("Engajamento é o número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
+            ],
+            target=f"grafico-engajamento-total-semana{semana}", trigger="click", id=f"dica-total-engajamento-semana{semana}"),
+        dbc.Popover(
+            [
+                dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#45A1FF"}),
+                dbc.PopoverBody("Taxa de engajamento é o percentual do público que engajou com a publicação curtindo, comentando ou compartilhando."),
+            ],
+            target=f"grafico-engajamento-taxa-semana{semana}", trigger="click", id=f"dica-taxa-engajamento-semana{semana}"),
+        dbc.Popover(
+            [
+                dbc.PopoverHeader("Total de VMG", style={"background-color": "#45A1FF"}),
+                dbc.PopoverBody("VMG (Valor de Mídia Ganho) é um valor monetário estimado da publicação com base no tamanho do público alcançado."),
+            ],
+            target=f"grafico-vmg-semana{semana}", trigger="click", id=f"dica-vmg{semana}"),            
+
+    ])
+
+    return elemento
+
+def layout_graficos_semanal(semana, fig1, fig2, fig3, fig4, caixas):
                 
     elemento = html.Div([
         dbc.Row([
             dbc.Col([
                 caixas,
-                dcc.Graph(id = "grafico-total-posts-semana1", figure=fig1, style={"height": "20vh", "margin-right": "10px"}),
+                dcc.Graph(id = f"grafico-total-posts-semana{semana}", figure=fig1, style={"height": "20vh", "margin-right": "10px"}),
             ], sm=6),
             dbc.Col([
-                dcc.Graph(id = "grafico-engajamento-total-semana1", figure=fig2, style={"height": "36.5vh"}),
+                dcc.Graph(id = f"grafico-engajamento-total-semana{semana}", figure=fig2, style={"height": "36.5vh"}),
             ], sm=6),
     ], className="g-0"),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id = "grafico-engajamento-taxa-semana1", figure=fig3, style={"height": "30vh", "margin-right": "10px", "margin-top": "10px"}),
+            dcc.Graph(id = f"grafico-engajamento-taxa-semana{semana}", figure=fig3, style={"height": "30vh", "margin-right": "10px", "margin-top": "10px"}),
         ], sm=6),
         dbc.Col([
-            dcc.Graph(id = "grafico-vmg-semana1", figure=fig4, style={"height": "30vh", "margin-top": "10px"}),
+            dcc.Graph(id = f"grafico-vmg-semana{semana}", figure=fig4, style={"height": "30vh", "margin-top": "10px"}),
         ], sm=6),
     ], className="g-0"),
     ])
@@ -502,7 +528,6 @@ def criar_post_cards(df, semana):
 
             posts_cards.append(card_youtube)
             
-
     return posts_cards
 
 def criar_tooltips(semana):
@@ -513,9 +538,9 @@ def criar_tooltips(semana):
 
         likes = dbc.Tooltip("Likes", target=f"likes-{i}-semana{semana}", placement="top")
         comentarios = dbc.Tooltip("Comentarios", target=f"comentarios-{i}-semana{semana}", placement="top")
-        impressoes = dbc.Tooltip("Impressões", target=f"impressoes-{i}-semana{semana}", placement="top")
-        visualizacoes = dbc.Tooltip("Visualizações", target=f"views-{i}-semana{semana}", placement="top")
-        engajamento = dbc.Tooltip("Engajamento", target=f"engajamento-{i}-semana{semana}", placement="top")
+        impressoes = dbc.Tooltip("Impressões: Número de vezes que o público visualizou a publicação.", target=f"impressoes-{i}-semana{semana}", placement="top")
+        visualizacoes = dbc.Tooltip("Visualizações: Número de vezes que o público visualizou a publicação de vídeo.", target=f"views-{i}-semana{semana}", placement="top")
+        engajamento = dbc.Tooltip("Engajamento: Número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando.", target=f"engajamento-{i}-semana{semana}", placement="top")
         compartilhamentos = dbc.Tooltip("Compartilhamentos", target=f"compartilhamentos-{i}-semana{semana}", placement="top")
         
         tooltips.append(likes)
@@ -548,5 +573,4 @@ def layout_cards_semanais(df, semana):
         ])
 
     return elemento
-
 

@@ -122,15 +122,16 @@ app.layout = html.Div([
         Output("quadro-informacoes-div", "hidden"),
         Output("escolha-politico-div", "hidden"),
         Output("div-mostrar-posts", "hidden", allow_duplicate=True),
+        Output("div-dicionario-variaveis", "hidden"),
     ],
     [Input("base-url", "pathname")],
     prevent_initial_call=True
     )
 def render_page(pathname):
     if pathname == "/":
-        return geral.layout, True, False, False, True, True
+        return geral.layout, True, False, False, True, True, True
     else:
-        return individual.layout, False, True, True, False, True
+        return individual.layout, False, True, True, False, True, False
 
 # ALTERAR ENTRE TABS DO GERAL
 @app.callback(
@@ -155,8 +156,10 @@ def switch_tab_geral(at):
 def switch_tab_individual(at):
     if at == "tab-geral":
         return [tabs.visao_geral]
-    else:
+    elif at == "tab-conteudo":
         return [tabs.conteudo]
+    else:
+        return ["ERROR"]
 
 # PAGINAL INDIVIDUAL CARREGANDO INFORMACOES PESSOAIS DOS POLITICOS
 @app.callback(
@@ -535,6 +538,8 @@ def update_graficos_conteudo_final(selected_value):
     df_conteudo = conteudo[conteudo["Nome"] == selected_value]
     df_total_posts = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True).size().reset_index(name="Total de Posts")
     df_engajamento_total = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Engajamento"]].sum().reset_index()
+    # df_engajamento_medio = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Engajamento"]].mean().reset_index()
+    # df_engajamento_medio.columns = ["Nome", "Semana", "Plataforma", "Engajamento Médio"]
     df_engajamento_medio = df_total_posts.merge(df_engajamento_total, on=["Nome", "Semana", "Plataforma"])
     df_engajamento_medio["Engajamento Médio"] = (df_engajamento_medio["Engajamento"] / df_engajamento_medio["Total de Posts"]).astype(int)
     df_engajamento_taxa = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Taxa de Engajamento"]].mean().reset_index()
@@ -701,7 +706,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
         df_posts = df_posts[df_posts["Semana"] == "14-20 MAR/24"]
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)
+        elemento = funcs.layout_graficos_semanal(1, fig1, fig2, fig3, fig4, caixas)
 
         return [elemento, "", ""]
     
@@ -709,7 +714,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         
         df_posts = df_posts[df_posts["Semana"] == "4-10 SET/24"]
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)
+        elemento = funcs.layout_graficos_semanal(2, fig1, fig2, fig3, fig4, caixas)
 
         return ["", elemento, ""]
     
@@ -717,7 +722,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
         df_posts = df_posts[df_posts["Semana"] == "12-18 JUN/24"]
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)        
+        elemento = funcs.layout_graficos_semanal(3, fig1, fig2, fig3, fig4, caixas)        
 
         return ["", "", elemento]
     
@@ -1015,6 +1020,17 @@ def open_toast(n, aberto):
         else:
             return False
 
+# OFFCANVAS DICIONARIO DE INFORMAÇÕES
+@app.callback(
+    Output("offcanvas", "is_open"),
+    Input("button-dicionario-variaveis", "n_clicks"),
+    [State("offcanvas", "is_open")],
+)
+def toggle_offcanvas(n1, is_open):
+    if n1:
+        return not is_open
+    return is_open
+
 # TOOLTIPS PARA POSTS SEMANAIS
 @app.callback(
         [
@@ -1037,6 +1053,38 @@ def generate_tooltips(active_item):
     elif active_item == "post-semana3":
 
         retorno = ["", "", funcs.criar_tooltips(semana=3)]
+    
+    else:
+
+        retorno = ["", "", ""]
+
+
+    return retorno
+
+
+# POPOVERS PARA POSTS SEMANAIS
+@app.callback(
+        [
+            Output("popovers-semana1", "children"),
+            Output("popovers-semana2", "children"),
+            Output("popovers-semana3", "children"),
+        ],
+            Input("accordion-conteudo", "active_item")    
+)
+def generate_popovers(active_item):
+
+
+    if active_item == "post-semana1":
+
+        retorno = [funcs.criar_popover_grafico_semanal(semana=1), "", ""]
+
+    elif active_item == "post-semana2":
+
+        retorno = ["", funcs.criar_popover_grafico_semanal(semana=2), ""]
+
+    elif active_item == "post-semana3":
+
+        retorno = ["", "", funcs.criar_popover_grafico_semanal(semana=3)]
     
     else:
 

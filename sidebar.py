@@ -36,7 +36,7 @@ for i in range(len(cores)):
 style_sidebar = style={"box-shadow": "2px 2px 10px 0px rgba(10, 9, 7, 0.10)",
                     "margin": "10px",
                     "padding": "10px",
-                    "height": "95vh"}
+                    "height": "100vh"}
 
 # ============================
 # LAYOUT
@@ -44,6 +44,44 @@ style_sidebar = style={"box-shadow": "2px 2px 10px 0px rgba(10, 9, 7, 0.10)",
 
 layout = dbc.Card(
     [   
+        # BOTAO DE DICIONARIO DAS VARIAVEIS
+        html.Div([
+            dbc.Button("Dicionário Variáveis", id="button-dicionario-variaveis", size="sm")
+        ], hidden=True, id="div-dicionario-variaveis", style={'display': 'flex', 'justify-content': 'center'}),
+
+        dbc.Offcanvas(
+            html.Div([
+                html.Hr(),
+                html.H6("Total de Posts"),
+                html.P("Soma das postagens realizadas no período."),
+                html.Hr(),
+                html.H6("Engajamento"),
+                html.P("Número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
+                html.Hr(),
+                html.H6("Engajamento Médio"),
+                html.P("Média de engajamento (likes, comentários e compartilhamentos) por post."),
+                html.Hr(),
+                html.H6("Taxa de Engajamento"),
+                html.P("Percentual de um público que engajou com a publicação curtindo, comentando ou compartilhando."),
+                html.Hr(),
+                html.H6("Impressões"),
+                html.P("Número de vezes que o público visualizou a publicação."),
+                html.Hr(),
+                html.H6("Visualizações"),
+                html.P("Número de vezes que o público visualizou a publicação de vídeo."),
+                html.Hr(),
+                html.H6("VMG (Valor de Mídia Ganho)"),
+                html.P("Valor monetário estimado da publicação com base no engajamento e tamanho do público."),
+                html.Hr(),
+            ]),
+            id="offcanvas",
+            title="Descrição das variáveis",
+            is_open=False,
+            placement="end"
+        ),        
+
+
+
         # BOTOES DE GERAL E INDIVIDUAL
         dbc.Nav(
             [
@@ -113,7 +151,7 @@ layout = dbc.Card(
                 value="Abilio Brunini",
                 id="dropdown-politico"),
             html.Img(src = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29.jpg",
-                     style={"width": "12vw", "display": "block", "padding-top": "10px", "margin": "0 auto", "margin-top": "10px"},
+                     style={"width": "11vw", "display": "block", "padding-top": "10px", "margin": "0 auto", "margin-top": "10px"},
                      id="imagem-politico"),
             dbc.ListGroup([
                 dbc.ListGroupItem(id="nome-politico", className="list-group-item-custom"),

@@ -253,6 +253,44 @@ toast = html.Div(
 )
 
 
+infos_semanal_completo = html.Div([
+    dbc.Popover(
+        [
+            dbc.PopoverHeader("Total de Posts", style={"background-color": "#45A1FF"}),
+            dbc.PopoverBody("Soma das postagens realizadas no período."),
+        ],
+        target="grafico-total-posts-final", trigger="click", id="dica-total-posts-final"),
+    dbc.Popover(
+        [
+            dbc.PopoverHeader("Total de Engajamento", style={"background-color": "#45A1FF"}),
+            dbc.PopoverBody("Engajamento é o número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
+        ],
+        target="grafico-engajamento-total-final", trigger="click", id="dica-total-engajamento-final"),
+    dbc.Popover(
+        [
+            dbc.PopoverHeader("Engajamento Médio", style={"background-color": "#45A1FF"}),
+            dbc.PopoverBody("Média de engajamento (likes, comentários e compartilhamentos) por post."),
+        ],
+        target="grafico-engajamento-medio-final", trigger="click", id="dica-engajamento-medio-final"),
+    dbc.Popover(
+        [
+            dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#45A1FF"}),
+            dbc.PopoverBody("Taxa de engajamento é o percentual do público que engajou com a publicação curtindo, comentando ou compartilhando."),
+        ],
+        target="grafico-engajamento-taxa-final", trigger="click", id="dica-taxa-engajamento-final"),
+    dbc.Popover(
+        [
+            dbc.PopoverHeader("Total de VMG", style={"background-color": "#45A1FF"}),
+            dbc.PopoverBody("VMG (Valor de Mídia Ganho) é um valor monetário estimado da publicação com base no tamanho do público alcançado."),
+        ],
+        target="grafico-vmg-final", trigger="click", id="dica-vmg-final"),    
+])
+
+
+
+
+
+
 
 
 # ACCODRION
@@ -349,23 +387,27 @@ accordion_pc = html.Div(
                     dbc.Col([
                         dcc.Graph(id = "grafico-vmg-final", figure=fig, style={"height": "28vh", "margin-top": "10px"}),
                     ], sm=6),
+                    infos_semanal_completo
                 ], className="g-0"),
             ]),
             # SEMANA 1
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
                 html.Div([], id="tooltips-semana1"),
+                html.Div([], id="popovers-semana1"),
                 html.Div([], id="top-posts-semana1", hidden=True),
                 html.Div([], id="graficos-semana1", hidden=False),
             ]),
             # SEMANA 3
             dbc.AccordionItem(title="📅 12-18 Junho/2024", item_id="post-semana3", children=[
                 html.Div([], id="tooltips-semana3"),
+                html.Div([], id="popovers-semana3"),
                 html.Div([], id="top-posts-semana3", hidden=True),
                 html.Div([], id="graficos-semana3", hidden=False),
             ]),
             # SEMANA 2
             dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
                 html.Div([], id="tooltips-semana2"),
+                html.Div([], id="popovers-semana2"),
                 html.Div([], id="top-posts-semana2", hidden=True),
                 html.Div([], id="graficos-semana2", hidden=False),
             ]),
