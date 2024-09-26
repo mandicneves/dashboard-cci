@@ -2,6 +2,9 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 
+# auxiliares
+import funcs
+
 # graficos
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
@@ -9,6 +12,7 @@ import dash_cytoscape as cyto
 cyto.load_extra_layouts()
 tema = "cyborg"
 load_figure_template(tema)
+
 
 # componentes
 fig = go.Figure()
@@ -146,7 +150,6 @@ legenda = html.Div(
     }   
 )
 
-
 button_group1 = dbc.ButtonGroup(
     [dbc.Button("Insta", id="insta-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm"), 
      dbc.Button("Twitter", id="twitter-politico", outline=True, color="secondary", style={"fontSize": "1vw"}, size="sm")],
@@ -220,7 +223,6 @@ list_group = dbc.ListGroup(
         ),
     ]
 )
-
 
 toast = html.Div(
     [
@@ -324,7 +326,7 @@ accordion_pc = html.Div(
         flush=True, id = "accordion-conteudo", active_item="post-completo",children=
         [   
             # PERIODO COMPLETO
-            dbc.AccordionItem(title="📅 14 Março - 30 Setembro/2024", item_id="post-completo", children=[
+            dbc.AccordionItem(title="📅 14 Março - 10 Setembro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-total-posts-final", figure=fig, style={"height": "30vh", "margin-right": "10px"}),
@@ -344,16 +346,28 @@ accordion_pc = html.Div(
             ]),
             # SEMANA 1
             dbc.AccordionItem(title="📅 14-20 Março/2024", item_id="post-semana1", children=[
+                html.Div([], id="tooltips-semana1"),
                 html.Div([], id="top-posts-semana1", hidden=True),
                 html.Div([], id="graficos-semana1", hidden=False),
             ]),
+            # SEMANA 3
+            dbc.AccordionItem(title="📅 12-18 Junho/2024", item_id="post-semana3", children=[
+                html.Div([], id="tooltips-semana3"),
+                html.Div([], id="top-posts-semana3", hidden=True),
+                html.Div([], id="graficos-semana3", hidden=False),
+            ]),
             # SEMANA 2
             dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
+                html.Div([], id="tooltips-semana2"),
                 html.Div([], id="top-posts-semana2", hidden=True),
                 html.Div([], id="graficos-semana2", hidden=False),
             ]),
+
         ],
     ),
     
 )
+
+
+
 

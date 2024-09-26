@@ -43,7 +43,8 @@ genero["PLATAFORMA"] = genero["PLATAFORMA"].str.replace("X", "TWITTER")
 posts = pd.read_csv("./dataset/posts.csv")
 posts["Nome"] = posts["Nome"].str.replace("Josimar Maranhãozinho", "Josimar de Maranhãozinho")
 conteudo = pd.read_csv("./dataset/conteudo.csv")
-conteudo[conteudo["Nome"].str.contains("Josimar")]
+ordem = conteudo["Semana"].unique().tolist()
+conteudo["Semana"] = pd.Categorical(conteudo["Semana"], ordered=True, categories=ordem)
 conteudo["Data"] = pd.to_datetime(conteudo["Data"], dayfirst=True)
 top_posts = pd.read_csv("./dataset/top_posts.csv")
 top_posts["Legenda"] = top_posts["Legenda"].str.strip()
@@ -530,10 +531,10 @@ def update_graficos_visao_geral(selected_value):
 def update_graficos_conteudo_final(selected_value):
 
     df_conteudo = conteudo[conteudo["Nome"] == selected_value]
-    df_total_posts = df_conteudo.groupby(["Nome", "Semana", "Plataforma"]).size().reset_index(name="Total de Posts")
-    df_engajamento_total = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["Engajamento"]].sum().reset_index()
-    df_engajamento_taxa = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["Taxa de Engajamento"]].mean().reset_index()
-    df_vmg = df_conteudo.groupby(["Nome", "Semana", "Plataforma"])[["VMG"]].sum().reset_index()
+    df_total_posts = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True).size().reset_index(name="Total de Posts")
+    df_engajamento_total = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Engajamento"]].sum().reset_index()
+    df_engajamento_taxa = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["Taxa de Engajamento"]].mean().reset_index()
+    df_vmg = df_conteudo.groupby(["Nome", "Semana", "Plataforma"], observed=True)[["VMG"]].sum().reset_index()
 
     # lista com plataformas para auxiliar na criacao das cores
     plataformas = df_conteudo["Plataforma"].unique().tolist()
@@ -549,13 +550,13 @@ def update_graficos_conteudo_final(selected_value):
     grafico_taxa_engajamento.update_yaxes(tickformat=".1%")
     grafico_vmg = px.bar(df_vmg, x = "Semana", y = "VMG", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)    
 
-    grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
     
 
@@ -566,6 +567,7 @@ def update_graficos_conteudo_final(selected_value):
         [
             Output("graficos-semana1", "children"),
             Output("graficos-semana2", "children"),
+            Output("graficos-semana3", "children"),
         ],
         [
             Input("dropdown-politico", "value"),
@@ -591,7 +593,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
 
-        return [elemento, ""]
+        return [elemento, "", ""]
     
     elif item_ativo == "post-semana2":
         
@@ -599,17 +601,26 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
 
-        return ["", elemento]
+        return ["", elemento, ""]
+    
+    elif item_ativo == "post-semana3":
+
+        df_posts = df_posts[df_posts["Semana"] == "12-18 JUN/24"]
+        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)        
+
+        return ["", "", elemento]
     
     else:
 
-        return ["", ""]
+        return ["", "", ""]
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS
 @app.callback(
         [
             Output("top-posts-semana1", "children"),
             Output("top-posts-semana2", "children"),
+            Output("top-posts-semana3", "children"),
         ],
         [
             Input("dropdown-politico", "value"),
@@ -627,18 +638,25 @@ def update_posts_cards(selected_value, item_ativo):
         df_top_posts1 = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts1, 1)
 
-        return [elemento, ""]
+        return [elemento, "", ""]
 
     elif item_ativo == "post-semana2":
 
         df_top_posts2 = df_top_posts[df_top_posts["Semana"] == "4-10 SET/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts2, 2)
 
-        return ["", elemento]
+        return ["", elemento, ""]
+    
+    elif item_ativo == "post-semana3":
+
+        df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "12-18 JUN/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts3, 3)        
+
+        return ["", "", elemento]
     
     else:
 
-        return ["", ""]
+        return ["", "", ""]
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS
 @app.callback(
@@ -648,6 +666,8 @@ def update_posts_cards(selected_value, item_ativo):
             Output("graficos-semana1", "hidden"),
             Output("top-posts-semana2", "hidden", allow_duplicate=True),
             Output("graficos-semana2", "hidden"),
+            Output("top-posts-semana3", "hidden", allow_duplicate=True),
+            Output("graficos-semana3", "hidden"),
         ],
         [
             Input("accordion-conteudo", "active_item"),
@@ -662,26 +682,39 @@ def mostrar_posts(item_ativo, valor):
 
         if valor == "Gráficos":
 
-            return [False, True, False, True, True]
+            return [False, 
+                    True, False, # semana 1
+                    True, True, # semana 2
+                    True, True # semana 3
+                    ] 
         
         else:
             
-            return [False, False, True, True, True]
-
+            return [False, False, True, True, True, True, True]
 
     if item_ativo == "post-semana2":
 
         if valor == "Gráficos":
 
-            return [False, True, True, True, False]
+            return [False, True, True, True, False, True, True]
         
         else:
             
-            return [False, True, True, False, True]
+            return [False, True, True, False, True, True, True]
+
+    if item_ativo == "post-semana3":
+
+        if valor == "Gráficos":
+
+            return [False, True, True, True, True, True, False]
+        
+        else:
+            
+            return [False, True, True, True, True, False, True]
         
     else:
             
-        return [True, True, True, True, True]
+        return [True, True, True, True, True, True, True]
 
 # ESCONDER RADIO POST GRAFICO NO PERFIL INDIVIDUAL GERAL
 @app.callback(
@@ -872,6 +905,35 @@ def open_toast(n, aberto):
         else:
             return False
 
+# TOOLTIPS PARA POSTS SEMANAIS
+@app.callback(
+        [
+            Output("tooltips-semana1", "children"),
+            Output("tooltips-semana2", "children"),
+            Output("tooltips-semana3", "children"),
+        ],
+            Input("accordion-conteudo", "active_item")    
+)
+def generate_tooltips(active_item):
+
+    if active_item == "post-semana1":
+
+        retorno = [funcs.criar_tooltips(semana=1), "", ""]
+
+    elif active_item == "post-semana2":
+
+        retorno = ["", funcs.criar_tooltips(semana=2), ""]
+
+    elif active_item == "post-semana3":
+
+        retorno = ["", "", funcs.criar_tooltips(semana=3)]
+    
+    else:
+
+        retorno = ["", "", ""]
+
+
+    return retorno
 
 
 
@@ -880,7 +942,7 @@ def open_toast(n, aberto):
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
 
 
 
