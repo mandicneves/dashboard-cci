@@ -2,9 +2,6 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 
-# auxiliares
-import funcs
-
 # graficos
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
@@ -256,6 +253,84 @@ toast = html.Div(
 )
 
 
+
+caixas = dbc.Container(
+    dbc.Row(
+        [
+            html.H6("Contagem de Posts", style={"margin-bottom": "20px"}),
+            dbc.Col(
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.Div([
+                                html.I(className="bi bi-instagram", style={"font-size": "12px", "color": "#E1306C"}),  # Ícone do Instagram
+                                html.P("Instagram", className="mb-0"),
+                                html.H4("{}", className="mb-0"),
+                            ], style={"text-align": "center"})
+                        ]
+                    ),
+                    style={"width": "100%", "text-align": "center"}
+                ),
+            ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.Div([
+                                html.I(className="bi bi-twitter", style={"font-size": "12px", "color": "#1DA1F2"}),  # Ícone do Twitter
+                                html.P("Twitter", className="mb-0"),
+                                html.H4("{}", className="mb-0"),
+                            ], style={"text-align": "center"})
+                        ]
+                    ),
+                    style={"width": "100%", "text-align": "center"}
+                ),
+            ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.Div([
+                                html.I(className="bi bi-youtube", style={"font-size": "12px", "color": "#FF0000"}),  # Ícone do YouTube
+                                html.P("YouTube", className="mb-0"),
+                                html.H4("{}", className="mb-0"),
+                            ], style={"text-align": "center"})
+                        ]
+                    ),
+                    style={"width": "100%", "text-align": "center"}
+                ),
+            ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.Div([
+                                html.I(className="bi bi-tiktok", style={"font-size": "12px", "color": "#000000"}),  # Ícone do TikTok
+                                html.P("TikTok", className="mb-0"),
+                                html.H4("{}", className="mb-0"),
+                            ], style={"text-align": "center"})
+                        ]
+                    ),
+                    style={"width": "100%", "text-align": "center"}
+                ),
+            ),
+        ],
+        className="g-2",  # Gap entre as colunas
+        style={"justify-content": "center"}  # Centralizar os elementos
+    ),
+    fluid=True
+)
+
+
+
+
+
+
+
+
+
+
+
 # ACCODRION
 accordion_vs = html.Div(
     dbc.Accordion(
@@ -323,7 +398,7 @@ accordion_vs = html.Div(
 
 accordion_pc = html.Div(
     dbc.Accordion(
-        flush=True, id = "accordion-conteudo", active_item="post-completo",children=
+        flush=True, id = "accordion-conteudo", active_item="post-semana1",children=
         [   
             # PERIODO COMPLETO
             dbc.AccordionItem(title="📅 14 Março - 10 Setembro/2024", item_id="post-completo", children=[

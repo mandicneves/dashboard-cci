@@ -3,6 +3,18 @@ import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
 from dash.dependencies import Output
 from dash import html, dcc
+import components
+
+
+
+
+
+
+
+
+
+
+
 
 
 def formatar_numero(numero):
@@ -83,24 +95,111 @@ def criar_graficos_semanal(df_posts):
 
     grafico_total_posts.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
                                 title={"text": "Quantidade total de posts por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de engajamento por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Taxa de engajamento médio por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
-    grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = False,
+    grafico_vmg.update_layout(margin=go.layout.Margin(l=5, r=5, t=35, b=0), template = tema, showlegend = True,
                                 title={"text": "Quantidade total de VMG por plataforma", 'y': 0.95, "x": 0.025}, xaxis_title="", yaxis_title="")
+    
+    try:
+        posts_insta = df_total_posts.loc[df_total_posts["Plataforma"] == "Instagram", "Total de Posts"].sum()
+    except:
+        posts_insta = 0
+    try:
+        posts_tiktok = df_total_posts.loc[df_total_posts["Plataforma"] == "TikTok", "Total de Posts"].sum()
+    except:
+        posts_tiktok = 0
+    try:
+        posts_x = df_total_posts.loc[df_total_posts["Plataforma"] == "Twitter", "Total de Posts"].sum()
+    except:
+        posts_x = 0
+    try:
+        posts_youtube = df_total_posts.loc[df_total_posts["Plataforma"] == "YouTube", "Total de Posts"].sum()
+    except:
+        posts_youtube = 0
+    
 
-    return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg
+    
+    caixas = dbc.Container(
+        dbc.Row(
+            [
+                html.H6("Contagem de Posts", style={"margin-bottom": "5px"}),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-instagram", style={"font-size": "12px", "color": "#E1306C"}),  # Ícone do Instagram
+                                    html.P("Instagram", className="mb-0"),
+                                    html.H6(f"{posts_insta}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-twitter", style={"font-size": "12px", "color": "#1DA1F2"}),  # Ícone do Twitter
+                                    html.P("Twitter", className="mb-0"),
+                                    html.H6(f"{posts_x}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-youtube", style={"font-size": "12px", "color": "#FF0000"}),  # Ícone do YouTube
+                                    html.P("YouTube", className="mb-0"),
+                                    html.H6(f"{posts_youtube}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.Div([
+                                    html.I(className="bi bi-tiktok", style={"font-size": "12px", "color": "#000000"}),  # Ícone do TikTok
+                                    html.P("TikTok", className="mb-0"),
+                                    html.H6(f"{posts_tiktok}", className="mb-0"),
+                                ], style={"text-align": "center"})
+                            ]
+                        ),
+                        style={"width": "100%", "text-align": "center"}
+                    ),
+                ),
+            ],
+            className="g-2",  # Gap entre as colunas
+            style={"justify-content": "center", "margin-bottom": "10px", "margin-right": "8px"}  # Centralizar os elementos
+        ),
+        fluid=True
+    ) 
 
-def layout_graficos_semanal(fig1, fig2, fig3, fig4):
+    return grafico_total_posts, grafico_total_engajamento, grafico_taxa_engajamento, grafico_vmg, caixas
+
+def layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas):
                 
     elemento = html.Div([
         dbc.Row([
             dbc.Col([
-                dcc.Graph(id = "grafico-total-posts-semana1", figure=fig1, style={"height": "30vh", "margin-right": "10px"}),
+                caixas,
+                dcc.Graph(id = "grafico-total-posts-semana1", figure=fig1, style={"height": "20vh", "margin-right": "10px"}),
             ], sm=6),
             dbc.Col([
-                dcc.Graph(id = "grafico-engajamento-total-semana1", figure=fig2, style={"height": "30vh"}),
+                dcc.Graph(id = "grafico-engajamento-total-semana1", figure=fig2, style={"height": "36.5vh"}),
             ], sm=6),
     ], className="g-0"),
     dbc.Row([
@@ -404,7 +503,6 @@ def layout_cards_semanais(df, semana):
                 dbc.Col([card2], sm=3, style={"margin-left": "20px", "margin-right": "20px"}),
                 dbc.Col([card3], sm=3),
             ]),
-            # html.Div(criar_tooltips(df))
         ])
     except:
         card1, card2 = criar_post_cards(df, semana)
@@ -413,7 +511,6 @@ def layout_cards_semanais(df, semana):
                 dbc.Col([card1], sm=3, width={"offset": 2}),
                 dbc.Col([card2], sm=3, style={"margin-left": "20px", "margin-right": "20px"}),
             ]),
-            # html.Div(criar_tooltips(df))
         ])
 
     return elemento

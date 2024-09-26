@@ -590,24 +590,24 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
     if item_ativo == "post-semana1":
 
         df_posts = df_posts[df_posts["Semana"] == "14-20 MAR/24"]
-        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
+        fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)
 
         return [elemento, "", ""]
     
     elif item_ativo == "post-semana2":
         
         df_posts = df_posts[df_posts["Semana"] == "4-10 SET/24"]
-        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)
+        fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)
 
         return ["", elemento, ""]
     
     elif item_ativo == "post-semana3":
 
         df_posts = df_posts[df_posts["Semana"] == "12-18 JUN/24"]
-        fig1, fig2, fig3, fig4 = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4)        
+        fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(fig1, fig2, fig3, fig4, caixas)        
 
         return ["", "", elemento]
     
