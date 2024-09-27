@@ -70,10 +70,13 @@ perfomance_conteudo = html.Div([
     dbc.Row([
         dbc.Col([
             dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"}),
-        ], sm=6),
+        ], sm=4),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"}),            
-        ], sm=6),
+            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"}),            
+        ], sm=4),
+        dbc.Col([
+            dcc.Graph(id="grafico-geral-engajamento-medio", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"}),            
+        ], sm=4),
     ], className="g-0"),
     dbc.Row([
         dbc.Col([
@@ -95,6 +98,12 @@ perfomance_conteudo = html.Div([
                     dbc.PopoverBody("Engajamento é o número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
                 ],
                 target="grafico-geral-total-engajamento", trigger="click", id="dica-total-engajamento"),
+            dbc.Popover(
+                [
+                    dbc.PopoverHeader("Engajamento Médio", style={"background-color": "#45A1FF"}),
+                    dbc.PopoverBody("Média de engajamento (likes, comentários e compartilhamentos) por post."),
+                ],
+                target="grafico-geral-engajamento-medio", trigger="click", id="dica-engajamento-medio"),
             dbc.Popover(
                 [
                     dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#45A1FF"}),

@@ -42,6 +42,8 @@ genero = pd.read_csv("./dataset/genero.csv")
 genero["PLATAFORMA"] = genero["PLATAFORMA"].str.replace("X", "TWITTER")
 posts = pd.read_csv("./dataset/posts.csv")
 posts["Nome"] = posts["Nome"].str.replace("Josimar Maranhãozinho", "Josimar de Maranhãozinho")
+ordem = posts["Data"].unique().tolist()
+posts["Data"] = pd.Categorical(posts["Data"], categories=ordem, ordered=True)
 conteudo = pd.read_csv("./dataset/conteudo.csv")
 ordem = conteudo["Semana"].unique().tolist()
 conteudo["Semana"] = pd.Categorical(conteudo["Semana"], ordered=True, categories=ordem)
@@ -365,6 +367,7 @@ def update_graficos_geral_vs(selected_values, operacao):
             Output("grafico-geral-vmg", "figure"),
             Output("grafico-geral-total-engajamento", "figure"),
             Output("grafico-geral-taxa-engajamento", "figure"),
+            Output("grafico-geral-engajamento-medio", "figure"),
         ],
         [
             Input('checklist-politicos-geral', 'value'),
@@ -372,7 +375,6 @@ def update_graficos_geral_vs(selected_values, operacao):
         ]
 )
 def update_graficos_geral_pc(selected_values, operacao):
-
 
     df_posts = posts[(posts["Nome"].isin(selected_values)) & (posts["Plataforma"] == "Total")]
     data_inicial = df_posts["Data"].unique()[0]
@@ -382,7 +384,7 @@ def update_graficos_geral_pc(selected_values, operacao):
 
     if operacao == "percentual":
 
-        df_posts = df_posts.pivot_table(index="Data", columns="Nome", values=["Total de Posts", "Engajamento Total", "Taxa de Engajamento", "VMG"]).pct_change(fill_method=None)
+        df_posts = df_posts.pivot_table(index="Data", columns="Nome", values=["Total de Posts", "Engajamento Total", "Engajamento Médio", "Taxa de Engajamento", "VMG"]).pct_change(fill_method=None)
         df_posts.iloc[0, :] = 0
         df_posts = df_posts.reset_index().melt(id_vars=['Data'], var_name=['Métrica', 'Nome'], value_name='Valor').pivot_table(columns="Métrica", values="Valor", index=["Nome", "Data"]).reset_index()
 
@@ -394,10 +396,13 @@ def update_graficos_geral_pc(selected_values, operacao):
         grafico_total_engajamento.update_yaxes(tickformat=",.1%")
         grafico_taxa_engajamento = px.line(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
         grafico_taxa_engajamento.update_yaxes(tickformat=",.1%")
+        grafico_engajamento_medio = px.line(df_posts, x = "Data", y="Engajamento Médio", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_engajamento_medio.update_yaxes(tickformat=",.1%")
 
         titulo_posts = f"Variação percentual (%) do total de posts entre {data_inicial} e {data_final}"
         titulo_vmg = f"Variação percentual (%) do VMG entre {data_inicial} e {data_final}"
         titulo_engajamento = f"Variação percentual (%) do total de engajamento entre {data_inicial} e {data_final}"
+        titulo_engajamento_medio = f"Variação percentual (%) do engajamento médio entre {data_inicial} e {data_final}"
         ttiulo_taxa = f"Variação percentual (%) da taxa de engajamento entre {data_inicial} e {data_final}"
 
     else:
@@ -409,10 +414,13 @@ def update_graficos_geral_pc(selected_values, operacao):
         grafico_total_engajamento.update_yaxes(tickformat=",.2s")
         grafico_taxa_engajamento = px.area(df_posts, x = "Data", y="Taxa de Engajamento", color="Nome", color_discrete_map=cores_personalizadas)
         grafico_taxa_engajamento.update_yaxes(tickformat=",.1%")
+        grafico_engajamento_medio = px.area(df_posts, x = "Data", y="Engajamento Médio", color="Nome", color_discrete_map=cores_personalizadas)
+        grafico_engajamento_medio.update_yaxes(tickformat=",.2s")
 
         titulo_posts = f"Variação do total de posts entre {data_inicial} e {data_final}"
         titulo_vmg = f"Variação do total de VMG {data_inicial} e {data_final}"
         titulo_engajamento = f"Variação do total de engajamento entre {data_inicial} e {data_final}"
+        titulo_engajamento_medio = f"Variação do engajamento médio entre {data_inicial} e {data_final}"
         ttiulo_taxa = f"Variação da taxa de engajamento entre {data_inicial} e {data_final}"        
 
     grafico_total_posts.update_traces(mode="markers+lines", hovertemplate=None)
@@ -425,10 +433,14 @@ def update_graficos_geral_pc(selected_values, operacao):
     grafico_total_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
                                             title={"text": titulo_engajamento, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
     grafico_taxa_engajamento.update_traces(mode="markers+lines", hovertemplate=None)
+    grafico_engajamento_medio.update_traces(mode="markers+lines", hovertemplate=None)
+    grafico_engajamento_medio.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
+                                            title={"text": titulo_engajamento_medio, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
+    grafico_taxa_engajamento.update_traces(mode="markers+lines", hovertemplate=None)
     grafico_taxa_engajamento.update_layout(margin=go.layout.Margin(l=5, r=5, t=30, b=0), template = tema, showlegend = False,
                                            title={"text": ttiulo_taxa, 'y': 0.97, "x": 0.05, "font": {"size": 12}}, hovermode="x", xaxis_title="", yaxis_title="")
 
-    return grafico_total_posts, grafico_vmg, grafico_total_engajamento, grafico_taxa_engajamento
+    return grafico_total_posts, grafico_vmg, grafico_total_engajamento, grafico_taxa_engajamento, grafico_engajamento_medio
 
 # PAGINA INDIVIDUAL - ABA VISAO GERAL
 @app.callback(
