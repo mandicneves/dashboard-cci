@@ -413,6 +413,13 @@ accordion_pc = html.Div(
                 html.Div([], id="top-posts-semana3", hidden=True),
                 html.Div([], id="graficos-semana3", hidden=False),
             ]),
+            # SEMANA 4
+            dbc.AccordionItem(title="📅 09-15 Agosto/2024", item_id="post-semana4", children=[
+                html.Div([], id="tooltips-semana4"),
+                html.Div([], id="popovers-semana4"),
+                html.Div([], id="top-posts-semana4", hidden=True),
+                html.Div([], id="graficos-semana4", hidden=False),
+            ]),            
             # SEMANA 2
             dbc.AccordionItem(title="📅 04-10 Setembro/2024", item_id="post-semana2", children=[
                 html.Div([], id="tooltips-semana2"),
