@@ -743,7 +743,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 
         df_posts = df_posts[df_posts["Semana"] == "9-15 AGO/24"]
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
-        elemento = funcs.layout_graficos_semanal(3, fig1, fig2, fig3, fig4, caixas)        
+        elemento = funcs.layout_graficos_semanal(4, fig1, fig2, fig3, fig4, caixas)        
 
         return ["", "", "", elemento]
     
@@ -767,6 +767,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
 def update_posts_cards(selected_value, item_ativo):
 
     # selected_value = "Abilio Brunini"
+    # selected_value = "Josimar de Maranhãozinho"
 
     df_top_posts = top_posts[(top_posts["Nome"] == selected_value)] 
 
@@ -793,8 +794,8 @@ def update_posts_cards(selected_value, item_ativo):
     
     elif item_ativo == "post-semana4":
 
-        df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "12-18 JUN/24"].reset_index(drop=True)
-        elemento = funcs.layout_cards_semanais(df_top_posts3, 3)        
+        df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "9-15 AGO/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts3, 4)        
 
         return ["", "", "", elemento]
     
