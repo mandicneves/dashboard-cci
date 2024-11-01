@@ -372,7 +372,7 @@ accordion_pc = html.Div(
         flush=True, id = "accordion-conteudo", active_item="",children=
         [   
             # PERIODO COMPLETO
-            dbc.AccordionItem(title="📅 14 Março - 10 Setembro/2024", item_id="post-completo", children=[
+            dbc.AccordionItem(title="📅 14 Março - 05 Outubro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
                         dcc.Graph(id = "grafico-total-posts-final", figure=fig, style={"height": "20vh", "margin-right": "10px"}),
@@ -426,6 +426,13 @@ accordion_pc = html.Div(
                 html.Div([], id="popovers-semana2"),
                 html.Div([], id="top-posts-semana2", hidden=True),
                 html.Div([], id="graficos-semana2", hidden=False),
+            ]),
+            # SEMANA 5
+            dbc.AccordionItem(title="📅 30 Setembro - 05 Outubro/2024", item_id="post-semana5", children=[
+                html.Div([], id="tooltips-semana5"),
+                html.Div([], id="popovers-semana5"),
+                html.Div([], id="top-posts-semana5", hidden=True),
+                html.Div([], id="graficos-semana5", hidden=False),
             ]),
 
         ],

@@ -696,6 +696,7 @@ def update_graficos_conteudo_final(selected_value):
             Output("graficos-semana2", "children"),
             Output("graficos-semana3", "children"),
             Output("graficos-semana4", "children"),
+            Output("graficos-semana5", "children"),
         ],
         [
             Input("dropdown-politico", "value"),
@@ -721,7 +722,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(1, fig1, fig2, fig3, fig4, caixas)
 
-        return [elemento, "", "", ""]
+        return [elemento, "", "", "", ""]
     
     elif item_ativo == "post-semana2":
         
@@ -729,7 +730,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(2, fig1, fig2, fig3, fig4, caixas)
 
-        return ["", elemento, "", ""]
+        return ["", elemento, "", "", ""]
     
     elif item_ativo == "post-semana3":
 
@@ -737,7 +738,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(3, fig1, fig2, fig3, fig4, caixas)        
 
-        return ["", "", elemento, ""]
+        return ["", "", elemento, "", ""]
     
     elif item_ativo == "post-semana4":
 
@@ -745,11 +746,20 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
         fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
         elemento = funcs.layout_graficos_semanal(4, fig1, fig2, fig3, fig4, caixas)        
 
-        return ["", "", "", elemento]
+        return ["", "", "", elemento, ""]
+    
+    
+    elif item_ativo == "post-semana5":
+
+        df_posts = df_posts[df_posts["Semana"] == "30 SET - 05 OUT/24"]
+        fig1, fig2, fig3, fig4, caixas = funcs.criar_graficos_semanal(df_posts)
+        elemento = funcs.layout_graficos_semanal(5, fig1, fig2, fig3, fig4, caixas)        
+
+        return ["", "", "", "", elemento]
     
     else:
 
-        return ["", "", "", ""]
+        return ["", "", "", "", ""]
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS - CARDS
 @app.callback(
@@ -758,6 +768,7 @@ def update_graficos_conteudo_semanal(selected_value, item_ativo):
             Output("top-posts-semana2", "children"),
             Output("top-posts-semana3", "children"),
             Output("top-posts-semana4", "children"),
+            Output("top-posts-semana5", "children"),
         ],
         [
             Input("dropdown-politico", "value"),
@@ -776,32 +787,40 @@ def update_posts_cards(selected_value, item_ativo):
         df_top_posts1 = df_top_posts[df_top_posts["Semana"] == "14-20 MAR/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts1, 1)
 
-        return [elemento, "", "", ""]
+        return [elemento, "", "", "", ""]
 
     elif item_ativo == "post-semana2":
 
         df_top_posts2 = df_top_posts[df_top_posts["Semana"] == "4-10 SET/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts2, 2)
 
-        return ["", elemento, "", ""]
+        return ["", elemento, "", "", ""]
     
     elif item_ativo == "post-semana3":
 
         df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "12-18 JUN/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts3, 3)        
 
-        return ["", "", elemento, ""]
+        return ["", "", elemento, "", ""]
     
     elif item_ativo == "post-semana4":
 
         df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "9-15 AGO/24"].reset_index(drop=True)
         elemento = funcs.layout_cards_semanais(df_top_posts3, 4)        
 
-        return ["", "", "", elemento]
+        return ["", "", "", elemento, ""]
+    
+    
+    elif item_ativo == "post-semana5":
+
+        df_top_posts3 = df_top_posts[df_top_posts["Semana"] == "30 SET - 05 OUT/24"].reset_index(drop=True)
+        elemento = funcs.layout_cards_semanais(df_top_posts3, 5)        
+
+        return ["", "", "", "", elemento]
     
     else:
 
-        return ["", "", "", ""]
+        return ["", "", "", "", ""]
 
 # PAGINA INDIVIDUAL - ABA PERFORMANCE DE CONTEUDO - POSTS SEMANAIS - APARECER OU NAO
 @app.callback(
@@ -815,6 +834,8 @@ def update_posts_cards(selected_value, item_ativo):
             Output("graficos-semana3", "hidden"),
             Output("top-posts-semana4", "hidden", allow_duplicate=True),
             Output("graficos-semana4", "hidden"),
+            Output("top-posts-semana5", "hidden", allow_duplicate=True),
+            Output("graficos-semana5", "hidden"),
         ],
         [
             Input("accordion-conteudo", "active_item"),
@@ -834,45 +855,56 @@ def mostrar_posts(item_ativo, valor):
                     True, True, # semana 2
                     True, True, # semana 3
                     True, True, # semana 4
+                    True, True
                     ] 
         
         else:
             
-            return [False, False, True, True, True, True, True, True, True]
+            return [False, False, True, True, True, True, True, True, True, True, True]
 
     if item_ativo == "post-semana2":
 
         if valor == "Gráficos":
 
-            return [False, True, True, True, False, True, True, True, True]
+            return [False, True, True, True, False, True, True, True, True, True, True]
         
         else:
             
-            return [False, True, True, False, True, True, True, True, True]
+            return [False, True, True, False, True, True, True, True, True, True, True]
 
     if item_ativo == "post-semana3":
 
         if valor == "Gráficos":
 
-            return [False, True, True, True, True, True, False, True, True]
+            return [False, True, True, True, True, True, False, True, True, True, True]
         
         else:
             
-            return [False, True, True, True, True, False, True, True, True]
+            return [False, True, True, True, True, False, True, True, True, True, True]
 
     if item_ativo == "post-semana4":
 
         if valor == "Gráficos":
 
-            return [False, True, True, True, True, True, False, True, False]
+            return [False, True, True, True, True, True, False, True, False, True, True]
         
         else:
             
-            return [False, True, True, True, True, False, True, False, True]
+            return [False, True, True, True, True, False, True, False, True, True, True]
+        
+    if item_ativo == "post-semana5":
+
+        if valor == "Gráficos":
+
+            return [False, True, True, True, True, True, True, True, True, True, False]
+        
+        else:
+            
+            return [False, True, True, True, True, True, True, True, True, False, True]
         
     else:
             
-        return [True, True, True, True, True, True, True, True, True]
+        return [True, True, True, True, True, True, True, True, True, True, True]
 
 # ESCONDER RADIO POST GRAFICO NO PERFIL INDIVIDUAL GERAL
 @app.callback(
@@ -1081,6 +1113,7 @@ def toggle_offcanvas(n1, is_open):
             Output("tooltips-semana2", "children"),
             Output("tooltips-semana3", "children"),
             Output("tooltips-semana4", "children"),
+            Output("tooltips-semana5", "children"),
         ],
             Input("accordion-conteudo", "active_item")    
 )
@@ -1088,23 +1121,27 @@ def generate_tooltips(active_item):
 
     if active_item == "post-semana1":
 
-        retorno = [funcs.criar_tooltips(semana=1), "", "", ""]
+        retorno = [funcs.criar_tooltips(semana=1), "", "", "", ""]
 
     elif active_item == "post-semana2":
 
-        retorno = ["", funcs.criar_tooltips(semana=2), "", ""]
+        retorno = ["", funcs.criar_tooltips(semana=2), "", "", ""]
 
     elif active_item == "post-semana3":
 
-        retorno = ["", "", funcs.criar_tooltips(semana=3), ""]
+        retorno = ["", "", funcs.criar_tooltips(semana=3), "", ""]
 
     elif active_item == "post-semana4":
 
-        retorno = ["", "", "", funcs.criar_tooltips(semana=4)]
+        retorno = ["", "", "", funcs.criar_tooltips(semana=4), ""]
+    
+    elif active_item == "post-semana5":
+
+        retorno = ["", "", "", "", funcs.criar_tooltips(semana=5)]    
     
     else:
 
-        retorno = ["", "", "", ""]
+        retorno = ["", "", "", "", ""]
 
 
     return retorno
@@ -1116,6 +1153,7 @@ def generate_tooltips(active_item):
             Output("popovers-semana2", "children"),
             Output("popovers-semana3", "children"),
             Output("popovers-semana4", "children"),
+            Output("popovers-semana5", "children"),
         ],
             Input("accordion-conteudo", "active_item")    
 )
@@ -1124,23 +1162,27 @@ def generate_popovers(active_item):
 
     if active_item == "post-semana1":
 
-        retorno = [funcs.criar_popover_grafico_semanal(semana=1), "", "", ""]
+        retorno = [funcs.criar_popover_grafico_semanal(semana=1), "", "", "", ""]
 
     elif active_item == "post-semana2":
 
-        retorno = ["", funcs.criar_popover_grafico_semanal(semana=2), "", ""]
+        retorno = ["", funcs.criar_popover_grafico_semanal(semana=2), "", "", ""]
 
     elif active_item == "post-semana3":
 
-        retorno = ["", "", funcs.criar_popover_grafico_semanal(semana=3), ""]
+        retorno = ["", "", funcs.criar_popover_grafico_semanal(semana=3), "", ""]
 
     elif active_item == "post-semana4":
 
-        retorno = ["", "", "", funcs.criar_popover_grafico_semanal(semana=4)]
+        retorno = ["", "", "", funcs.criar_popover_grafico_semanal(semana=4), ""]
+    
+    elif active_item == "post-semana5":
+
+        retorno = ["", "", "", "", funcs.criar_popover_grafico_semanal(semana=5)]    
     
     else:
 
-        retorno = ["", "", "", ""]
+        retorno = ["", "", "", "", ""]
 
 
     return retorno
