@@ -1,5 +1,5 @@
 # Componentes web
-from dash import html, dcc
+from dash import html, dcc, clientside_callback, callback
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 
@@ -53,6 +53,8 @@ top_posts["Legenda"] = top_posts["Legenda"].str.strip()
 df_conexao = pd.read_csv("./dataset/df_conexoes.csv")
 df_conexao["Metrica"] = (df_conexao["Engajamento"] / df_conexao["Total de Posts"]).astype(int)
 
+
+
 with open('dataset/conexoes.json', 'r') as file:
     conexao = json.load(file)
 
@@ -96,13 +98,13 @@ conexao_stylesheet = [{
 }]
 
 app.layout = html.Div([
-
+    
     dbc.Row([
         dbc.Col([        
             dcc.Location(id="base-url"),
             sidebar.layout
         ], sm=2),
-        dbc.Col([
+        dbc.Col([            
             html.Div([
             ], id="page-content")
         ], sm=10)
@@ -1055,19 +1057,22 @@ def generate_stylesheet(node, data_list, selected_value):
                         }                        
                     }                   
                 )        
-        
-        
-        
-        
+                
         nome = node['data']['label_selected']
 
         if nome == selected_value:
             return conexao_stylesheet, "", "", "", "", "", ""
 
-        metrica = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Metrica"].values[0]
-        engajamento = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Engajamento"].values[0]
-        posts = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Total de Posts"].values[0]
-        link = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Top Post"].values[0]
+        try:
+            metrica = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Metrica"].values[0]
+            engajamento = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Engajamento"].values[0]
+            posts = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Total de Posts"].values[0]
+            link = df_conexao.loc[(df_conexao['Nome'] == selected_value) & (df_conexao["Conexão"] == nome), "Top Post"].values[0]
+        except:
+            metrica = 0
+            engajamento = 0
+            posts = 0
+            link = 0
 
         return stylesheet, nome, f"{metrica:,.0f}".replace(",", "."), f"{engajamento:,.0f}".replace(",", "."), posts, link, "primary"
 
@@ -1188,39 +1193,11 @@ def generate_popovers(active_item):
     return retorno
 
 
-
 # =================================== #
 # RUN SERVER
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    app.run(debug=True)
 
 
