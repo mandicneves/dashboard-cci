@@ -23,7 +23,8 @@ cores = [
     "#556B2F",  # Dark Olive Green
     "#1E90FF",  # Dodger Blue
     "#DD4124",  # Orange Red
-    "#F5F5F5",   # White Smoke
+    "#b0acac",   # White Smoke
+    # "#F5F5F5",   # White Smoke
     "#9ACD32",  # Yellow Green
     "#8B4513",  # Saddle Brown
     "#F4A460",  # Sandy Brown
@@ -105,7 +106,7 @@ layout = dbc.Card(
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=15, style={"filter": "invert(1)"},
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/44/44908.png", height=15, style={"filter": "invert(0)"},
                                          id="img-percentual"),
                             ],
                         "value": "percentual",
@@ -113,7 +114,7 @@ layout = dbc.Card(
                     {
                         "label":
                             [
-                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=15, style={"filter": "invert(1)"},
+                                html.Img(src="https://cdn-icons-png.flaticon.com/512/43/43492.png", height=15, style={"filter": "invert(0)"},
                                          id="img-absoluto"),
                             ],
                         "value": "absoluto",

@@ -59,7 +59,7 @@ def ajustar_intensidade(cor, fator):
 
 def criar_graficos_semanal(df_posts):
 
-    tema = "cyborg"
+    tema = "minty"
 
     plataformas = df_posts["Plataforma"].unique().tolist()
     # criando cores personalizadas
@@ -187,25 +187,25 @@ def criar_popover_grafico_semanal(semana):
     elemento = html.Div([        
         dbc.Popover(
             [
-                dbc.PopoverHeader("Total de Posts", style={"background-color": "#45A1FF"}),
+                dbc.PopoverHeader("Total de Posts", style={"background-color": "#78c2ad"}),
                 dbc.PopoverBody("Soma das postagens realizadas no período."),
             ],
             target=f"grafico-total-posts-semana{semana}", trigger="click", id=f"dica-total-posts-semana{semana}"),
         dbc.Popover(
             [
-                dbc.PopoverHeader("Total de Engajamento", style={"background-color": "#45A1FF"}),
+                dbc.PopoverHeader("Total de Engajamento", style={"background-color": "#78c2ad"}),
                 dbc.PopoverBody("Engajamento é o número de vezes que o público engajou com a publicação curtindo, comentando ou compartilhando."),
             ],
             target=f"grafico-engajamento-total-semana{semana}", trigger="click", id=f"dica-total-engajamento-semana{semana}"),
         dbc.Popover(
             [
-                dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#45A1FF"}),
+                dbc.PopoverHeader("Taxa de Engajamento", style={"background-color": "#78c2ad"}),
                 dbc.PopoverBody("Taxa de engajamento é o percentual do público que engajou com a publicação curtindo, comentando ou compartilhando."),
             ],
             target=f"grafico-engajamento-taxa-semana{semana}", trigger="click", id=f"dica-taxa-engajamento-semana{semana}"),
         dbc.Popover(
             [
-                dbc.PopoverHeader("Total de VMG", style={"background-color": "#45A1FF"}),
+                dbc.PopoverHeader("Total de VMG", style={"background-color": "#78c2ad"}),
                 dbc.PopoverBody("VMG (Valor de Mídia Ganho) é um valor monetário estimado da publicação com base no tamanho do público alcançado."),
             ],
             target=f"grafico-vmg-semana{semana}", trigger="click", id=f"dica-vmg{semana}"),            
@@ -292,7 +292,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.5",  # Definição da opacidade da imagem
+                                        "opacity": "0.7",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -320,7 +320,7 @@ def criar_post_cards(df, semana):
                     style={"height": "55vh"}
                 ),
                 className="p-2 bg-body-primary rounded-3",
-                style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+                style={"border": "2px solid", "border-color": "var(--bs-primary)"}
             )
 
             posts_cards.append(card_insta)
@@ -359,7 +359,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.5",  # Definição da opacidade da imagem
+                                        "opacity": "0.7",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -389,7 +389,7 @@ def criar_post_cards(df, semana):
                     fluid=True, style={"height": "55vh"}
                 ),
                 className="p-2 bg-body-primary rounded-3",
-                style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+                style={"border": "2px solid", "border-color": "var(--bs-primary)"}
             )
 
             posts_cards.append(card_tiktok)
@@ -428,7 +428,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.5",  # Definição da opacidade da imagem
+                                        "opacity": "0.7",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -456,7 +456,7 @@ def criar_post_cards(df, semana):
                     style={"height": "55vh"}
                 ),
                 className="p-2 bg-body-primary rounded-3",
-                style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+                style={"border": "2px solid", "border-color": "var(--bs-primary)"}
             )
 
             posts_cards.append(card_x)
@@ -495,7 +495,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.5",  # Definição da opacidade da imagem
+                                        "opacity": "0.7",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -523,7 +523,7 @@ def criar_post_cards(df, semana):
                     style={"height": "55vh"}
                 ),
                 className="p-2 bg-body-primary rounded-3",
-                style={"border": "2px solid", "border-color": "var(--bs-secondary)"}
+                style={"border": "2px solid", "border-color": "var(--bs-primary)"}
             )
 
             posts_cards.append(card_youtube)

@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
 import dash_cytoscape as cyto
 cyto.load_extra_layouts()
-tema = "cyborg"
+tema = "minty"
 load_figure_template(tema)
 
 
@@ -172,7 +172,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Conexão selecionada", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                        html.H5("Conexão selecionada", style={"font-size": "1.2vw"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -184,7 +184,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Engajamento / Total de Menções", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                        html.H5("Engajamento / Total de Menções", style={"font-size": "1.2vw"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -195,7 +195,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Total de Engajamento", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                        html.H5("Total de Engajamento", style={"font-size": "1.2vw"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -206,7 +206,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Total de Posts", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                        html.H5("Total de Posts", style={"font-size": "1.2vw"}),
                     ],
                     className="d-flex w-100 justify-content-between",
                 ),
@@ -217,7 +217,7 @@ list_group = dbc.ListGroup(
             [
                 html.Div(
                     [
-                        html.H5("Top Post", style={"font-size": "1.2vw", "text-shadow": "2px 2px 4px #888888"}),
+                        html.H5("Top Post", style={"font-size": "1.2vw"}),
                     ],
                     className="d-flex w-100 justify-content-between", style={"margin-bottom": "10px"},
                 ),

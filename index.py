@@ -21,7 +21,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
 import dash_cytoscape as cyto
-tema = "cyborg"
+tema = "minty"
 load_figure_template(tema)
 cyto.load_extra_layouts()
 
@@ -73,10 +73,10 @@ conexao_stylesheet = [{
         'label': 'data(label)',
         'text-valign': 'center',
         'text-halign': 'center',
-        'color': 'rgb(255, 255, 255)',
+        'color': 'black',
         "background-color": 'data(color)',
-        'border-color': 'white',
-        'border-width': 1.5,
+        'border-color': 'black',
+        'border-width': 3,
         "border-opacity": 1,
         'width': 'data(size)',
         'height': 'data(size)',
@@ -981,10 +981,10 @@ def generate_stylesheet(node, data_list, selected_value):
                 'label': 'data(label)',
                 'text-valign': 'center',
                 'text-halign': 'center',
-                'color': 'rgb(255, 255, 255)',
+                'color': 'black',
                 "background-color": 'data(color)',
-                'border-color': 'white',
-                'border-width': 1.5,
+                'border-color': 'black',
+                'border-width': 3,
                 "border-opacity": 1,
                 'width': 'data(size)',
                 'height': 'data(size)',
@@ -1011,7 +1011,7 @@ def generate_stylesheet(node, data_list, selected_value):
                 'background-color': 'data(color)',
                 'text-valign': 'center',
                 'text-halign': 'center',
-                'border-width': 1.5,
+                'border-width': 2,
                 "border-opacity": 1,
                 'width': 'data(size)',
                 'height': 'data(size)',
@@ -1025,7 +1025,7 @@ def generate_stylesheet(node, data_list, selected_value):
                 'background-color': 'data(color)',
                 'text-valign': 'center',
                 'text-halign': 'center',
-                'border-width': 1.5,
+                'border-width': 2,
                 "border-opacity": 1,
                 'width': 'data(size)',
                 'height': 'data(size)',
@@ -1053,7 +1053,7 @@ def generate_stylesheet(node, data_list, selected_value):
                             'label': 'data(pct)',
                             'text-valign': 'center',
                             'text-halign': 'center',
-                            'color': 'rgb(255, 255, 255)',                                           
+                            # 'color': 'rgb(255, 255, 255)',                                           
                         }                        
                     }                   
                 )        
