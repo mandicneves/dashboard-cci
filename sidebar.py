@@ -20,7 +20,8 @@ cores = [
     "#006400",  # Dark Green
     "#855c75",
     "#8B0000",  # Dark Red
-    "#556B2F",  # Dark Olive Green
+    "#2f4d6b",  # BLUE
+    # "#556B2F",  # Dark Olive Green
     "#1E90FF",  # Dodger Blue
     "#DD4124",  # Orange Red
     "#b0acac",   # White Smoke
