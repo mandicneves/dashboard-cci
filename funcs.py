@@ -269,11 +269,12 @@ def criar_post_cards(df, semana):
                             html.I(className="bi bi-instagram", 
                                     style={
                                         "font-size": "50px", 
-                                        "color": "#000000",
+                                        "color": "#80529e",
                                         "position": "absolute",  # Posicionamento absoluto
                                         "top": "10px",  # Alinha no topo com um pequeno espaçamento
                                         "right": "10px",  # Alinha à direita com um pequeno espaçamento
-                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        # "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff",
+                                        "z-index": "1"
                                     }), 
                             html.P(legenda, className="lead", 
                                 style={
@@ -294,7 +295,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.7",  # Definição da opacidade da imagem
+                                        "opacity": "0.9",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -336,11 +337,12 @@ def criar_post_cards(df, semana):
                             html.I(className="bi bi-tiktok", 
                                     style={
                                         "font-size": "50px", 
-                                        "color": "#000000",
+                                        "color": "#d1c39b",
                                         "position": "absolute",  # Posicionamento absoluto
                                         "top": "10px",  # Alinha no topo com um pequeno espaçamento
                                         "right": "10px",  # Alinha à direita com um pequeno espaçamento
-                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        # "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        "z-index": "1"
                                     }),                            
                             html.P(legenda, className="lead", 
                                 style={
@@ -361,7 +363,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.7",  # Definição da opacidade da imagem
+                                        "opacity": "0.9",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -405,11 +407,12 @@ def criar_post_cards(df, semana):
                             html.I(className="bi bi-twitter", 
                                     style={
                                         "font-size": "50px", 
-                                        "color": "#000000",
+                                        "color": "#1DA1F2",
                                         "position": "absolute",  # Posicionamento absoluto
                                         "top": "10px",  # Alinha no topo com um pequeno espaçamento
                                         "right": "10px",  # Alinha à direita com um pequeno espaçamento
-                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        # "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        "z-index": "1"
                                     }), #                             
                             html.P(legenda, className="lead", 
                                 style={
@@ -430,7 +433,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.7",  # Definição da opacidade da imagem
+                                        "opacity": "0.9",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
@@ -472,11 +475,12 @@ def criar_post_cards(df, semana):
                             html.I(className="bi bi-youtube", 
                                     style={
                                         "font-size": "50px", 
-                                        "color": "#000000",
+                                        "color": "#ad0202",
                                         "position": "absolute",  # Posicionamento absoluto
                                         "top": "10px",  # Alinha no topo com um pequeno espaçamento
                                         "right": "10px",  # Alinha à direita com um pequeno espaçamento
-                                        "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        # "text-shadow": "1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff" 
+                                        "z-index": "1"
                                     }),
                             html.P(legenda, className="lead", 
                                 style={
@@ -497,7 +501,7 @@ def criar_post_cards(df, semana):
                                         "left": "0",  # Alinha à esquerda
                                         "width": "100%",  # Largura total do contêiner
                                         "height": "100%",  # Altura total do contêiner
-                                        "opacity": "0.7",  # Definição da opacidade da imagem
+                                        "opacity": "0.9",  # Definição da opacidade da imagem
                                         "z-index": "0"  # Imagem atrás do texto
                                     })
                         ], style={
