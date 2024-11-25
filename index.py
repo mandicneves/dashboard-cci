@@ -73,7 +73,9 @@ conexao_stylesheet = [{
         'label': 'data(label)',
         'text-valign': 'center',
         'text-halign': 'center',
-        'color': 'black',
+        'color': '#ffffff', # Cor do texto principal (branco)
+        'text-outline-color': '#000000', # Contorno preto
+        'text-outline-width': 1, # Largura do contorno
         "background-color": 'data(color)',
         'border-color': 'black',
         'border-width': 3,
