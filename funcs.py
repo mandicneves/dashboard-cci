@@ -61,12 +61,14 @@ def criar_graficos_semanal(df_posts):
 
     tema = "minty"
 
-    plataformas = df_posts["Plataforma"].unique().tolist()
+    # plataformas = df_posts["Plataforma"].unique().tolist()
     # criando cores personalizadas
-    cores = px.colors.sequential.Viridis
-    cores_personalizadas = {}
-    for i in range(len(plataformas)):
-        cores_personalizadas[plataformas[i]] = cores[i+1]       
+    # cores = px.colors.sequential.Viridis
+    # cores_personalizadas = {}
+    # for i in range(len(plataformas)):
+    #     cores_personalizadas[plataformas[i]] = cores[i+1]
+
+    cores_personalizadas = {"Instagram": "#80529e", "Twitter": "#1DA1F2", "TikTok": "#d1c39b", "YouTube": "#ad0202"}       
 
     df_total_posts = df_posts.groupby(["Data", "Plataforma"]).size().reset_index(name="Total de Posts")
     df_total_engajamento = df_posts.groupby(["Data", "Plataforma"])["Engajamento"].sum().reset_index()

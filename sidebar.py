@@ -19,7 +19,8 @@ cores = funcs.gerar_cores(len(politicos))
 cores = [
     "#006400",  # Dark Green
     "#855c75",
-    "#8B0000",  # Dark Red
+    "#630101",  # Dark Red
+    # "#8B0000",  # Dark Red
     "#2f4d6b",  # BLUE
     # "#556B2F",  # Dark Olive Green
     "#1E90FF",  # Dodger Blue
@@ -27,7 +28,8 @@ cores = [
     "#b0acac",   # White Smoke
     # "#F5F5F5",   # White Smoke
     "#9ACD32",  # Yellow Green
-    "#8B4513",  # Saddle Brown
+    # "#8B4513",  # Saddle Brown
+    "#66582a",  # 
     "#F4A460",  # Sandy Brown
 ]
 

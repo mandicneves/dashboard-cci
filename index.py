@@ -469,10 +469,14 @@ def update_graficos_visao_geral(selected_value):
     # lista com plataformas para auxiliar na criacao das cores
     plataformas = df_genero["PLATAFORMA"].unique().tolist()
     # criando cores personalizadas
-    cores = px.colors.sequential.Viridis
+    # cores = px.colors.sequential.Viridis
+    cores = ["#80529e", "#1DA1F2", "#4c5252", "#ad0202"]
     cores_personalizadas = {}
     for i in range(len(plataformas)):
-        cores_personalizadas[plataformas[i]] = cores[i+1]
+        # cores_personalizadas[plataformas[i]] = cores[i+1]
+        cores_personalizadas[plataformas[i]] = cores[i]
+
+    cores_personalizadas = {"INSTAGRAM": "#80529e", "TWITTER": "#1DA1F2", "TIKTOK": "#d1c39b", "YOUTUBE": "#ad0202"}
 
     # grafico seguidores
     grafico_seguidores = px.bar(df_seguidores, y = "PLATAFORMA", x = "SEGUIDORES", color="PLATAFORMA", color_discrete_map=cores_personalizadas)
@@ -495,7 +499,7 @@ def update_graficos_visao_geral(selected_value):
 
         labels = df_genero.loc[df_genero["PLATAFORMA"] == plataforma, "GENERO"]
         values = df_genero.loc[df_genero["PLATAFORMA"] == plataforma, "SEGUIDORES GENERO"]
-        colors = [funcs.ajustar_intensidade(cores_personalizadas[plataforma], i) for i in [1.3, 0.7]]
+        colors = [funcs.ajustar_intensidade(cores_personalizadas[plataforma], i) for i in [0.9, 0.7]]
 
         grafico_genero.add_trace(go.Pie(
             labels=labels,
@@ -562,10 +566,14 @@ def update_graficos_conteudo_final(selected_value):
     # lista com plataformas para auxiliar na criacao das cores
     plataformas = df_conteudo["Plataforma"].unique().tolist()
     # criando cores personalizadas
-    cores = px.colors.sequential.Viridis
-    cores_personalizadas = {}
-    for i in range(len(plataformas)):
-        cores_personalizadas[plataformas[i]] = cores[i+1]
+    # cores = px.colors.sequential.Viridis
+    # cores = ["#80529e", "#1DA1F2", "#4c5252", "#ad0202"]
+    # cores_personalizadas = {}
+    # for i in range(len(plataformas)):
+    #     # cores_personalizadas[plataformas[i]] = cores[i+1]
+    #     cores_personalizadas[plataformas[i]] = cores[i]
+    
+    cores_personalizadas = {"Instagram": "#80529e", "Twitter": "#1DA1F2", "TikTok": "#d1c39b", "YouTube": "#ad0202"}
 
     grafico_total_posts = px.bar(df_total_posts, x = "Semana", y = "Total de Posts", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
     grafico_total_engajamento = px.bar(df_engajamento_total, x = "Semana", y = "Engajamento", color = "Plataforma", barmode="group", color_discrete_map=cores_personalizadas)
@@ -706,15 +714,6 @@ def update_graficos_conteudo_final(selected_value):
         ],
 )
 def update_graficos_conteudo_semanal(selected_value, item_ativo):
-
-    # selected_value = "Abilio Brunini"
-
-    plataformas = posts["Plataforma"].unique().tolist()
-    # criando cores personalizadas
-    cores = px.colors.sequential.Viridis
-    cores_personalizadas = {}
-    for i in range(len(plataformas)):
-        cores_personalizadas[plataformas[i]] = cores[i+1]    
 
     df_posts = conteudo[conteudo["Nome"] == selected_value]
 
@@ -1198,6 +1197,6 @@ def generate_popovers(active_item):
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
 
 
