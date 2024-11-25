@@ -272,7 +272,7 @@ def update_checklist(selected_values):
 def update_graficos_geral_vs(selected_values, operacao):
 
     # chave api
-    px.set_mapbox_access_token(open("./keys/mapbox_token").read())
+    # px.set_mapbox_access_token(open("./keys/mapbox_token").read())
     
     # filtrando datasets
     df_seguidores = seguidores[seguidores["NOME"].isin(list(selected_values))]
@@ -1199,6 +1199,6 @@ def generate_popovers(active_item):
 # =================================== #
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 
