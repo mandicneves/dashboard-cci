@@ -38,10 +38,12 @@ seguidores_geral = html.Div([
     # primeira linha
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-seguidores-geral", figure=fig, style={"height": "28vh", "padding": "5px"})
+            dcc.Graph(id="grafico-seguidores-geral", figure=fig, style={"height": "28vh", "padding": "5px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-seguidores-geral', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm=8),
         dbc.Col([
-            dcc.Graph(id="grafico-genero-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"})
+            dcc.Graph(id="grafico-genero-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-genero-geral', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm=4),
     ], className="g-0"),
 
@@ -49,7 +51,8 @@ seguidores_geral = html.Div([
     # segunda linha
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-idade-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"})
+            dcc.Graph(id="grafico-idade-geral", figure=fig, style={"height": "28vh", "padding": "5px", "margin-right": "20px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-idade-geral', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm=12)
     ]),
 
@@ -58,10 +61,12 @@ seguidores_geral = html.Div([
     # terceira linha
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-autenticos-geral", figure=fig, style={"height": "30vh", "padding": "5px"})
+            dcc.Graph(id="grafico-autenticos-geral", figure=fig, style={"height": "30vh", "padding": "5px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-autenticos-geral', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm = 6),       
         dbc.Col([
-            dcc.Graph(id="grafico-mapa-geral", figure=fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"})
+            dcc.Graph(id="grafico-mapa-geral", figure=fig, style={"height": "30vh", "padding": "5px", "margin-right": "20px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-mapa-geral', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm = 6),        
     ], className="g-0")    
 ])
@@ -69,21 +74,26 @@ seguidores_geral = html.Div([
 perfomance_conteudo = html.Div([
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"}),
+            dcc.Graph(id="grafico-geral-total-posts", figure=fig, style={"height": "42vh", "padding": "5px"},
+            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-geral-total-posts', 'height': 1080, 'width': 1920, 'scale': 1}}),
         ], sm=4),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"}),            
+            dcc.Graph(id="grafico-geral-total-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"},
+            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-geral-total-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),            
         ], sm=4),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-engajamento-medio", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"}),            
+            dcc.Graph(id="grafico-geral-engajamento-medio", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"},
+                      config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-geral-engajamento-medio', 'height': 1080, 'width': 1920, 'scale': 1}}),            
         ], sm=4),
     ], className="g-0"),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"})
+            dcc.Graph(id="grafico-geral-taxa-engajamento", figure=fig, style={"height": "42vh", "padding": "5px"},
+            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-geral-tx-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm=6),
         dbc.Col([
-            dcc.Graph(id="grafico-geral-vmg", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"})
+            dcc.Graph(id="grafico-geral-vmg", figure=fig, style={"height": "42vh", "padding": "5px", "margin-right": "10px"},
+            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-geral-vmg', 'height': 1080, 'width': 1920, 'scale': 1}})
         ], sm=6),
         html.Div([
             dbc.Popover(
@@ -312,12 +322,16 @@ accordion_vs = html.Div(
                 title="Seguidores", children=
                 [
                     dbc.Row([
-                        dbc.Col([dcc.Graph(id="grafico-seguidores-individual", figure=fig, style={"height": "32vh", "margin-top": "5px", "margin-right": "10px"}),], sm=4),
-                        dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "32vh", "margin-top": "5px"}),], sm=8),
+                        dbc.Col([dcc.Graph(id="grafico-seguidores-individual", figure=fig, style={"height": "32vh", "margin-top": "5px", "margin-right": "10px"},
+                                            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-individual-seguidores', 'height': 1080, 'width': 1920, 'scale': 1}}),], sm=4),
+                        dbc.Col([dcc.Graph(id="grafico-idade-individual", figure=fig, style={"height": "32vh", "margin-top": "5px"},
+                                            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-individual-idade', 'height': 1080, 'width': 1920, 'scale': 1}}),], sm=8),
                     ], className="g-0"),
                     dbc.Row([
-                        dbc.Col([dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "35vh", "margin-top": "15px", "margin-right": "10px"}),],sm=7),
-                        dbc.Col([dcc.Graph(id="grafico-mapa-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"}),],sm=5),
+                        dbc.Col([dcc.Graph(id="grafico-genero-individual", figure=fig, style={"height": "35vh", "margin-top": "15px", "margin-right": "10px"},
+                                            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-individual-genero', 'height': 1080, 'width': 1920, 'scale': 1}}),],sm=7),
+                        dbc.Col([dcc.Graph(id="grafico-mapa-individual", figure=fig, style={"height": "35vh", "margin-top": "15px"},
+                                            config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-individual-mapa', 'height': 1080, 'width': 1920, 'scale': 1}}),],sm=5),
                     ], className="g-0"),
                     
                     
@@ -375,7 +389,8 @@ accordion_pc = html.Div(
             dbc.AccordionItem(title="📅 14 Março - 05 Outubro/2024", item_id="post-completo", children=[
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-total-posts-final", figure=fig, style={"height": "20vh", "margin-right": "10px"}),
+                        dcc.Graph(id = "grafico-total-posts-final", figure=fig, style={"height": "20vh", "margin-right": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-final-total-posts', 'height': 1080, 'width': 1920, 'scale': 1}}),
                     ], sm=6),
                     dbc.Col([
                         html.Div(id="caixas-total-posts-final")
@@ -383,18 +398,22 @@ accordion_pc = html.Div(
                 ], className="g-0"),
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-engajamento-total-final", figure=fig, style={"height": "28vh", "margin-right": "10px", "margin-top": "10px"}),
+                        dcc.Graph(id = "grafico-engajamento-total-final", figure=fig, style={"height": "28vh", "margin-right": "10px", "margin-top": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-final-total-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),
                     ], sm=6),
                     dbc.Col([
-                        dcc.Graph(id = "grafico-engajamento-medio-final", figure=fig, style={"height": "28vh", "margin-top": "10px"}),
+                        dcc.Graph(id = "grafico-engajamento-medio-final", figure=fig, style={"height": "28vh", "margin-top": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-final-medio-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),
                     ], sm=6),
                 ], className="g-0"),
                 dbc.Row([
                     dbc.Col([
-                        dcc.Graph(id = "grafico-engajamento-taxa-final", figure=fig, style={"height": "28vh", "margin-right": "10px", "margin-top": "10px"}),
+                        dcc.Graph(id = "grafico-engajamento-taxa-final", figure=fig, style={"height": "28vh", "margin-right": "10px", "margin-top": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-final-taxa-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),
                     ], sm=6),
                     dbc.Col([
-                        dcc.Graph(id = "grafico-vmg-final", figure=fig, style={"height": "28vh", "margin-top": "10px"}),
+                        dcc.Graph(id = "grafico-vmg-final", figure=fig, style={"height": "28vh", "margin-top": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-final-total-vmg', 'height': 1080, 'width': 1920, 'scale': 1}}),
                     ], sm=6),
                     infos_semanal_completo
                 ], className="g-0"),

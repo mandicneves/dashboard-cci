@@ -222,18 +222,22 @@ def layout_graficos_semanal(semana, fig1, fig2, fig3, fig4, caixas):
         dbc.Row([
             dbc.Col([
                 caixas,
-                dcc.Graph(id = f"grafico-total-posts-semana{semana}", figure=fig1, style={"height": "20vh", "margin-right": "10px"}),
+                dcc.Graph(id = f"grafico-total-posts-semana{semana}", figure=fig1, style={"height": "20vh", "margin-right": "10px"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-total-posts', 'height': 1080, 'width': 1920, 'scale': 1}}),
             ], sm=6),
             dbc.Col([
-                dcc.Graph(id = f"grafico-engajamento-total-semana{semana}", figure=fig2, style={"height": "36.5vh"}),
+                dcc.Graph(id = f"grafico-engajamento-total-semana{semana}", figure=fig2, style={"height": "36.5vh"},
+                        config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-total-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),
             ], sm=6),
     ], className="g-0"),
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id = f"grafico-engajamento-taxa-semana{semana}", figure=fig3, style={"height": "30vh", "margin-right": "10px", "margin-top": "10px"}),
+            dcc.Graph(id = f"grafico-engajamento-taxa-semana{semana}", figure=fig3, style={"height": "30vh", "margin-right": "10px", "margin-top": "10px"},
+                    config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-taxa-engajamento', 'height': 1080, 'width': 1920, 'scale': 1}}),
         ], sm=6),
         dbc.Col([
-            dcc.Graph(id = f"grafico-vmg-semana{semana}", figure=fig4, style={"height": "30vh", "margin-top": "10px"}),
+            dcc.Graph(id = f"grafico-vmg-semana{semana}", figure=fig4, style={"height": "30vh", "margin-top": "10px"},
+                    config = {'toImageButtonOptions': {'format': 'png', 'filename': 'grafico-vmg', 'height': 1080, 'width': 1920, 'scale': 1}}),
         ], sm=6),
     ], className="g-0"),
     ])
